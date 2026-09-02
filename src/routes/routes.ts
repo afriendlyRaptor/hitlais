@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // Lazy-loaded screens
 const Home = lazy(() => import('~/screens/home'));
 const NotFound = lazy(() => import('~/screens/not-found'));
+const About = lazy(() => import('~/screens/about'));
 
 export interface RouteConfig {
   path: string;
@@ -21,6 +22,12 @@ export const routes: RouteConfig[] = [
     component: Home,
     title: 'Home',
   },
+  {
+    path: '/about',
+    component: About,
+    title: 'About',
+  },
+
   {
     path: '*',
     component: NotFound,
