@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Switch } from 'wouter';
+import { Router, Route, Switch } from 'wouter';
 import { routes } from './routes';
 import { Skeleton } from '~/components/ui';
 
@@ -25,15 +25,17 @@ function RouteLoading() {
  */
 export function AppRouter() {
   return (
-    <Suspense fallback={<RouteLoading />}>
-      <Switch>
-        {routes.map(({ path, component: Component }) => (
-          <Route key={path} path={path}>
-            <Component />
-          </Route>
-        ))}
-      </Switch>
-    </Suspense>
+    <Router base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+      <Suspense fallback={<RouteLoading />}>
+        <Switch>
+          {routes.map(({ path, component: Component }) => (
+            <Route key={path} path={path}>
+              <Component />
+            </Route>
+          ))}
+        </Switch>
+      </Suspense>
+    </Router>
   );
 }
 
