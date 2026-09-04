@@ -1,18 +1,7 @@
-import { useState } from 'react';
 import { Box, Container, Typography, Link, Divider } from "@mui/material";
-import { Button, DrawerAppBar, SimpleHighlighter, WordSelector } from '~/components/ui';
-
-
-import { useTheme } from '~/providers';
+import { DrawerAppBar } from '~/components/ui';
 
 export default function Home() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [count, setCount] = useState(0);
-
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-  };
-
   return (
         <>
         <DrawerAppBar />

@@ -1,62 +1,55 @@
-import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import SelectedSentencesBox from "./selectedsentencesbox";
 
 type Props = {
   text: string;
 };
 
-export default function WordSelector({ text }: Props) {
-  const words = text.split(" ");
+export default function SentenceSelector({ text }: Props) {
+  const sentences = text.split(/(?<=[.!?])\s+/);
 
-  const [selectedWords, setSelectedWords] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
+  const [boxHeight, setBoxHeight] = useState(120);
 
   function handleClick(index: number) {
-    if (selectedWords.includes(index)) {
-      setSelectedWords(
-        selectedWords.filter((selected) => selected !== index)
-      );
+    if (selected.includes(index)) {
+      setSelected(selected.filter((item) => item !== index));
     } else {
-      setSelectedWords([...selectedWords, index]);
+      setSelected([...selected, index]);
     }
   }
+ const selectedSentences = selected.map((index) => sentences[index]);
 
   return (
     <div>
       {/* Text */}
+      <div
+        style={{
+          paddingBottom: `${boxHeight + 20}px`,
+        }}
+      >
       <div>
-        {words.map((word, index) => (
-          <button
+        {sentences.map((sentence, index) => (
+          <span
             key={index}
             onClick={() => handleClick(index)}
             style={{
-              backgroundColor: selectedWords.includes(index)
-                ? "yellow"
+              backgroundColor: selected.includes(index)
+                ? "#d3d3d3"
                 : "transparent",
-              border: "none",
-              padding: "2px",
               cursor: "pointer",
             }}
           >
-            {word}
-          </button>
+            {sentence}{" "}
+          </span>
         ))}
       </div>
-
-      {/* Selected words */}
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "0px",
-          padding: "16px",
-          marginTop: "20px",
-        }}
-      >
-        <h3>Selected words:</h3>
-
-        {selectedWords.map((index) => (
-          <div key={index}>{words[index]}</div>
-        ))}
-        </Box>
-    </div>
+      <SelectedSentencesBox
+        sentences={selectedSentences}
+        height={boxHeight}
+        setHeight={setBoxHeight}
+        />
+     </div>
+     </div>
   );
 }

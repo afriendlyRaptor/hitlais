@@ -12,8 +12,11 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { Link } from "wouter";
+
+/**
+ * https://mui.com/material-ui/react-app-bar/
+ */
 
 interface Props {
   /**
@@ -41,7 +44,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
     <Typography variant="h6" sx={{ my: 2 }}>
-        Menu
+        HITLAIS
       </Typography>
       <Divider />
 
@@ -83,12 +86,16 @@ export default function DrawerAppBar(props: Props) {
           >
             HITLAIS
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {navItems.map((item) => (
-              <Button key={item.name} sx={{ color: '#fff' }}>
-                {item.name}
-              </Button>
-            ))}
+            <ListItemButton 
+                component={Link}
+                href={item.path}
+                sx={{ textAlign: 'center' }}>
+               <ListItemText primary={item.name} />
+            </ListItemButton>
+
+           ))}
           </Box>
         </Toolbar>
       </AppBar>
