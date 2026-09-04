@@ -93,7 +93,7 @@ export default function DrawerAppBar(props: Props) {
           >
             <Box
               component="img"
-              src="/icon.png"
+              src={`${import.meta.env.BASE_URL}icon.png`}
               alt="HITLAIS"
               sx={{
                 width: 32,
