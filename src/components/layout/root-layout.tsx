@@ -6,7 +6,7 @@ interface RootLayoutProps {
 
 export function RootLayout({ children }: RootLayoutProps) {
   return (
-    <div className="relative min-h-screen bg-background font-sans antialiased">
+    <div className="bg-background relative min-h-screen font-sans antialiased">
       <main className="relative flex min-h-screen flex-col">{children}</main>
       <Toaster
         position="bottom-right"

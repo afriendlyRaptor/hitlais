@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Link } from "wouter";
+import { Link } from 'wouter';
 
 /**
  * https://mui.com/material-ui/react-app-bar/
@@ -28,9 +28,9 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Contact", path: "/contact" },
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 export default function DrawerAppBar(props: Props) {
@@ -43,7 +43,7 @@ export default function DrawerAppBar(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-    <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
         HITLAIS
       </Typography>
       <Divider />
@@ -51,10 +51,11 @@ export default function DrawerAppBar(props: Props) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.name} disablePadding>
-            <ListItemButton 
-            component={Link}
-            href={item.path}
-            sx={{ textAlign: 'center' }}>
+            <ListItemButton
+              component={Link}
+              href={item.path}
+              sx={{ textAlign: 'center' }}
+            >
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
@@ -63,7 +64,8 @@ export default function DrawerAppBar(props: Props) {
     </Box>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -88,14 +90,14 @@ export default function DrawerAppBar(props: Props) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {navItems.map((item) => (
-            <ListItemButton 
+              <ListItemButton
                 component={Link}
                 href={item.path}
-                sx={{ textAlign: 'center' }}>
-               <ListItemText primary={item.name} />
-            </ListItemButton>
-
-           ))}
+                sx={{ textAlign: 'center' }}
+              >
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            ))}
           </Box>
         </Toolbar>
       </AppBar>
@@ -110,7 +112,10 @@ export default function DrawerAppBar(props: Props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -118,7 +123,7 @@ export default function DrawerAppBar(props: Props) {
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        </Box>
+      </Box>
     </Box>
   );
 }

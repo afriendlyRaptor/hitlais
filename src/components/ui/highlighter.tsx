@@ -1,6 +1,5 @@
-import React from 'react'
-import { Highlighter, SelectionProvider } from 'react-selection-highlighter'
-
+import React from 'react';
+import { Highlighter, SelectionProvider } from 'react-selection-highlighter';
 
 type Props = {
   text: string;
@@ -11,6 +10,6 @@ const SimpleHighlighter = ({ text }: Props) => {
     <SelectionProvider>
       <Highlighter htmlString={text} />
     </SelectionProvider>
-  )
-}
-export default SimpleHighlighter
+  );
+};
+export default SimpleHighlighter;

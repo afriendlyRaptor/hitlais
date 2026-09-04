@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { ThemeProvider } from './theme-provider';
-import { RootLayout, ErrorBoundary  } from '~/components/layout';
+import { RootLayout, ErrorBoundary } from '~/components/layout';
 
 interface ProvidersProps {
   children: ReactNode;
