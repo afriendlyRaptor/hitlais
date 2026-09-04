@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import {
   DrawerAppBar,
-  SimpleHighlighter,
   SentenceSelector,
 } from '~/components/ui';
 

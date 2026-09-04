@@ -1,4 +1,3 @@
-
 import { Box, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
@@ -93,9 +92,7 @@ export default function SelectedSentencesBox({
           height: `${height}px`,
           backgroundColor: 'white',
           borderTop: open ? '1px solid #ccc' : 'none',
-          boxShadow: open
-            ? '0 -2px 10px rgba(0, 0, 0, 0.1)'
-            : 'none',
+          boxShadow: open ? '0 -2px 10px rgba(0, 0, 0, 0.1)' : 'none',
           zIndex: 1000,
         }}
       >
@@ -124,9 +121,7 @@ export default function SelectedSentencesBox({
             </Box>
 
             <Box sx={{ px: 2 }}>
-              <h3 style={{ margin: '0 0 8px' }}>
-                Selected sentences:
-              </h3>
+              <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
 
               <Box
                 sx={{

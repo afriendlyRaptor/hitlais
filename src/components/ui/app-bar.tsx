@@ -81,13 +81,39 @@ export default function DrawerAppBar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          <Box
+            component={Link}
+            href="/"
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              alignItems: 'center',
+              gap: 1.5,
+              flexGrow: 1,
+            }}
           >
-            HITLAIS
-          </Typography>
+            <Box
+              component="img"
+              src="/icon.png"
+              alt="HITLAIS"
+              sx={{
+                width: 32,
+                height: 32,
+                objectFit: 'contain',
+                borderRadius: '8px',
+              }}
+            />
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                lineHeight: 1,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              HITLAIS
+            </Typography>
+          </Box>
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {navItems.map((item) => (
               <ListItemButton
