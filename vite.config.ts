@@ -6,7 +6,8 @@ import compression from 'vite-plugin-compression';
 import path from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/hitlais/' : '/',
   plugins: [
     react(),
     tailwindcss(),
@@ -72,4 +73,4 @@ export default defineConfig({
     // Remove console.log and debugger in production
     drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
   },
-});
+}));

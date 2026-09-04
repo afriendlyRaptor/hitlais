@@ -1,8 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import {
-  DrawerAppBar,
-  SentenceSelector,
-} from '~/components/ui';
+import { DrawerAppBar, SentenceSelector } from '~/components/ui';
 
 export default function Home() {
   const text =
