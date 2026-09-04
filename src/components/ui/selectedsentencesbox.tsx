@@ -1,14 +1,21 @@
 import { Box } from "@mui/material";
 
+type Sentence = {
+  index: number;
+  text: string;
+};
+
 type Props = {
   sentences: string[];
   height: number;
   setHeight: (height: number) => void;
+  onRemove: (index: number) => void;
 };
 export default function SelectedSentencesBox({
   sentences,
   height,
   setHeight,
+  onRemove,
 }: Props) {
     function handleResize(event: React.PointerEvent) {
     const startY = event.clientY;
@@ -86,14 +93,19 @@ export default function SelectedSentencesBox({
         >
           {sentences.map((sentence, index) => (
             <Box
-              key={index}
+              key={index} 
+              onClick={() => onRemove(sentence.index)}
               sx={{
                 backgroundColor: "#f0f0f0",
                 padding: "6px 10px",
-                borderRadius: "4px",
+                borderRadius: "4px",cursor: "pointer",
+
+                "&:hover": {
+                  backgroundColor: "#d0d0d0",
+                },
               }}
             >
-              {sentence}
+              {sentence.text}
             </Box>
           ))}
         </Box>

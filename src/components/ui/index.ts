@@ -12,4 +12,4 @@ export { Skeleton } from './skeleton';
 export { Separator } from './separator';
 export { default as DrawerAppBar } from './app-bar';
 export { default as SimpleHighlighter } from './highlighter';
-export { default as WordSelector } from './wordselector';
+export { default as SentenceSelector } from './sentenceselector';
