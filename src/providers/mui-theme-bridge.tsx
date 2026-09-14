@@ -11,8 +11,6 @@ interface MuiThemeBridgeProps {
 }
 
 /**
- * MUI components (Box, Typography, AppBar, ...) have their own theming
- * system, entirely separate from our Tailwind/shadcn CSS variables.
  * This reads `resolvedTheme` from our ThemeProvider and feeds it into
  * MUI's `createTheme`, so both systems switch together.
  */

@@ -72,13 +72,13 @@ export default function SelectedSentencesBox({
           position: 'fixed',
           bottom: open ? height + 10 : 10,
           right: 20,
-          backgroundColor: 'white',
-          border: '1px solid #ccc',
+          backgroundColor: 'theme.palette.background.paper',
+          border: '1px solid theme.palette.divider',
           boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
           zIndex: 1100,
 
           '&:hover': {
-            backgroundColor: '#f5f5f5',
+            backgroundColor: 'theme.palette.action.hover',
           },
         }}
       >
@@ -93,8 +93,8 @@ export default function SelectedSentencesBox({
           left: 0,
           right: 0,
           height: `${height}px`,
-          backgroundColor: 'white',
-          borderTop: open ? '1px solid #ccc' : 'none',
+          backgroundColor: 'theme.palette.background.paper',
+          borderTop: open ? '1px solid theme.palette.divider' : 'none',
           boxShadow: open ? '0 -2px 10px rgba(0, 0, 0, 0.1)' : 'none',
           zIndex: 1000,
         }}
@@ -118,13 +118,14 @@ export default function SelectedSentencesBox({
                   width: '40px',
                   height: '4px',
                   borderRadius: '4px',
-                  backgroundColor: '#aaa',
+                  backgroundColor: 'theme.palette.text.disabled',
                 }}
               />
             </Box>
 
             <Box sx={{ px: 2 }}>
-              <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
+              <h3 style={{ margin: '0 0 8px', color: theme.palette.text.primary 
+              }}>Selected sentences:</h3>
 
               <Box
                 sx={{
@@ -141,13 +142,13 @@ export default function SelectedSentencesBox({
                     key={sentence.index}
                     onClick={() => onRemove(sentence.index)}
                     sx={{
-                      backgroundColor: '#f0f0f0',
+                      backgroundColor: 'theme.palette.action.selected',
                       padding: '6px 10px',
                       borderRadius: '4px',
                       cursor: 'pointer',
 
                       '&:hover': {
-                        backgroundColor: '#d0d0d0',
+                        backgroundColor: 'theme.palette.action.hover',
                       },
                     }}
                   >
