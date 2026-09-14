@@ -75,7 +75,7 @@ export default function SelectedSentencesBox({
           border: '1px solid',
           boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
           zIndex: 1100,
-          backgroundColor: 'background.paper'
+          backgroundColor: 'background.paper',
         }}
       >
         {open ? <CloseIcon /> : <InfoIcon />}

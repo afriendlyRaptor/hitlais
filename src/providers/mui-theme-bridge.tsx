@@ -5,8 +5,7 @@ import {
 } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useTheme } from './theme-provider';
-import theme from './theme';
-
+import { lightTheme, darkTheme } from './theme';
 
 interface MuiThemeBridgeProps {
   children: ReactNode;
@@ -19,19 +18,10 @@ interface MuiThemeBridgeProps {
 
 export function MuiThemeBridge({ children }: MuiThemeBridgeProps) {
   const { resolvedTheme } = useTheme();
-
   const muiTheme = useMemo(
-    () =>
-      createTheme({
-        ...theme,
-        palette: {
-          ...theme.palette,
-          mode: resolvedTheme,
-        },
-      }),
+    () => (resolvedTheme === 'dark' ? darkTheme : lightTheme),
     [resolvedTheme]
   );
-
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
