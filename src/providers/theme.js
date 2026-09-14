@@ -48,11 +48,11 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     primary: {
-      main: '#5d64e6',
+      main: '#3742F5',
       contrastText: '#0c0d12',
     },
     secondary: {
-      main: '#977ae0',
+      main: '#979C98',
       contrastText: '#0d0c11',
     },
     success: {
