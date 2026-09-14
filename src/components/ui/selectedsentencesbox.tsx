@@ -2,6 +2,7 @@ import { Box, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { logAction } from '~/services';
 
 type Sentence = {
   index: number;
@@ -25,6 +26,8 @@ export default function SelectedSentencesBox({
   const [previousHeight, setPreviousHeight] = useState(height);
 
   function toggleBox() {
+    logAction('selected_sentences_panel_toggled', { open: !open });
+
     if (open) {
       setPreviousHeight(height);
       setHeight(0);

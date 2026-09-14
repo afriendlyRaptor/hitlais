@@ -1,7 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -13,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'wouter';
+import { logAction } from '~/services';
 
 /**
  * https://mui.com/material-ui/react-app-bar/
@@ -38,8 +38,14 @@ export default function DrawerAppBar(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
+    logAction('drawer_toggled', { open: !mobileOpen });
     setMobileOpen((prevState) => !prevState);
   };
+
+  function handleNavClick(item: (typeof navItems)[number]) {
+    // logs nav items by identified by path
+    logAction('nav_click', { path: item.path, label: item.name });
+  }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -54,6 +60,7 @@ export default function DrawerAppBar(props: Props) {
             <ListItemButton
               component={Link}
               href={item.path}
+              onClick={() => handleNavClick(item)}
               sx={{ textAlign: 'center' }}
             >
               <ListItemText primary={item.name} />
@@ -69,7 +76,6 @@ export default function DrawerAppBar(props: Props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -119,6 +125,7 @@ export default function DrawerAppBar(props: Props) {
               <ListItemButton
                 component={Link}
                 href={item.path}
+                onClick={() => handleNavClick(item)}
                 sx={{ textAlign: 'center' }}
               >
                 <ListItemText primary={item.name} />

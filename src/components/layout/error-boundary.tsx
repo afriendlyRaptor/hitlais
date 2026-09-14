@@ -47,7 +47,12 @@ export class ErrorBoundary extends Component<Props, State> {
               {this.state.error?.message || 'An unexpected error occurred'}
             </p>
           </div>
-          <Button onClick={this.handleRetry} variant="outline" className="mt-4">
+          <Button
+            onClick={this.handleRetry}
+            variant="outline"
+            className="mt-4"
+            logId="error_boundary_retry"
+          >
             <RefreshCw className="mr-2 h-4 w-4" />
             Try again
           </Button>

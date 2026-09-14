@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SelectedSentencesBox from './selectedsentencesbox';
+import { logAction } from '~/services';
 
 type Props = {
   text: string;
@@ -19,7 +20,16 @@ export default function SentenceSelector({ text }: Props) {
     }));
 
   function handleClick(index: number) {
-    if (selected.includes(index)) {
+    const wasSelected = selected.includes(index);
+
+    // logging sentences being clicked
+    logAction('sentence_toggled', {
+      index,
+      text: sentences[index],
+      selected: !wasSelected,
+    });
+
+    if (wasSelected) {
       setSelected(selected.filter((item) => item !== index));
     } else {
       setSelected([...selected, index]);
@@ -27,6 +37,7 @@ export default function SentenceSelector({ text }: Props) {
   }
 
   function removeSentence(index: number) {
+    logAction('sentence_removed', { index, text: sentences[index] });
     setSelected((prev) => prev.filter((item) => item !== index));
   }
 

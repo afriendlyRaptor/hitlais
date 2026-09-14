@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { ThemeProvider } from './theme-provider';
+import { MuiThemeBridge } from './mui-theme-bridge';
 import { RootLayout, ErrorBoundary } from '~/components/layout';
 
 interface ProvidersProps {
@@ -17,7 +18,9 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="app-theme">
-        <RootLayout>{children}</RootLayout>
+        <MuiThemeBridge>
+          <RootLayout>{children}</RootLayout>
+        </MuiThemeBridge>
       </ThemeProvider>
     </ErrorBoundary>
   );
