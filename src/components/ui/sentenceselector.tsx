@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import SelectedSentencesBox from './selectedsentencesbox';
 import { logAction } from '~/services';
+import Box from '@mui/material/Box';
 
 type Props = {
   text: string;
@@ -51,18 +52,19 @@ export default function SentenceSelector({ text }: Props) {
       >
         <div>
           {sentences.map((sentence, index) => (
-            <span
+            <Box
+              component="span"
               key={index}
               onClick={() => handleClick(index)}
-              style={{
+              sx={{
                 backgroundColor: selected.includes(index)
-                  ? '#d3d3d3'
+                  ? 'secondary.main'
                   : 'transparent',
                 cursor: 'pointer',
               }}
             >
               {sentence}{' '}
-            </span>
+            </Box>
           ))}
         </div>
         <SelectedSentencesBox

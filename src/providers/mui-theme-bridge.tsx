@@ -5,6 +5,8 @@ import {
 } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useTheme } from './theme-provider';
+import theme from './theme';
+
 
 interface MuiThemeBridgeProps {
   children: ReactNode;
@@ -14,11 +16,19 @@ interface MuiThemeBridgeProps {
  * This reads `resolvedTheme` from our ThemeProvider and feeds it into
  * MUI's `createTheme`, so both systems switch together.
  */
+
 export function MuiThemeBridge({ children }: MuiThemeBridgeProps) {
   const { resolvedTheme } = useTheme();
 
   const muiTheme = useMemo(
-    () => createTheme({ palette: { mode: resolvedTheme } }),
+    () =>
+      createTheme({
+        ...theme,
+        palette: {
+          ...theme.palette,
+          mode: resolvedTheme,
+        },
+      }),
     [resolvedTheme]
   );
 

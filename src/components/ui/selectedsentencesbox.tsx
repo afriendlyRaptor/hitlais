@@ -65,21 +65,17 @@ export default function SelectedSentencesBox({
 
   return (
     <>
-      {/* Hamburger button */}
+      {/* Info button */}
       <IconButton
         onClick={toggleBox}
         sx={{
           position: 'fixed',
           bottom: open ? height + 10 : 10,
           right: 20,
-          backgroundColor: 'theme.palette.background.paper',
-          border: '1px solid theme.palette.divider',
+          border: '1px solid',
           boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
           zIndex: 1100,
-
-          '&:hover': {
-            backgroundColor: 'theme.palette.action.hover',
-          },
+          backgroundColor: 'background.paper'
         }}
       >
         {open ? <CloseIcon /> : <InfoIcon />}
@@ -93,10 +89,10 @@ export default function SelectedSentencesBox({
           left: 0,
           right: 0,
           height: `${height}px`,
-          backgroundColor: 'theme.palette.background.paper',
-          borderTop: open ? '1px solid theme.palette.divider' : 'none',
+          borderTop: open ? '1px solid' : 'none',
           boxShadow: open ? '0 -2px 10px rgba(0, 0, 0, 0.1)' : 'none',
           zIndex: 1000,
+          backgroundColor: 'background.paper',
         }}
       >
         {open && (
@@ -118,14 +114,13 @@ export default function SelectedSentencesBox({
                   width: '40px',
                   height: '4px',
                   borderRadius: '4px',
-                  backgroundColor: 'theme.palette.text.disabled',
+                  backgroundColor: 'secondary.main',
                 }}
               />
             </Box>
 
             <Box sx={{ px: 2 }}>
-              <h3 style={{ margin: '0 0 8px', color: theme.palette.text.primary 
-              }}>Selected sentences:</h3>
+              <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
 
               <Box
                 sx={{
@@ -142,14 +137,10 @@ export default function SelectedSentencesBox({
                     key={sentence.index}
                     onClick={() => onRemove(sentence.index)}
                     sx={{
-                      backgroundColor: 'theme.palette.action.selected',
                       padding: '6px 10px',
                       borderRadius: '4px',
                       cursor: 'pointer',
-
-                      '&:hover': {
-                        backgroundColor: 'theme.palette.action.hover',
-                      },
+                      backgroundColor: 'secondary.main',
                     }}
                   >
                     {sentence.text}
