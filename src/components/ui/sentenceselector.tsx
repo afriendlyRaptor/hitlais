@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import SelectedSentencesBox from './selectedsentencesbox';
 import { logAction } from '~/services';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 
 type Props = {
   text: string;
@@ -9,6 +9,7 @@ type Props = {
 };
 
 const STORAGE_KEY = 'sentence-selection';
+const TOKEN_LIMIT = 1024;
 
 export default function SentenceSelector({ text, onSelectionChange }: Props) {
   const sentences = useMemo(() => text.split(/(?<=[.!?])\s+/), [text]);
@@ -74,6 +75,32 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
     setSelected([]);
   }
 
+  function selectFirst1024Tokens() {
+    let tokenCount = 0;
+    const selectedIndexes: number[] = [];
+
+    for (let index = 0; index < sentences.length; index++) {
+      const sentence = sentences[index];
+
+      // Approximate token count using whitespace-separated words.
+      const sentenceTokens = sentence.trim().split(/\s+/).length;
+
+      if (tokenCount + sentenceTokens > TOKEN_LIMIT) {
+        break;
+      }
+
+      selectedIndexes.push(index);
+      tokenCount += sentenceTokens;
+    }
+
+    logAction('first_1024_tokens_selected', {
+      token_count: tokenCount,
+      sentence_count: selectedIndexes.length,
+    });
+
+    setSelected(selectedIndexes);
+  }
+
   return (
     <Box>
       {/* Selector header */}
@@ -86,15 +113,27 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
         }}
       >
         <Typography variant="h5">Select sentences for summary</Typography>
+        <ButtonGroup variant="outlined" aria-label="Sentence selection actions">
+          <Button
+            size="sm"
+            variant="outline"
+            logId="clear_all_sentences"
+            onClick={clearAllSentences}
+            disabled={selected.length === 0}
+          >
+            Clear all
+          </Button>
 
-        <Button
-          size="small"
-          variant="outlined"
-          onClick={clearAllSentences}
-          disabled={selected.length === 0}
-        >
-          Clear all
-        </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            logId="select_first_1024_tokens"
+            onClick={selectFirst1024Tokens}
+            disabled={sentences.length === 0}
+          >
+            Select first
+          </Button>
+        </ButtonGroup>
       </Box>
 
       {/* Text */}
