@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import SelectedSentencesBox from './selectedsentencesbox';
 import { logAction } from '~/services';
-import Box from '@mui/material/Box';
+import { Box, Button, Typography } from '@mui/material';
 
 type Props = {
   text: string;
@@ -9,6 +9,13 @@ type Props = {
 };
 
 const STORAGE_KEY = 'sentence-selection';
+
+const selectedSentences = [...selected]
+  .sort((a, b) => a - b)
+  .map((index) => ({
+    index,
+    text: sentences[index],
+  }));
 
 export default function SentenceSelector({ text, onSelectionChange }: Props) {
   const sentences = useMemo(() => text.split(/(?<=[.!?])\s+/), [text]);
@@ -36,13 +43,6 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
     onSelectionChange(selectedSentences);
   }, [selected, sentences, onSelectionChange]);
 
-  const selectedSentences = [...selected]
-    .sort((a, b) => a - b)
-    .map((index) => ({
-      index,
-      text: sentences[index],
-    }));
-
   function handleClick(index: number) {
     const wasSelected = selected.includes(index);
 
@@ -65,15 +65,44 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
     setSelected((prev) => prev.filter((item) => item !== index));
   }
 
+  function clearAllSentences() {
+    logAction('selected_sentences_cleared', {
+      count: selected.length,
+    });
+
+    setSelected([]);
+  }
+
   return (
-    <div>
+    <Box>
+      {/* Selector header */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          mb: 2,
+        }}
+      >
+        <Typography variant="h5">Select sentences for summary</Typography>
+
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={clearAllSentences}
+          disabled={selected.length === 0}
+        >
+          Clear all
+        </Button>
+      </Box>
+
       {/* Text */}
-      <div
-        style={{
+      <Box
+        sx={{
           paddingBottom: `${boxHeight + 20}px`,
         }}
       >
-        <div>
+        <Box>
           {sentences.map((sentence, index) => (
             <Box
               component="span"
@@ -89,14 +118,15 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
               {sentence}{' '}
             </Box>
           ))}
-        </div>
+        </Box>
+
         <SelectedSentencesBox
           sentences={selectedSentences}
           height={boxHeight}
           setHeight={setBoxHeight}
           onRemove={removeSentence}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

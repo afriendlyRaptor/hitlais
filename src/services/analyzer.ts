@@ -1,4 +1,3 @@
-
 import { postApi } from './api';
 
 export interface AnalyzeResult {
@@ -13,20 +12,14 @@ export interface AnalyzeResponse {
 }
 
 export async function analyzeSentences(
-  selectedSentences: SelectedSentence[],
+  selectedSentences: SelectedSentence[]
 ): Promise<AnalyzeResponse> {
-  const text = selectedSentences
-    .map(({ text }) => text)
-    .join(' ');
+  const text = selectedSentences.map(({ text }) => text).join(' ');
 
-  const response = await postApi<AnalyzeResponse>(
-    '/run-script',
-    {
-      scriptId: 'analyze',
-      args: text,
-    },
-  );
+  const response = await postApi<AnalyzeResponse>('/run-script', {
+    scriptId: 'analyze',
+    args: text,
+  });
 
   return response.data;
 }
-

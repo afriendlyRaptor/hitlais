@@ -1,23 +1,10 @@
-
 import { useState } from 'react';
-import {
-  Box,
-  CircularProgress,
-  Typography,
-} from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import {
-  DrawerAppBar,
-  SentenceSelector,
-  Button,
-} from '~/components/ui';
+import { DrawerAppBar, SentenceSelector, Button } from '~/components/ui';
 
-import {
-  Alertify,
-  analyzeSentences,
-  logAction,
-} from '~/services';
+import { Alertify, analyzeSentences, logAction } from '~/services';
 
 export default function Home() {
   const text =
@@ -74,10 +61,6 @@ export default function Home() {
       >
         {/* Sentence selection */}
         <Box sx={{ minWidth: 0 }}>
-          <Typography variant="h5">
-            Select sentences for summary
-          </Typography>
-
           <SentenceSelector
             text={text}
             onSelectionChange={setSelectedSentences}
@@ -93,9 +76,7 @@ export default function Home() {
 
         {/* Summary */}
         <Box sx={{ minWidth: 0 }}>
-          <Typography variant="h5">
-            Summary
-          </Typography>
+          <Typography variant="h5">Summary</Typography>
 
           <Box
             sx={{
@@ -109,11 +90,7 @@ export default function Home() {
             }}
           >
             <Typography
-              color={
-                summary
-                  ? 'text.primary'
-                  : 'text.secondary'
-              }
+              color={summary ? 'text.primary' : 'text.secondary'}
               sx={{
                 whiteSpace: 'pre-wrap',
               }}
@@ -140,18 +117,11 @@ export default function Home() {
           size="icon"
           onClick={handleAnalyze}
           disabled={isAnalyzing}
-          aria-label={
-            isAnalyzing
-              ? 'Generating summary'
-              : 'Generate summary'
-          }
-        className="h-20 w-12 rounded-full"
+          aria-label={isAnalyzing ? 'Generating summary' : 'Generate summary'}
+          className="h-20 w-12 rounded-full"
         >
           {isAnalyzing ? (
-            <CircularProgress
-              size={22}
-              color="inherit"
-            />
+            <CircularProgress size={22} color="inherit" />
           ) : (
             <ArrowForwardIcon />
           )}
@@ -160,4 +130,3 @@ export default function Home() {
     </>
   );
 }
-
