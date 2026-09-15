@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import seedrandom from 'seedrandom';
 import SelectedSentencesBox from './selectedsentencesbox';
 import { logAction } from '~/services';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
@@ -9,7 +10,9 @@ type Props = {
 };
 
 const STORAGE_KEY = 'sentence-selection';
-const TOKEN_LIMIT = 1024;
+const TOKEN_LIMIT = 100;
+const RANDOM_SELECTION_SEED = 12345;
+const rng = seedrandom(RANDOM_SELECTION_SEED);
 
 export default function SentenceSelector({ text, onSelectionChange }: Props) {
   const sentences = useMemo(() => text.split(/(?<=[.!?])\s+/), [text]);
@@ -75,7 +78,7 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
     setSelected([]);
   }
 
-  function selectFirst1024Tokens() {
+  function selectFirstTokens() {
     let tokenCount = 0;
     const selectedIndexes: number[] = [];
 
@@ -93,9 +96,51 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
       tokenCount += sentenceTokens;
     }
 
-    logAction('first_1024_tokens_selected', {
+    logAction('first_tokens_selected', {
       token_count: tokenCount,
       sentence_count: selectedIndexes.length,
+    });
+
+    setSelected(selectedIndexes);
+  }
+
+  function selectRandomTokens() {
+    // Start with every sentence index.
+    const indexes = sentences.map((_, index) => index);
+
+    // Fisher-Yates shuffle using the seeded RNG.
+    for (let i = indexes.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+    }
+
+    let tokenCount = 0;
+    const selectedIndexes: number[] = [];
+
+    // Walk through the shuffled sentences and add sentences
+    for (const index of indexes) {
+      const sentence = sentences[index];
+      const sentenceTokens = sentence.trim().split(/\s+/).length;
+
+      if (sentenceTokens > TOKEN_LIMIT) {
+        continue;
+      }
+
+      if (tokenCount + sentenceTokens <= TOKEN_LIMIT) {
+        selectedIndexes.push(index);
+        tokenCount += sentenceTokens;
+      }
+
+      // We can stop once we've hit the limit exactly.
+      if (tokenCount === TOKEN_LIMIT) {
+        break;
+      }
+    }
+
+    logAction('random__tokens_selected', {
+      token_count: tokenCount,
+      sentence_count: selectedIndexes.length,
+      seed: RANDOM_SELECTION_SEED,
     });
 
     setSelected(selectedIndexes);
@@ -127,11 +172,20 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
           <Button
             size="sm"
             variant="outline"
-            logId="select_first_1024_tokens"
-            onClick={selectFirst1024Tokens}
+            logId="select_first__tokens"
+            onClick={selectFirstTokens}
             disabled={sentences.length === 0}
           >
             Select first
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            logId="select_random_tokens"
+            onClick={selectRandomTokens}
+            disabled={sentences.length === 0}
+          >
+            Select random
           </Button>
         </ButtonGroup>
       </Box>
