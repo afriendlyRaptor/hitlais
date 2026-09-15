@@ -150,7 +150,7 @@ export default function Home() {
           className="h-20 w-12 rounded-full"
         >
           {isAnalyzing ? (
-            <CircularProgress size={22} color="inherit" />
+            <CircularProgress size={22} color='primary.main' />
           ) : (
             <ArrowForwardIcon />
           )}
