@@ -28,7 +28,12 @@ export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleAnalyze = async () => {
-    if (isAnalyzing || selectedSentences.length === 0) {
+    if (isAnalyzing) {
+      return;
+    }
+
+    if (selectedSentences.length === 0) {
+      Alertify.info('Please select at least one sentence.');
       return;
     }
 
@@ -51,23 +56,24 @@ export default function Home() {
     }
   };
 
-  const canAnalyze =
-    selectedSentences.length > 0 && !isAnalyzing;
-
   return (
     <>
       <DrawerAppBar />
 
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 3,
+          display: 'grid',
+
+          // Left content | button space | right content
+          gridTemplateColumns: 'minmax(0, 1fr) 20px minmax(0, 1fr)',
+
+          columnGap: 3,
+          alignItems: 'start',
           p: 4,
         }}
       >
         {/* Sentence selection */}
-        <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Box sx={{ minWidth: 0 }}>
           <Typography variant="h5">
             Select sentences for summary
           </Typography>
@@ -78,41 +84,15 @@ export default function Home() {
           />
         </Box>
 
-        {/* Analyze */}
+        {/* Reserved middle column */}
         <Box
           sx={{
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: 80,
           }}
-        >
-          <Button
-            logId="generate_summary"
-            variant="default"
-            size="icon"
-            onClick={handleAnalyze}
-            disabled={!canAnalyze}
-            aria-label={
-              isAnalyzing
-                ? 'Generating summary'
-                : 'Generate summary'
-            }
-            className="h-14 w-14 rounded-full"
-          >
-            {isAnalyzing ? (
-              <CircularProgress
-                size={24}
-                color="inherit"
-              />
-            ) : (
-              <ArrowForwardIcon />
-            )}
-          </Button>
-        </Box>
+        />
 
         {/* Summary */}
-        <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Box sx={{ minWidth: 0 }}>
           <Typography variant="h5">
             Summary
           </Typography>
@@ -142,6 +122,40 @@ export default function Home() {
             </Typography>
           </Box>
         </Box>
+      </Box>
+
+      {/* Generate summary button */}
+      <Box
+        sx={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: (theme) => theme.zIndex.appBar + 1,
+        }}
+      >
+        <Button
+          logId="generate_summary"
+          variant="default"
+          size="icon"
+          onClick={handleAnalyze}
+          disabled={isAnalyzing}
+          aria-label={
+            isAnalyzing
+              ? 'Generating summary'
+              : 'Generate summary'
+          }
+        className="h-20 w-12 rounded-full"
+        >
+          {isAnalyzing ? (
+            <CircularProgress
+              size={22}
+              color="inherit"
+            />
+          ) : (
+            <ArrowForwardIcon />
+          )}
+        </Button>
       </Box>
     </>
   );
