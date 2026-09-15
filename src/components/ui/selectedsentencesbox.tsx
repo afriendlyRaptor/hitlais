@@ -1,9 +1,10 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, useTheme } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { logAction } from '~/services';
-import ScoreHistogram from './scoreboard';
+import ScoreLineChart from './ScoreLineChart';
+import ScoreDisplay from './ScoreDisplay';
 
 type Sentence = {
   index: number;
@@ -20,23 +21,30 @@ type Props = {
   height: number;
   setHeight: (height: number) => void;
   onRemove: (index: number) => void;
-  scoreHistory: ScoreEntry[];
+  scoreHistory?: ScoreEntry[];
 };
 
-const MIN_SCORE_WIDTH = 60;
-const MAX_SCORE_WIDTH = 400;
-const DEFAULT_SCORE_WIDTH = 220;
+const MIN_CHART_WIDTH = 60;
+const MAX_CHART_WIDTH = 400;
+const DEFAULT_CHART_WIDTH = 220;
 
 export default function SelectedSentencesBox({
   sentences,
   height,
   setHeight,
   onRemove,
-  scoreHistory,
+  scoreHistory = [],
 }: Props) {
   const [open, setOpen] = useState(true);
   const [previousHeight, setPreviousHeight] = useState(height);
-  const [scoreWidth, setScoreWidth] = useState(DEFAULT_SCORE_WIDTH);
+  const [chartWidth, setChartWidth] = useState(DEFAULT_CHART_WIDTH);
+
+  const theme = useTheme();
+
+  const latestScore =
+    scoreHistory.length > 0
+      ? scoreHistory[scoreHistory.length - 1].score
+      : undefined;
 
   function toggleBox() {
     logAction('selected_sentences_panel_toggled', { open: !open });
@@ -74,17 +82,17 @@ export default function SelectedSentencesBox({
     window.addEventListener('pointerup', stop);
   }
 
-  function handleResizeWidth(event: React.PointerEvent) {
+  function handleResizeChartWidth(event: React.PointerEvent) {
     const startX = event.clientX;
-    const startWidth = scoreWidth;
+    const startWidth = chartWidth;
 
     function move(event: PointerEvent) {
       const newWidth = startWidth + (startX - event.clientX);
       const newWidthLimited = Math.min(
-        Math.max(newWidth, MIN_SCORE_WIDTH),
-        MAX_SCORE_WIDTH
+        Math.max(newWidth, MIN_CHART_WIDTH),
+        MAX_CHART_WIDTH
       );
-      setScoreWidth(newWidthLimited);
+      setChartWidth(newWidthLimited);
     }
 
     function stop() {
@@ -105,7 +113,7 @@ export default function SelectedSentencesBox({
           bottom: open ? height + 10 : 10,
           right: 20,
           border: '1px solid',
-          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+          boxShadow: theme.shadows[3],
           zIndex: 1100,
           backgroundColor: 'background.paper',
         }}
@@ -121,7 +129,7 @@ export default function SelectedSentencesBox({
           right: 0,
           height: `${height}px`,
           borderTop: open ? '1px solid' : 'none',
-          boxShadow: open ? '0 -2px 10px rgba(0, 0, 0, 0.1)' : 'none',
+          boxShadow: open ? theme.shadows[4] : 'none',
           zIndex: 1000,
           backgroundColor: 'background.paper',
           display: 'flex',
@@ -182,9 +190,9 @@ export default function SelectedSentencesBox({
                 </Box>
               </Box>
 
-              {/* Vertical drag handle for score panel width */}
+              {/* Drag handle resizes the chart, not the score */}
               <Box
-                onPointerDown={handleResizeWidth}
+                onPointerDown={handleResizeChartWidth}
                 sx={{
                   width: '12px',
                   cursor: 'ew-resize',
@@ -205,7 +213,10 @@ export default function SelectedSentencesBox({
                 />
               </Box>
 
-              <ScoreHistogram history={scoreHistory} width={scoreWidth} />
+              <ScoreLineChart history={scoreHistory} width={chartWidth} />
+
+              {/* Pinned to the far right, unaffected by chart resizing */}
+              <ScoreDisplay latestScore={latestScore} boxHeight={height} />
             </Box>
           </>
         )}
