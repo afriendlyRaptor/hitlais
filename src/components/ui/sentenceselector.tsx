@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import SelectedSentencesBox from './selectedsentencesbox';
 import { logAction } from '~/services';
 import Box from '@mui/material/Box';
 
 type Props = {
   text: string;
+  onSelectionChange: (sentences: string[]) => void;
 };
 
 const STORAGE_KEY = 'sentence-selection';
 
-export default function SentenceSelector({ text }: Props) {
-  const sentences = text.split(/(?<=[.!?])\s+/);
-
+export default function SentenceSelector({ text, onSelectionChange }: Props) {
+  const sentences = useMemo(() => text.split(/(?<=[.!?])\s+/), [text]);
   const [selected, setSelected] = useState<number[]>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
 
@@ -31,6 +31,10 @@ export default function SentenceSelector({ text }: Props) {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(selected));
   }, [selected]);
+
+  useEffect(() => {
+    onSelectionChange(selectedSentences);
+  }, [selected, sentences, onSelectionChange]);
 
   const selectedSentences = [...selected]
     .sort((a, b) => a - b)
