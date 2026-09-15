@@ -42,7 +42,7 @@ export default function Home() {
     try {
       const response = await analyzeSentences(selectedSentences);
 
-      setSummary(response.result.message);
+      setSummary(response.result.received_args);
 
       logAction('summary_generated', {
         sentence_count: selectedSentences.length,
