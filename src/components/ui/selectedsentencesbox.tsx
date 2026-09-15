@@ -3,10 +3,16 @@ import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { logAction } from '~/services';
+import ScoreHistogram from './scoreboard';
 
 type Sentence = {
   index: number;
   text: string;
+};
+
+type ScoreEntry = {
+  timestamp: number;
+  score: number;
 };
 
 type Props = {
@@ -14,16 +20,23 @@ type Props = {
   height: number;
   setHeight: (height: number) => void;
   onRemove: (index: number) => void;
+  scoreHistory: ScoreEntry[];
 };
+
+const MIN_SCORE_WIDTH = 60;
+const MAX_SCORE_WIDTH = 400;
+const DEFAULT_SCORE_WIDTH = 220;
 
 export default function SelectedSentencesBox({
   sentences,
   height,
   setHeight,
   onRemove,
+  scoreHistory,
 }: Props) {
   const [open, setOpen] = useState(true);
   const [previousHeight, setPreviousHeight] = useState(height);
+  const [scoreWidth, setScoreWidth] = useState(DEFAULT_SCORE_WIDTH);
 
   function toggleBox() {
     logAction('selected_sentences_panel_toggled', { open: !open });
@@ -38,18 +51,16 @@ export default function SelectedSentencesBox({
     setOpen(!open);
   }
 
-  function handleResize(event: React.PointerEvent) {
+  function handleResizeHeight(event: React.PointerEvent) {
     const startY = event.clientY;
     const startHeight = height;
 
     function move(event: PointerEvent) {
       const newHeight = startHeight + (startY - event.clientY);
-
       const newHeightLimited = Math.min(
         Math.max(newHeight, 80),
         window.innerHeight * 0.7
       );
-
       setHeight(newHeightLimited);
       setPreviousHeight(newHeightLimited);
     }
@@ -63,9 +74,30 @@ export default function SelectedSentencesBox({
     window.addEventListener('pointerup', stop);
   }
 
+  function handleResizeWidth(event: React.PointerEvent) {
+    const startX = event.clientX;
+    const startWidth = scoreWidth;
+
+    function move(event: PointerEvent) {
+      const newWidth = startWidth + (startX - event.clientX);
+      const newWidthLimited = Math.min(
+        Math.max(newWidth, MIN_SCORE_WIDTH),
+        MAX_SCORE_WIDTH
+      );
+      setScoreWidth(newWidthLimited);
+    }
+
+    function stop() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', stop);
+    }
+
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', stop);
+  }
+
   return (
     <>
-      {/* Info button */}
       <IconButton
         onClick={toggleBox}
         sx={{
@@ -81,7 +113,6 @@ export default function SelectedSentencesBox({
         {open ? <CloseIcon /> : <InfoIcon />}
       </IconButton>
 
-      {/* Selected sentences box */}
       <Box
         sx={{
           position: 'fixed',
@@ -93,13 +124,14 @@ export default function SelectedSentencesBox({
           boxShadow: open ? '0 -2px 10px rgba(0, 0, 0, 0.1)' : 'none',
           zIndex: 1000,
           backgroundColor: 'background.paper',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         {open && (
           <>
-            {/* Drag handle */}
             <Box
-              onPointerDown={handleResize}
+              onPointerDown={handleResizeHeight}
               sx={{
                 height: '20px',
                 display: 'flex',
@@ -119,34 +151,61 @@ export default function SelectedSentencesBox({
               />
             </Box>
 
-            <Box sx={{ px: 2 }}>
-              <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
+            <Box sx={{ display: 'flex', flex: 1, minHeight: 0 }}>
+              <Box sx={{ px: 2, flex: 1, minWidth: 0 }}>
+                <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
 
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignContent: 'flex-start',
+                    gap: '8px',
+                    overflowY: 'auto',
+                    maxHeight: `calc(${height}px - 80px)`,
+                  }}
+                >
+                  {sentences.map((sentence) => (
+                    <Box
+                      key={sentence.index}
+                      onClick={() => onRemove(sentence.index)}
+                      sx={{
+                        padding: '6px 10px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        backgroundColor: 'secondary.main',
+                      }}
+                    >
+                      {sentence.text}
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+
+              {/* Vertical drag handle for score panel width */}
               <Box
+                onPointerDown={handleResizeWidth}
                 sx={{
+                  width: '12px',
+                  cursor: 'ew-resize',
+                  touchAction: 'none',
                   display: 'flex',
-                  flexWrap: 'wrap',
-                  alignContent: 'flex-start',
-                  gap: '8px',
-                  overflowY: 'auto',
-                  maxHeight: `calc(${height}px - 60px)`,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexShrink: 0,
                 }}
               >
-                {sentences.map((sentence) => (
-                  <Box
-                    key={sentence.index}
-                    onClick={() => onRemove(sentence.index)}
-                    sx={{
-                      padding: '6px 10px',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      backgroundColor: 'secondary.main',
-                    }}
-                  >
-                    {sentence.text}
-                  </Box>
-                ))}
+                <Box
+                  sx={{
+                    width: '4px',
+                    height: '40px',
+                    borderRadius: '4px',
+                    backgroundColor: 'secondary.main',
+                  }}
+                />
               </Box>
+
+              <ScoreHistogram history={scoreHistory} width={scoreWidth} />
             </Box>
           </>
         )}

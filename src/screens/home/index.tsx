@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
 import { DrawerAppBar, SentenceSelector, Button } from '~/components/ui';
-
 import { Alertify, analyzeSentences, logAction } from '~/services';
+
+type ScoreEntry = {
+  timestamp: number;
+  score: number;
+};
 
 export default function Home() {
   const text =
@@ -21,6 +24,8 @@ export default function Home() {
   });
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>([]);
 
   useEffect(() => {
     localStorage.setItem(SUMMARY_STORAGE_KEY, summary);
@@ -41,10 +46,21 @@ export default function Home() {
     try {
       const response = await analyzeSentences(selectedSentences);
 
-      setSummary(response.result.received_args);
+      setSummary(response.result.summary);
+
+      const rawScore = response.result.score;
+      const score =
+        typeof rawScore === 'string' ? parseFloat(rawScore) : rawScore;
+
+      if (Number.isNaN(score)) {
+        console.error('Invalid score received from API:', rawScore);
+      } else {
+        setScoreHistory((prev) => [...prev, { timestamp: Date.now(), score }]);
+      }
 
       logAction('summary_generated', {
-        sentence_count: selectedSentences.length,
+        sentence_count: response.result.summary.length,
+        score: response.result.score,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
@@ -76,6 +92,7 @@ export default function Home() {
           <SentenceSelector
             text={text}
             onSelectionChange={setSelectedSentences}
+            scoreHistory={scoreHistory}
           />
         </Box>
 
