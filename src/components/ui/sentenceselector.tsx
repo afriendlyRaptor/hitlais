@@ -10,7 +10,7 @@ type Props = {
 };
 
 const STORAGE_KEY = 'sentence-selection';
-const TOKEN_LIMIT = 100;
+const TOKEN_LIMIT = 1024;
 const RANDOM_SELECTION_SEED = 12345;
 const rng = seedrandom(RANDOM_SELECTION_SEED);
 
@@ -149,47 +149,50 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
   return (
     <Box>
       {/* Selector header */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          mb: 2,
-        }}
-      >
-        <Typography variant="h5">Select sentences for summary</Typography>
-        <ButtonGroup variant="outlined" aria-label="Sentence selection actions">
-          <Button
-            size="sm"
-            variant="outline"
-            logId="clear_all_sentences"
-            onClick={clearAllSentences}
-            disabled={selected.length === 0}
-          >
-            Clear all
-          </Button>
+      
+<Box
+  sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 1,
+    mb: 2,
+  }}
+>
+{/* <Typography variant="h5">Select sentences</Typography>*/}
 
-          <Button
-            size="sm"
-            variant="outline"
-            logId="select_first__tokens"
-            onClick={selectFirstTokens}
-            disabled={sentences.length === 0}
-          >
-            Select first
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            logId="select_random_tokens"
-            onClick={selectRandomTokens}
-            disabled={sentences.length === 0}
-          >
-            Select random
-          </Button>
-        </ButtonGroup>
-      </Box>
+  <ButtonGroup variant="outlined" aria-label="Sentence selection actions">
+    <Button
+      size="sm"
+      variant="outline"
+      logId="clear_all_sentences"
+      onClick={clearAllSentences}
+      disabled={selected.length === 0}
+    >
+      Clear all
+    </Button>
 
+    <Button
+      size="sm"
+      variant="outline"
+      logId="select_first__tokens"
+      onClick={selectFirstTokens}
+      disabled={sentences.length === 0}
+    >
+      Select first
+    </Button>
+
+    <Button
+      size="sm"
+      variant="outline"
+      logId="select_random_tokens"
+      onClick={selectRandomTokens}
+      disabled={sentences.length === 0}
+    >
+      Select random
+    </Button>
+  </ButtonGroup>
+</Box>
       {/* Text */}
       <Box
         sx={{
