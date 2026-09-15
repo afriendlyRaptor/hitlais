@@ -10,15 +10,9 @@ type Props = {
 
 const STORAGE_KEY = 'sentence-selection';
 
-const selectedSentences = [...selected]
-  .sort((a, b) => a - b)
-  .map((index) => ({
-    index,
-    text: sentences[index],
-  }));
-
 export default function SentenceSelector({ text, onSelectionChange }: Props) {
   const sentences = useMemo(() => text.split(/(?<=[.!?])\s+/), [text]);
+
   const [selected, setSelected] = useState<number[]>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
 
@@ -32,6 +26,13 @@ export default function SentenceSelector({ text, onSelectionChange }: Props) {
       return [];
     }
   });
+
+  const selectedSentences = [...selected]
+    .sort((a, b) => a - b)
+    .map((index) => ({
+      index,
+      text: sentences[index],
+    }));
 
   const [boxHeight, setBoxHeight] = useState(120);
 
