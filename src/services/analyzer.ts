@@ -13,17 +13,20 @@ export interface AnalyzeResponse {
 }
 
 export async function analyzeSentences(
-  sentences: string[],
+  selectedSentences: SelectedSentence[],
 ): Promise<AnalyzeResponse> {
+  const text = selectedSentences
+    .map(({ text }) => text)
+    .join(' ');
+
   const response = await postApi<AnalyzeResponse>(
     '/run-script',
     {
       scriptId: 'analyze',
-      args: {
-        sentences,
-      },
+      args: text,
     },
   );
 
   return response.data;
 }
+
