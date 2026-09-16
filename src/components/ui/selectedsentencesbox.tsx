@@ -119,14 +119,17 @@ export default function SelectedSentencesBox({
 
   const handleSubmit = () => {
     setConfirmOpen(true);
+    logAction('submit_dialog', { open: !confirmOpen });
   };
 
   const handleCancel = () => {
     setConfirmOpen(false);
+    logAction('submit_dialog_cancel', { open: !confirmOpen });
   };
 
   const handleConfirm = () => {
     setConfirmOpen(false);
+    logAction('submit_dialog_confirm', { open: !confirmOpen });
     navigate('/about');
   };
 
