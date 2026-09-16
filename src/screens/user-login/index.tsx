@@ -2,6 +2,8 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { DrawerAppBar } from '~/components/ui';
 import { setUserId } from '~/services/logger';
 import { useLocation } from 'wouter';
+import { logAction } from '~/services';
+
 
 export default function Login() {
   const [, navigate] = useLocation();
@@ -16,7 +18,12 @@ export default function Login() {
 
     setUserId(id);
 
+
+    logAction('userId_set', { userID: id });
     navigate('/home');
+
+
+
   };
 
 
