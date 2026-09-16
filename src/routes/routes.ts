@@ -4,6 +4,7 @@ import { lazy } from 'react';
 const Home = lazy(() => import('~/screens/home'));
 const NotFound = lazy(() => import('~/screens/not-found'));
 const About = lazy(() => import('~/screens/about'));
+const Login = lazy(() => import('~/screens/user-login'));
 
 export interface RouteConfig {
   path: string;
@@ -19,13 +20,25 @@ export interface RouteConfig {
 export const routes: RouteConfig[] = [
   {
     path: '/',
+    component: Login,
+    title: 'User Login',
+  },
+  {
+    path: '/home',
     component: Home,
     title: 'Home',
   },
+
   {
     path: '/about',
     component: About,
     title: 'About',
+  },
+
+  {
+    path: '/login',
+    component: Login,
+    title: 'User Login',
   },
 
   {

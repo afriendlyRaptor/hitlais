@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Link, Divider } from '@mui/material';
 import { DrawerAppBar } from '~/components/ui';
 
-export default function Home() {
+export default function About() {
   return (
     <>
       <DrawerAppBar />
