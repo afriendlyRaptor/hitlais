@@ -60,8 +60,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
       if (logId) {
-        logAction('button_click', {
-          id: logId,
+        logAction(logId, {
           label: typeof children === 'string' ? children : undefined,
         });
       }

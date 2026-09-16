@@ -141,7 +141,7 @@ export default function Home() {
         }}
       >
         <Button
-          logId="generate_summary"
+          logId="request_summary"
           variant="default"
           size="icon"
           onClick={handleAnalyze}
