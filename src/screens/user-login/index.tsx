@@ -4,7 +4,6 @@ import { setUserId } from '~/services/logger';
 import { useLocation } from 'wouter';
 import { logAction } from '~/services';
 
-
 export default function Login() {
   const [, navigate] = useLocation();
 
@@ -18,60 +17,55 @@ export default function Login() {
 
     setUserId(id);
 
-
     logAction('userId_set', { userID: id });
     navigate('/home');
-
-
-
   };
 
-
-return (
-  <Box
-    sx={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      px: 2,
-    }}
-  >
+  return (
     <Box
-      component="form"
-      onSubmit={handleSubmit}
       sx={{
-        width: '100%',
-        maxWidth: 420,
+        minHeight: '100vh',
         display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 2,
       }}
     >
-      <Box>
-        <Typography variant="h3" component="h1" gutterBottom>
-          Welcome
-        </Typography>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          width: '100%',
+          maxWidth: 420,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
+      >
+        <Box>
+          <Typography variant="h3" component="h1" gutterBottom>
+            Welcome
+          </Typography>
 
-        <Typography variant="body1" color="text.secondary">
-          Please enter your user ID to continue.
-        </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Please enter your user ID to continue.
+          </Typography>
+        </Box>
+
+        <TextField
+          label="User ID"
+          variant="outlined"
+          fullWidth
+          required
+          autoFocus
+          name="userId"
+          placeholder="Enter your ID"
+        />
+
+        <Button type="submit" variant="contained" size="large" fullWidth>
+          Continue
+        </Button>
       </Box>
-
-      <TextField
-        label="User ID"
-        variant="outlined"
-        fullWidth
-        required
-        autoFocus
-        name="userId"
-        placeholder="Enter your ID"
-      />
-
-      <Button type="submit" variant="contained" size="large" fullWidth>
-        Continue
-      </Button>
     </Box>
-  </Box>
-);
+  );
 }

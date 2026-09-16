@@ -1,10 +1,21 @@
-import { Box, IconButton, useTheme } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Button,
+  useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { logAction } from '~/services';
 import ScoreLineChart from './ScoreLineChart';
 import ScoreDisplay from './ScoreDisplay';
+import { useLocation } from 'wouter';
 
 type Sentence = {
   index: number;
@@ -38,6 +49,8 @@ export default function SelectedSentencesBox({
   const [open, setOpen] = useState(true);
   const [previousHeight, setPreviousHeight] = useState(height);
   const [chartWidth, setChartWidth] = useState(DEFAULT_CHART_WIDTH);
+  const [, navigate] = useLocation();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const theme = useTheme();
 
@@ -104,14 +117,70 @@ export default function SelectedSentencesBox({
     window.addEventListener('pointerup', stop);
   }
 
+  const handleSubmit = () => {
+    setConfirmOpen(true);
+  };
+
+  const handleCancel = () => {
+    setConfirmOpen(false);
+  };
+
+  const handleConfirm = () => {
+    setConfirmOpen(false);
+    navigate('/about');
+  };
+
   return (
     <>
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        sx={{
+          position: 'fixed',
+
+          bottom: open ? height + 10 : 10,
+          right: 20,
+          borderRadius: '999px',
+          px: 4,
+          py: 1.25,
+          boxShadow: theme.shadows[3],
+          zIndex: 1100,
+          textTransform: 'none',
+          fontWeight: 600,
+        }}
+      >
+        Submit
+      </Button>
+      <Dialog
+        open={confirmOpen}
+        onClose={handleCancel}
+        aria-labelledby="submit-dialog-title"
+        aria-describedby="submit-dialog-description"
+      >
+        <DialogTitle id="submit-dialog-title">Submit</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText id="submit-dialog-description">
+            Are you satisfied with the summary? You will not be able to make any
+            changes after submitting.
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handleCancel}>Cancel</Button>
+
+          <Button onClick={handleConfirm} variant="contained" autoFocus>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <IconButton
         onClick={toggleBox}
         sx={{
           position: 'fixed',
           bottom: open ? height + 10 : 10,
-          right: 20,
+          right: 140,
           border: '1px solid',
           boxShadow: theme.shadows[3],
           zIndex: 1100,
