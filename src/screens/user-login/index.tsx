@@ -19,12 +19,23 @@ export default function Login() {
     navigate('/home');
   };
 
-  return (
+
+return (
+  <Box
+    sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      px: 2,
+    }}
+  >
     <Box
       component="form"
       onSubmit={handleSubmit}
       sx={{
         width: '100%',
+        maxWidth: 420,
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
@@ -54,5 +65,6 @@ export default function Login() {
         Continue
       </Button>
     </Box>
-  );
+  </Box>
+);
 }
