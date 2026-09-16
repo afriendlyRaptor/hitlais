@@ -61,6 +61,7 @@ export default function Home() {
       logAction('summary_generated', {
         sentence_count: response.result.summary.length,
         score: response.result.score,
+        summary: response.result.summary,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
