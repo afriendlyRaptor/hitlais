@@ -1,4 +1,5 @@
 import { postApi } from './api';
+import { DEFAULT_TASK_ID, getStudyTask } from '~/config';
 
 export type LogPayload = Record<string, unknown>;
 
@@ -34,16 +35,13 @@ export function clearUserId() {
 }
 
 export function getDocumentId(): number | null {
-  const value = new URLSearchParams(window.location.search).get('documentId');
+  const params = new URLSearchParams(window.location.search);
+  const taskId = params.get('task') ?? DEFAULT_TASK_ID;
+  const task = getStudyTask(taskId);
+  return task?.documentId ?? null;
+}
 
-  if (!value) {
-    return null;
-  }
-
-  const documentId = Number.parseInt(value, 10);
-
-  return Number.isNaN(documentId) ? null : documentId;
-} /**
+/**
  * Redirect to the login page.
  */
 function redirectToLogin() {

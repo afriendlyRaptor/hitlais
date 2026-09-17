@@ -5,7 +5,8 @@ import { DrawerAppBar, SentenceSelector, Button } from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
 import { useDocument } from '~/hooks/useDocument';
-import { useSearch } from 'wouter';
+import { useSearch, useLocation } from 'wouter';
+import { DEFAULT_TASK_ID, getStudyTask } from '~/config';
 
 type ScoreEntry = {
   timestamp: number;
@@ -15,18 +16,22 @@ type ScoreEntry = {
 export default function Home() {
   const search = useSearch();
 
-  const url = new URL(window.location.href);
-  const params = url.searchParams;
+  const [, navigate] = useLocation();
 
-  const documentId = parseInt(params.get('documentId') || '40404', 10);
+  const params = new URLSearchParams(search);
+  const taskId = params.get('task');
 
-  params.set('documentId', documentId);
+  // If there is no task, redirect to the default task.
+  useEffect(() => {
+    if (!taskId) {
+      navigate(`?task=${DEFAULT_TASK_ID}`, {
+        replace: true,
+      });
+    }
+  }, [taskId, navigate]);
 
-  window.history.replaceState(
-    {},
-    '',
-    `${url.pathname}?${params.toString()}${url.hash}`
-  );
+  const task = getStudyTask(taskId);
+  const { documentId, components } = task;
 
   const [selectedSentences, setSelectedSentences] = useState<
     SelectedSentence[]
@@ -40,11 +45,15 @@ export default function Home() {
   const { summary, isAnalyzing, scoreHistory, handleAnalyze } =
     useSummaryAnalysis();
 
-  const text = document?.transcript ?? '';
-
   useEffect(() => {
-    loadDocument(documentId);
-  }, []);
+    if (taskId) {
+      loadDocument(documentId);
+    }
+  }, [taskId, documentId]);
+
+  if (!taskId) {
+    return null;
+  }
 
   return (
     <>
