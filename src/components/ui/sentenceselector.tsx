@@ -1,8 +1,8 @@
-import { useEffect, useState, useMemo } from 'react';
-import seedrandom from 'seedrandom';
-import SelectedSentencesBox from './selectedsentencesbox';
-import { logAction } from '~/services';
+import { useMemo, useEffect, useState } from 'react';
 import { Box, Button, ButtonGroup } from '@mui/material';
+import SelectedSentencesBox from './selectedsentencesbox';
+import { splitIntoParagraphs, flattenSentences } from './sentence-utils';
+import { useSentenceSelection } from './useSentenceSelection';
 
 type Props = {
   text: string;
@@ -10,172 +10,34 @@ type Props = {
   scoreHistory?: ScoreEntry[];
 };
 
-const STORAGE_KEY = 'sentence-selection';
-const TOKEN_LIMIT = 1024;
-const RANDOM_SELECTION_SEED = 12345;
-const rng = seedrandom(RANDOM_SELECTION_SEED);
-
 export default function SentenceSelector({
   text,
   onSelectionChange,
   scoreHistory = [],
 }: Props) {
-  const paragraphs = useMemo(() => {
-    if (!text) {
-      return [];
-    }
-
-    const segmenter = new Intl.Segmenter('de', {
-      granularity: 'sentence',
-    });
-
-    return text
-      .split(/\n\s*\n/)
-      .map((paragraph) => paragraph.trim())
-      .filter(Boolean)
-      .map((paragraph) =>
-        Array.from(segmenter.segment(paragraph), ({ segment }) =>
-          segment.trim()
-        ).filter(Boolean)
-      );
-  }, [text]);
-
-  const sentences = useMemo(() => paragraphs.flat(), [paragraphs]);
-  const [selected, setSelected] = useState<number[]>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-
-    if (!stored) {
-      return [];
-    }
-
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return [];
-    }
-  });
-
-  const selectedSentences = [...selected]
-    .sort((a, b) => a - b)
-    .map((index) => ({
-      index,
-      text: sentences[index],
-    }))
-    .filter((sentence) => sentence.text !== undefined);
-
   const [boxHeight, setBoxHeight] = useState(120);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(selected));
-  }, [selected]);
+  const paragraphs = useMemo(() => splitIntoParagraphs(text), [text]);
+
+  const sentences = useMemo(() => flattenSentences(paragraphs), [paragraphs]);
+
+  const {
+    selected,
+    selectedSentences,
+    toggleSentence,
+    removeSentence,
+    clearAll,
+    selectFirstTokens,
+    selectRandomTokens,
+  } = useSentenceSelection(sentences);
+
+  const handleSelectionChange = (newSelection: SelectedSentence[]) => {
+    onSelectionChange(newSelection);
+  };
 
   useEffect(() => {
     onSelectionChange(selectedSentences);
-  }, [selected, sentences, onSelectionChange]);
-
-  useEffect(() => {
-    setSelected((previous) =>
-      previous.filter((index) => index >= 0 && index < sentences.length)
-    );
-  }, [sentences.length]);
-
-  function handleClick(index: number) {
-    const wasSelected = selected.includes(index);
-
-    logAction('sentence_toggled', {
-      index,
-      text: sentences[index],
-      selected: !wasSelected,
-    });
-
-    if (wasSelected) {
-      setSelected(selected.filter((item) => item !== index));
-    } else {
-      setSelected([...selected, index]);
-    }
-  }
-
-  function removeSentence(index: number) {
-    logAction('sentence_removed', {
-      index,
-      text: sentences[index],
-    });
-
-    setSelected((prev) => prev.filter((item) => item !== index));
-  }
-
-  function clearAllSentences() {
-    logAction('selected_sentences_cleared', {
-      count: selected.length,
-    });
-
-    setSelected([]);
-  }
-
-  function selectFirstTokens() {
-    let tokenCount = 0;
-    const selectedIndexes: number[] = [];
-
-    for (let index = 0; index < sentences.length; index++) {
-      const sentence = sentences[index];
-
-      const sentenceTokens = sentence.trim().split(/\s+/).length;
-
-      if (tokenCount + sentenceTokens > TOKEN_LIMIT) {
-        break;
-      }
-
-      selectedIndexes.push(index);
-      tokenCount += sentenceTokens;
-    }
-
-    logAction('first_tokens_selected', {
-      token_count: tokenCount,
-      sentence_count: selectedIndexes.length,
-    });
-
-    setSelected(selectedIndexes);
-  }
-
-  function selectRandomTokens() {
-    const indexes = sentences.map((_, index) => index);
-
-    for (let i = indexes.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-
-      [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
-    }
-
-    let tokenCount = 0;
-    const selectedIndexes: number[] = [];
-
-    for (const index of indexes) {
-      const sentence = sentences[index];
-
-      const sentenceTokens = sentence.trim().split(/\s+/).length;
-
-      if (sentenceTokens > TOKEN_LIMIT) {
-        continue;
-      }
-
-      if (tokenCount + sentenceTokens <= TOKEN_LIMIT) {
-        selectedIndexes.push(index);
-        tokenCount += sentenceTokens;
-      }
-
-      if (tokenCount === TOKEN_LIMIT) {
-        break;
-      }
-    }
-
-    logAction('random__tokens_selected', {
-      token_count: tokenCount,
-      sentence_count: selectedIndexes.length,
-      seed: RANDOM_SELECTION_SEED,
-    });
-
-    setSelected(selectedIndexes);
-  }
+  }, [selectedSentences, onSelectionChange]);
 
   return (
     <Box>
@@ -193,7 +55,7 @@ export default function SentenceSelector({
             size="sm"
             variant="outline"
             logId="clear_all_sentences"
-            onClick={clearAllSentences}
+            onClick={clearAll}
             disabled={selected.length === 0}
           >
             Clear all
@@ -202,7 +64,7 @@ export default function SentenceSelector({
           <Button
             size="sm"
             variant="outline"
-            logId="select_first__tokens"
+            logId="select_first_tokens"
             onClick={selectFirstTokens}
             disabled={sentences.length === 0}
           >
@@ -241,7 +103,7 @@ export default function SentenceSelector({
                   <Box
                     component="span"
                     key={index}
-                    onClick={() => handleClick(index)}
+                    onClick={() => toggleSentence(index)}
                     sx={{
                       backgroundColor: selected.includes(index)
                         ? 'secondary.main'
