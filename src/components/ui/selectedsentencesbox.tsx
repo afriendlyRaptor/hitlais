@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { logAction } from '~/services';
 import ScoreLineChart from './ScoreLineChart';
 import ScoreDisplay from './ScoreDisplay';
@@ -33,6 +33,7 @@ type Props = {
   setHeight: (height: number) => void;
   onRemove: (index: number) => void;
   scoreHistory?: ScoreEntry[];
+  scoreDisplayEnabled?: boolean;
 };
 
 const MIN_CHART_WIDTH = 60;
@@ -45,8 +46,9 @@ export default function SelectedSentencesBox({
   setHeight,
   onRemove,
   scoreHistory = [],
+  scoreDisplayEnabled = true,
 }: Props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(scoreDisplayEnabled);
   const [previousHeight, setPreviousHeight] = useState(height);
   const [chartWidth, setChartWidth] = useState(DEFAULT_CHART_WIDTH);
   const [, navigate] = useLocation();
@@ -133,6 +135,13 @@ export default function SelectedSentencesBox({
     navigate('/about');
   };
 
+  useEffect(() => {
+    if (!scoreDisplayEnabled) {
+      setOpen(false);
+      setHeight(0);
+    }
+  }, [scoreDisplayEnabled, setHeight]);
+
   return (
     <>
       <Button
@@ -180,6 +189,7 @@ export default function SelectedSentencesBox({
 
       <IconButton
         onClick={toggleBox}
+        disabled={!scoreDisplayEnabled}
         sx={{
           position: 'fixed',
           bottom: open ? height + 10 : 10,

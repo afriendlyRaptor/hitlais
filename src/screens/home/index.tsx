@@ -89,6 +89,7 @@ export default function Home() {
               text={document?.transcript ?? ''}
               onSelectionChange={setSelectedSentences}
               scoreHistory={scoreHistory}
+              scoreDisplayEnabled={components.score_display}
             />
           )}{' '}
         </Box>

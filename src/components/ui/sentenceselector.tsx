@@ -8,12 +8,14 @@ type Props = {
   text: string;
   onSelectionChange: (sentences: SelectedSentence[]) => void;
   scoreHistory?: ScoreEntry[];
+  scoreDisplayEnabled?: boolean;
 };
 
 export default function SentenceSelector({
   text,
   onSelectionChange,
   scoreHistory = [],
+  scoreDisplayEnabled = true,
 }: Props) {
   const [boxHeight, setBoxHeight] = useState(120);
 
@@ -125,6 +127,7 @@ export default function SentenceSelector({
           setHeight={setBoxHeight}
           onRemove={removeSentence}
           scoreHistory={scoreHistory}
+          scoreDisplayEnabled={scoreDisplayEnabled}
         />
       </Box>
     </Box>
