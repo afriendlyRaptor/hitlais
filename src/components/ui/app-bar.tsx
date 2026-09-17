@@ -35,7 +35,7 @@ const navItems = [
   { name: 'About', path: '/about' },
   {
     name: userId ? `ID: ${userId}` : 'Login',
-    path: userId ? '/home' : '/login',
+    path: userId ? '/login' : '/login',
   },
 ];
 
