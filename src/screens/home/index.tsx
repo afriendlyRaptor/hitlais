@@ -15,9 +15,17 @@ type ScoreEntry = {
 export default function Home() {
   const search = useSearch();
 
-  const documentId = parseInt(
-    new URLSearchParams(search).get('documentId') || '40404',
-    10
+  const url = new URL(window.location.href);
+  const params = url.searchParams;
+
+  const documentId = parseInt(params.get('documentId') || '40404', 10);
+
+  params.set('documentId', documentId);
+
+  window.history.replaceState(
+    {},
+    '',
+    `${url.pathname}?${params.toString()}${url.hash}`
   );
 
   const [selectedSentences, setSelectedSentences] = useState<
