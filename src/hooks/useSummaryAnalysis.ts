@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Alertify, analyzeSentences, logAction } from '~/services';
+import {
+  Alertify,
+  analyzeSentences,
+  compareTexts,
+  logAction,
+  type CompareResult,
+} from '~/services';
 
 type ScoreEntry = {
   timestamp: number;
@@ -13,8 +19,12 @@ export function useSummaryAnalysis() {
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>([]);
+  const [comparison, setComparison] = useState<CompareResult | null>(null);
 
-  const handleAnalyze = async (selectedSentences: SelectedSentence[]) => {
+  const handleAnalyze = async (
+    selectedSentences: SelectedSentence[],
+    referenceSummary: string
+  ) => {
     if (isAnalyzing) {
       return;
     }
@@ -24,45 +34,61 @@ export function useSummaryAnalysis() {
       return;
     }
 
+    if (!referenceSummary) {
+      Alertify.error('No dataset summary is available for comparison.');
+      return;
+    }
+
     setIsAnalyzing(true);
 
     try {
-      const response = await analyzeSentences(selectedSentences);
+      // ---------------------------------------------------
+      // 1. Generate summary
+      // ---------------------------------------------------
 
-      const newSummary = response.result.summary;
+      const analyzeResponse = await analyzeSentences(selectedSentences);
 
-      setSummary(newSummary);
+      const generatedSummary = analyzeResponse.result.summary;
 
-      localStorage.setItem('generated-summary', newSummary);
+      setSummary(generatedSummary);
 
-      const rawScore = response.result.score;
+      localStorage.setItem('generated-summary', generatedSummary); // ---------------------------------------------------
+      // 2. Compare generated summary with dataset summary
+      // ---------------------------------------------------
 
-      const score =
-        typeof rawScore === 'string' ? parseFloat(rawScore) : rawScore;
+      const compareResponse = await compareTexts(documentId, generatedSummary);
 
-      if (Number.isNaN(score)) {
-        console.error('Invalid score received from API:', rawScore);
-      } else {
-        setScoreHistory((prev) => [
-          ...prev,
-          {
-            timestamp: Date.now(),
-            score,
-          },
-        ]);
-      }
+      const result = compareResponse.result;
 
-      setSummary(newSummary);
+      setComparison(result);
+
+      // Use BERTScore F1 as the main score for the history.
+      const score = comparisonResult.bert_score.f1;
+
+      setScoreHistory((prev) => [
+        ...prev,
+        {
+          timestamp: Date.now(),
+          score,
+        },
+      ]);
+
+      // ---------------------------------------------------
+      // 3. Logging
+      // ---------------------------------------------------
 
       logAction('summary_generated', {
         summary_length: newSummary.length,
-        score: response.result.score,
+        bert_score: comparisonResult.bert_score.f1,
+        rouge1: comparisonResult.rouge.rouge1,
+        rouge2: comparisonResult.rouge.rouge2,
+        rougeL: comparisonResult.rouge.rougeL,
         summary: newSummary,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
 
-      Alertify.error('Failed to generate summary.');
+      Alertify.error('Failed to generate or compare summary.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -70,6 +96,7 @@ export function useSummaryAnalysis() {
 
   return {
     summary,
+    comparison,
     isAnalyzing,
     scoreHistory,
     handleAnalyze,
