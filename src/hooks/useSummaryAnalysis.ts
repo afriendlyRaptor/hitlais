@@ -56,6 +56,12 @@ export function useSummaryAnalysis() {
       // 2. Compare generated summary with dataset summary
       // ---------------------------------------------------
 
+      logAction('rate_summary', {
+        summary_length: generatedSummary.length,
+        generated_summary: generatedSummary,
+        reference_summary: referenceSummary,
+      });
+
       const compareResponse = await compareTexts(
         referenceSummary,
         generatedSummary
@@ -79,7 +85,7 @@ export function useSummaryAnalysis() {
       // 3. Logging
       // ---------------------------------------------------
 
-      logAction('summary_generated', {
+      logAction('summary_scores', {
         summary_length: generatedSummary.length,
         bert_score: result.bert_score.f1,
         rouge1: result.rouge.rouge1,

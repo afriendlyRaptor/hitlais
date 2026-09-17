@@ -33,7 +33,17 @@ export function clearUserId() {
   localStorage.removeItem(USER_ID_KEY);
 }
 
-/**
+export function getDocumentId(): number | null {
+  const value = new URLSearchParams(window.location.search).get('documentId');
+
+  if (!value) {
+    return null;
+  }
+
+  const documentId = Number.parseInt(value, 10);
+
+  return Number.isNaN(documentId) ? null : documentId;
+} /**
  * Redirect to the login page.
  */
 function redirectToLogin() {
@@ -49,6 +59,7 @@ function redirectToLogin() {
  */
 export function logAction(type: string, payload?: LogPayload) {
   const userId = getUserId();
+  const documentId = getDocumentId();
 
   if (!userId) {
     redirectToLogin();
@@ -57,6 +68,7 @@ export function logAction(type: string, payload?: LogPayload) {
 
   postApi('/log', {
     userId,
+    documentId,
     type,
     timestamp: Date.now(),
     payload,

@@ -5,6 +5,7 @@ import { DrawerAppBar, SentenceSelector, Button } from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
 import { useDocument } from '~/hooks/useDocument';
+import { useSearch } from 'wouter';
 
 type ScoreEntry = {
   timestamp: number;
@@ -12,6 +13,13 @@ type ScoreEntry = {
 };
 
 export default function Home() {
+  const search = useSearch();
+
+  const documentId = parseInt(
+    new URLSearchParams(search).get('documentId') || '40404',
+    10
+  );
+
   const [selectedSentences, setSelectedSentences] = useState<
     SelectedSentence[]
   >([]);
@@ -27,7 +35,7 @@ export default function Home() {
   const text = document?.transcript ?? '';
 
   useEffect(() => {
-    loadDocument(40404);
+    loadDocument(documentId);
   }, []);
 
   return (
