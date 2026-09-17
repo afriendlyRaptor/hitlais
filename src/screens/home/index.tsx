@@ -120,7 +120,7 @@ export default function Home() {
               return;
             }
 
-            handleAnalyze(selectedSentences, document.id);
+            handleAnalyze(selectedSentences, document.summary);
           }}
           disabled={isAnalyzing}
           aria-label={isAnalyzing ? 'Generating summary' : 'Generate summary'}

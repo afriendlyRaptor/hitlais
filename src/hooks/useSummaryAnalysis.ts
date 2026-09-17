@@ -56,14 +56,17 @@ export function useSummaryAnalysis() {
       // 2. Compare generated summary with dataset summary
       // ---------------------------------------------------
 
-      const compareResponse = await compareTexts(documentId, generatedSummary);
+      const compareResponse = await compareTexts(
+        referenceSummary,
+        generatedSummary
+      );
 
       const result = compareResponse.result;
 
       setComparison(result);
 
       // Use BERTScore F1 as the main score for the history.
-      const score = comparisonResult.bert_score.f1;
+      const score = result.bert_score.f1;
 
       setScoreHistory((prev) => [
         ...prev,
@@ -72,18 +75,17 @@ export function useSummaryAnalysis() {
           score,
         },
       ]);
-
       // ---------------------------------------------------
       // 3. Logging
       // ---------------------------------------------------
 
       logAction('summary_generated', {
-        summary_length: newSummary.length,
-        bert_score: comparisonResult.bert_score.f1,
-        rouge1: comparisonResult.rouge.rouge1,
-        rouge2: comparisonResult.rouge.rouge2,
-        rougeL: comparisonResult.rouge.rougeL,
-        summary: newSummary,
+        summary_length: generatedSummary.length,
+        bert_score: result.bert_score.f1,
+        rouge1: result.rouge.rouge1,
+        rouge2: result.rouge.rouge2,
+        rougeL: result.rouge.rougeL,
+        summary: generatedSummary,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
