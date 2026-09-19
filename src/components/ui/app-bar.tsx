@@ -13,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'wouter';
 import { logAction } from '~/services';
-import { getUserId } from '~/services/logger';
+import { useUserId } from '~/hooks';
 
 /**
  * https://mui.com/material-ui/react-app-bar/
@@ -29,19 +29,21 @@ interface Props {
 
 const drawerWidth = 240;
 
-const userId = getUserId();
-const navItems = [
+const getNavItems = (userId: string | null) => [
   { name: 'Home', path: '/home' },
   { name: 'About', path: '/about' },
   {
     name: userId ? `ID: ${userId}` : 'Login',
-    path: userId ? '/login' : '/login',
+    path: '/login',
   },
 ];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const userId = useUserId();
+
+  const navItems = getNavItems(userId);
 
   const handleDrawerToggle = () => {
     logAction('drawer_toggled', { open: !mobileOpen });

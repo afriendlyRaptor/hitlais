@@ -5,10 +5,12 @@ export type LogPayload = Record<string, unknown>;
 
 const USER_ID_KEY = 'study_user_id';
 const LOGIN_PATH = '/login';
+export const USER_ID_CHANGED_EVENT = 'study-user-id-changed';
 
 /**
  * Store the user ID persistently.
  */
+
 export function setUserId(id: string) {
   const trimmedId = id.trim();
 
@@ -18,6 +20,8 @@ export function setUserId(id: string) {
 
   localStorage.clear();
   localStorage.setItem(USER_ID_KEY, trimmedId);
+
+  window.dispatchEvent(new Event(USER_ID_CHANGED_EVENT));
 }
 
 /**
