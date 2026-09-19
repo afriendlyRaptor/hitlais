@@ -96,6 +96,7 @@ export default function Home() {
               onSelectionChange={setSelectedSentences}
               scoreHistory={scoreHistory}
               scoreDisplayEnabled={components.score_display}
+              taskId={taskId}
             />
           )}{' '}
         </Box>

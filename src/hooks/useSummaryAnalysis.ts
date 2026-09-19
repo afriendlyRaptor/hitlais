@@ -155,13 +155,13 @@ export function useSummaryAnalysis(taskId: string) {
 
   const clearAnalysis = () => {
     logAction('analysis_cleared', {
-      task_id: oldTaskId,
+      task_id: taskId,
       summary: summary,
       score_history: scoreHistory,
       comparison,
     });
-    localStorage.removeItem(getSummaryKey(TaskId));
-    localStorage.removeItem(getScoreHistoryKey(TaskId));
+    localStorage.removeItem(getSummaryKey(taskId));
+    localStorage.removeItem(getScoreHistoryKey(taskId));
 
     setSummary('');
     setScoreHistory([]);

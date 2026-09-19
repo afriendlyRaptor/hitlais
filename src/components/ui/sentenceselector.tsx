@@ -16,6 +16,7 @@ export default function SentenceSelector({
   onSelectionChange,
   scoreHistory = [],
   scoreDisplayEnabled = true,
+  taskId,
 }: Props) {
   const [boxHeight, setBoxHeight] = useState(120);
 
@@ -31,7 +32,7 @@ export default function SentenceSelector({
     clearAll,
     selectFirstTokens,
     selectRandomTokens,
-  } = useSentenceSelection(sentences);
+  } = useSentenceSelection(sentences, taskId);
 
   const handleSelectionChange = (newSelection: SelectedSentence[]) => {
     onSelectionChange(newSelection);

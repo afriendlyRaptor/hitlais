@@ -3,30 +3,40 @@ import seedrandom from 'seedrandom';
 import { logAction } from '~/services';
 import { countTokens } from './sentence-utils';
 
-const STORAGE_KEY = 'sentence-selection';
 const TOKEN_LIMIT = 100;
 const RANDOM_SELECTION_SEED = 12345;
 
 const rng = seedrandom(RANDOM_SELECTION_SEED);
 
-export function useSentenceSelection(sentences: string[]) {
-  const [selected, setSelected] = useState<number[]>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
+const getStorageKey = (taskId: string) =>
+  `sentence-selection-${taskId}`;
+
+export function useSentenceSelection(sentences: string[], taskId: string) {
+ const [selected, setSelected] = useState<number[]>([]);
+
+ useEffect(() => {
+    const stored = localStorage.getItem(getStorageKey(taskId));
 
     if (!stored) {
-      return [];
+      setSelected([]);
+      return;
     }
 
     try {
-      return JSON.parse(stored);
+      setSelected(JSON.parse(stored));
     } catch {
-      return [];
+      setSelected([]);
     }
-  });
+  }, [taskId]);
 
+
+// Persist selection
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(selected));
-  }, [selected]);
+    localStorage.setItem(
+      getStorageKey(taskId),
+      JSON.stringify(selected)
+    );
+  }, [taskId, selected]);
 
   useEffect(() => {
     if (sentences.length === 0) {
@@ -76,10 +86,13 @@ export function useSentenceSelection(sentences: string[]) {
   }
 
   function clearAll() {
-    logAction('selected_sentences_cleared', {
+logAction('selected_sentences_cleared', {
+      task_id: taskId,
       count: selected.length,
+      selected_sentences: selectedSentences,
     });
 
+    localStorage.removeItem(getStorageKey(taskId));
     setSelected([]);
   }
 
