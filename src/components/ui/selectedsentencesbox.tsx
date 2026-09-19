@@ -15,7 +15,9 @@ import { useState, useEffect } from 'react';
 import { logAction } from '~/services';
 import ScoreLineChart from './ScoreLineChart';
 import ScoreDisplay from './ScoreDisplay';
-import { useLocation } from 'wouter';
+import { useLocation, useSearch } from 'wouter';
+import { getNextTaskId } from '~/config';
+import { useSentenceSelection } from './useSentenceSelection';
 
 type Sentence = {
   index: number;
@@ -52,9 +54,12 @@ export default function SelectedSentencesBox({
   const [previousHeight, setPreviousHeight] = useState(height);
   const [chartWidth, setChartWidth] = useState(DEFAULT_CHART_WIDTH);
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const taskId = new URLSearchParams(search).get('task');
   const [confirmOpen, setConfirmOpen] = useState(false);
-
   const theme = useTheme();
+
+  const { clearAll } = useSentenceSelection(sentences);
 
   const latestScore =
     scoreHistory.length > 0
@@ -132,7 +137,13 @@ export default function SelectedSentencesBox({
   const handleConfirm = () => {
     setConfirmOpen(false);
     logAction('submit_dialog_confirm', { open: !confirmOpen });
-    navigate('/about');
+    const nextTaskId = getNextTaskId(taskId);
+
+    if (nextTaskId) {
+      clearAll();
+      localStorage.setItem('generated-summary', '');
+      navigate(`/home?task=${nextTaskId}`);
+    }
   };
 
   useEffect(() => {

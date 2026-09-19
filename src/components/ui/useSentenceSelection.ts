@@ -29,6 +29,10 @@ export function useSentenceSelection(sentences: string[]) {
   }, [selected]);
 
   useEffect(() => {
+    if (sentences.length === 0) {
+      return;
+    }
+
     setSelected((previous) =>
       previous.filter((index) => index >= 0 && index < sentences.length)
     );

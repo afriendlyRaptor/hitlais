@@ -37,3 +37,14 @@ export const DEFAULT_TASK_ID = 'taskA';
 export function getStudyTask(taskId: string | null): StudyTaskConfig {
   return studyTasks[taskId ?? DEFAULT_TASK_ID] ?? studyTasks[DEFAULT_TASK_ID];
 }
+
+export function getNextTaskId(taskId: string | null): string | null {
+  const taskIds = Object.keys(studyTasks);
+  const currentIndex = taskIds.indexOf(taskId ?? DEFAULT_TASK_ID);
+
+  if (currentIndex === -1 || currentIndex === taskIds.length - 1) {
+    return null;
+  }
+
+  return taskIds[currentIndex + 1];
+}

@@ -1,1 +1,1 @@
-export { DEFAULT_TASK_ID, getStudyTask } from './studyTasks';
+export { DEFAULT_TASK_ID, getStudyTask, getNextTaskId } from './studyTasks';

@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { DrawerAppBar, SentenceSelector, Button } from '~/components/ui';
+import {
+  DrawerAppBar,
+  SentenceSelector,
+  SummaryBox,
+  Button,
+} from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
 import { useDocument } from '~/hooks/useDocument';
@@ -36,6 +41,7 @@ export default function Home() {
   const [selectedSentences, setSelectedSentences] = useState<
     SelectedSentence[]
   >([]);
+
   const {
     document,
     isLoading: isDocumentLoading,
@@ -93,39 +99,16 @@ export default function Home() {
             />
           )}{' '}
         </Box>
-
         {/* Reserved middle column */}
         <Box
           sx={{
             width: 80,
           }}
         />
-
         {/* Summary */}
         <Box sx={{ minWidth: 0 }}>
-          <Typography variant="h5">Summary</Typography>
-
-          <Box
-            sx={{
-              border: 1,
-              borderColor: 'divider',
-              p: 2,
-              minHeight: 300,
-              mt: 1,
-              borderRadius: 1,
-              bgcolor: 'background.paper',
-            }}
-          >
-            <Typography
-              color={summary ? 'text.primary' : 'text.secondary'}
-              sx={{
-                whiteSpace: 'pre-wrap',
-              }}
-            >
-              {summary || 'Your summary will appear here...'}
-            </Typography>
-          </Box>
-        </Box>
+          <SummaryBox isLoading={isAnalyzing} />
+        </Box>{' '}
       </Box>
 
       {/* Generate summary button */}
