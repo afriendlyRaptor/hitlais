@@ -13,20 +13,31 @@ const getStorageKey = (taskId: string) => `sentence-selection-${taskId}`;
 export function useSentenceSelection(sentences: string[], taskId: string) {
   const [selected, setSelected] = useState<number[]>([]);
 
+  const [hasLoadedSelection, setHasLoadedSelection] = useState(false);
+
   useEffect(() => {
     const stored = localStorage.getItem(getStorageKey(taskId));
 
     if (!stored) {
       setSelected([]);
+    } else {
+      try {
+        setSelected(JSON.parse(stored));
+      } catch {
+        setSelected([]);
+      }
+    }
+
+    setHasLoadedSelection(true);
+  }, [taskId]);
+
+  useEffect(() => {
+    if (!hasLoadedSelection) {
       return;
     }
 
-    try {
-      setSelected(JSON.parse(stored));
-    } catch {
-      setSelected([]);
-    }
-  }, [taskId]);
+    localStorage.setItem(getStorageKey(taskId), JSON.stringify(selected));
+  }, [taskId, selected, hasLoadedSelection]);
 
   // Persist selection
   useEffect(() => {

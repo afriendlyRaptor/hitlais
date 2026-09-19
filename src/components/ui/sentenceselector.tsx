@@ -9,6 +9,7 @@ type Props = {
   onSelectionChange: (sentences: SelectedSentence[]) => void;
   scoreHistory?: ScoreEntry[];
   scoreDisplayEnabled?: boolean;
+  taskId: string;
 };
 
 export default function SentenceSelector({
@@ -33,10 +34,6 @@ export default function SentenceSelector({
     selectFirstTokens,
     selectRandomTokens,
   } = useSentenceSelection(sentences, taskId);
-
-  const handleSelectionChange = (newSelection: SelectedSentence[]) => {
-    onSelectionChange(newSelection);
-  };
 
   useEffect(() => {
     onSelectionChange(selectedSentences);
