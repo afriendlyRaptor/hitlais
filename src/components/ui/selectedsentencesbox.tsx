@@ -18,6 +18,7 @@ import ScoreDisplay from './ScoreDisplay';
 import { useLocation, useSearch } from 'wouter';
 import { getNextTaskId } from '~/config';
 import { useSentenceSelection } from './useSentenceSelection';
+import { useSummaryAnalysis } from '~/hooks';
 
 type Sentence = {
   index: number;
@@ -60,6 +61,7 @@ export default function SelectedSentencesBox({
   const theme = useTheme();
 
   const { clearAll } = useSentenceSelection(sentences);
+  const { clearAnalysis } = useSummaryAnalysis(taskId);
 
   const latestScore =
     scoreHistory.length > 0
@@ -141,8 +143,8 @@ export default function SelectedSentencesBox({
 
     if (nextTaskId) {
       clearAll();
-      localStorage.setItem('generated-summary', '');
       navigate(`/home?task=${nextTaskId}`);
+      clearAnalysis();
     }
   };
 

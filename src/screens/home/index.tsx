@@ -48,8 +48,8 @@ export default function Home() {
     loadDocument,
   } = useDocument();
 
-  const { summary, isAnalyzing, scoreHistory, handleAnalyze } =
-    useSummaryAnalysis();
+  const { summary, isAnalyzing, scoreHistory, handleAnalyze, clearAnalysis } =
+    useSummaryAnalysis(taskId);
 
   useEffect(() => {
     if (taskId) {
@@ -107,7 +107,7 @@ export default function Home() {
         />
         {/* Summary */}
         <Box sx={{ minWidth: 0 }}>
-          <SummaryBox isLoading={isAnalyzing} />
+          <SummaryBox summary={summary} isLoading={isAnalyzing} />
         </Box>{' '}
       </Box>
 

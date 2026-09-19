@@ -5,9 +5,7 @@ type SummaryProps = {
   isLoading: boolean;
 };
 
-export default function SummaryBox({ isLoading }: SummaryProps) {
-  const storedSummary = localStorage.getItem('generated-summary') ?? '';
-
+export default function SummaryBox({ summary, isLoading }: SummaryProps) {
   return (
     <Box sx={{ flex: 1 }}>
       <Typography variant="h5">Summary</Typography>
@@ -27,10 +25,10 @@ export default function SummaryBox({ isLoading }: SummaryProps) {
           <Typography color="text.secondary">Generating summary...</Typography>
         ) : (
           <Typography
-            color={storedSummary ? 'text.primary' : 'text.secondary'}
+            color={summary ? 'text.primary' : 'text.secondary'}
             sx={{ whiteSpace: 'pre-wrap' }}
           >
-            {storedSummary || 'Your summary will appear here...'}
+            {summary || 'Your summary will appear here...'}
           </Typography>
         )}
       </Box>

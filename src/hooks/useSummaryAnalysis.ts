@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Alertify,
   analyzeSentences,
@@ -12,14 +12,66 @@ type ScoreEntry = {
   score: number;
 };
 
-export function useSummaryAnalysis() {
+const getSummaryKey = (taskId: string) => `generated-summary-${taskId}`;
+
+const getScoreHistoryKey = (taskId: string) => `score-history-${taskId}`;
+
+export function useSummaryAnalysis(taskId: string) {
   const [summary, setSummary] = useState<string>(() => {
-    return localStorage.getItem('generated-summary') ?? '';
+    return localStorage.getItem(getSummaryKey(taskId)) ?? '';
   });
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>([]);
+
+  const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>(() => {
+    const stored = localStorage.getItem(getScoreHistoryKey(taskId));
+
+    if (!stored) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [];
+    }
+  });
+
   const [comparison, setComparison] = useState<CompareResult | null>(null);
+
+  useEffect(() => {
+    const storedSummary = localStorage.getItem(getSummaryKey(taskId)) ?? '';
+
+    const storedScoreHistory = localStorage.getItem(getScoreHistoryKey(taskId));
+
+    setSummary(storedSummary);
+
+    if (storedScoreHistory) {
+      try {
+        setScoreHistory(JSON.parse(storedScoreHistory));
+      } catch {
+        setScoreHistory([]);
+      }
+    } else {
+      setScoreHistory([]);
+    }
+
+    // Comparison is not persisted, so reset it when changing tasks.
+    setComparison(null);
+  }, [taskId]);
+
+  // Persist summary
+  useEffect(() => {
+    localStorage.setItem(getSummaryKey(taskId), summary);
+  }, [taskId, summary]);
+
+  // Persist score history
+  useEffect(() => {
+    localStorage.setItem(
+      getScoreHistoryKey(taskId),
+      JSON.stringify(scoreHistory)
+    );
+  }, [taskId, scoreHistory]);
 
   const handleAnalyze = async (
     selectedSentences: SelectedSentence[],
@@ -42,9 +94,7 @@ export function useSummaryAnalysis() {
     setIsAnalyzing(true);
 
     try {
-      // ---------------------------------------------------
-      // 1. Generate summary
-      // ---------------------------------------------------
+      // Generate summary
 
       const analyzeResponse = await analyzeSentences(selectedSentences);
 
@@ -52,11 +102,12 @@ export function useSummaryAnalysis() {
 
       setSummary(generatedSummary);
 
-      localStorage.setItem('generated-summary', generatedSummary); // ---------------------------------------------------
-      // 2. Compare generated summary with dataset summary
-      // ---------------------------------------------------
+      localStorage.setItem(getSummaryKey(taskId), generatedSummary);
+
+      // Compare generated summary with dataset summary
 
       logAction('rate_summary', {
+        task_id: taskId,
         summary_length: generatedSummary.length,
         generated_summary: generatedSummary,
         reference_summary: referenceSummary,
@@ -102,11 +153,27 @@ export function useSummaryAnalysis() {
     }
   };
 
+  const clearAnalysis = () => {
+    logAction('analysis_cleared', {
+      task_id: oldTaskId,
+      summary: summary,
+      score_history: scoreHistory,
+      comparison,
+    });
+    localStorage.removeItem(getSummaryKey(TaskId));
+    localStorage.removeItem(getScoreHistoryKey(TaskId));
+
+    setSummary('');
+    setScoreHistory([]);
+    setComparison(null);
+  };
+
   return {
     summary,
     comparison,
     isAnalyzing,
     scoreHistory,
     handleAnalyze,
+    clearAnalysis,
   };
 }
