@@ -8,13 +8,12 @@ const RANDOM_SELECTION_SEED = 12345;
 
 const rng = seedrandom(RANDOM_SELECTION_SEED);
 
-const getStorageKey = (taskId: string) =>
-  `sentence-selection-${taskId}`;
+const getStorageKey = (taskId: string) => `sentence-selection-${taskId}`;
 
 export function useSentenceSelection(sentences: string[], taskId: string) {
- const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
 
- useEffect(() => {
+  useEffect(() => {
     const stored = localStorage.getItem(getStorageKey(taskId));
 
     if (!stored) {
@@ -29,13 +28,9 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     }
   }, [taskId]);
 
-
-// Persist selection
+  // Persist selection
   useEffect(() => {
-    localStorage.setItem(
-      getStorageKey(taskId),
-      JSON.stringify(selected)
-    );
+    localStorage.setItem(getStorageKey(taskId), JSON.stringify(selected));
   }, [taskId, selected]);
 
   useEffect(() => {
@@ -86,7 +81,7 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
   }
 
   function clearAll() {
-logAction('selected_sentences_cleared', {
+    logAction('selected_sentences_cleared', {
       task_id: taskId,
       count: selected.length,
       selected_sentences: selectedSentences,
