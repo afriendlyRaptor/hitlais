@@ -3,6 +3,7 @@ export type StudyTaskConfig = {
   components: {
     score_display: boolean;
     task_timer: boolean;
+    time?: number; // seconds, required if task_timer is true
   };
 };
 
@@ -10,8 +11,8 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 40404,
     components: {
-      score_display: true,
-      task_timer: true,
+      score_display: false,
+      task_timer: false,
     },
   },
 
@@ -19,15 +20,16 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
     documentId: 35813,
     components: {
       score_display: true,
-      task_timer: true,
+      task_timer: false,
     },
   },
 
   taskC: {
     documentId: 43187,
     components: {
-      score_display: true,
-      task_timer: false,
+      score_display: false,
+      task_timer: true,
+      time: 300, // 5 minutes
     },
   },
 };

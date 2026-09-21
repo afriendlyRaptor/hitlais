@@ -6,6 +6,7 @@ import {
   SentenceSelector,
   SummaryBox,
   Button,
+  TaskTimer,
 } from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
@@ -64,6 +65,12 @@ export default function Home() {
   return (
     <>
       <DrawerAppBar />
+      {components.task_timer && components.time != null && (
+        <TaskTimer
+          seconds={components.time}
+          redirectTo="/task-complete" // or wherever you want to send them
+        />
+      )}
 
       <Box
         sx={{
