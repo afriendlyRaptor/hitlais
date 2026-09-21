@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   DrawerAppBar,
   SentenceSelector,
   SummaryBox,
-  Button,
   TaskTimer,
+  Button,
 } from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
 import { useDocument } from '~/hooks/useDocument';
 import { useSearch, useLocation } from 'wouter';
 import { DEFAULT_TASK_ID, getStudyTask, getNextTaskId } from '~/config';
-
-type ScoreEntry = {
-  timestamp: number;
-  score: number;
-};
 
 export default function Home() {
   const search = useSearch();
@@ -57,7 +52,7 @@ export default function Home() {
     loadDocument,
   } = useDocument();
 
-  const { summary, isAnalyzing, scoreHistory, handleAnalyze, clearAnalysis } =
+  const { summary, isAnalyzing, scoreHistory, handleAnalyze } =
     useSummaryAnalysis(taskId);
 
   useEffect(() => {

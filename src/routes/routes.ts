@@ -5,6 +5,7 @@ const Home = lazy(() => import('~/screens/home'));
 const NotFound = lazy(() => import('~/screens/not-found'));
 const About = lazy(() => import('~/screens/about'));
 const Login = lazy(() => import('~/screens/user-login'));
+const Survey = lazy(() => import('~/screens/likert-survey'));
 
 export interface RouteConfig {
   path: string;
@@ -39,6 +40,12 @@ export const routes: RouteConfig[] = [
     path: '/login',
     component: Login,
     title: 'User Login',
+  },
+
+  {
+    path: '/survey',
+    component: Survey,
+    title: 'Survey',
   },
 
   {

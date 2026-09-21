@@ -36,7 +36,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
   taskD: {
     documentId: null,
-    redirectTo: '/about',
+    redirectTo: '/survey',
     components: {
       score_display: false,
       task_timer: false,

@@ -1,5 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
-import { DrawerAppBar } from '~/components/ui';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { setUserId } from '~/services/logger';
 import { useLocation } from 'wouter';
 import { logAction } from '~/services';

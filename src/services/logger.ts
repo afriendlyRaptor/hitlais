@@ -68,7 +68,7 @@ export function logAction(type: string, payload?: LogPayload) {
   const userId = getUserId();
   const task = getTask();
   const params = new URLSearchParams(window.location.search);
-  const taskId = params.get('task') ?? DEFAULT_TASK_ID;
+  const taskId = params.get('task') ?? 'None';
 
   if (!userId) {
     redirectToLogin();

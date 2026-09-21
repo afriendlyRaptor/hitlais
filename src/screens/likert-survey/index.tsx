@@ -1,0 +1,119 @@
+import { useMemo, useState } from 'react';
+import { Box, Typography, useTheme } from '@mui/material';
+import { DrawerAppBar, Button } from '~/components/ui';
+import { LikertScale } from '~/components/ui/LikertScale';
+import { logAction } from '~/services';
+import { useLocation } from 'wouter';
+
+type LikertQuestion = {
+  id: string;
+  question: string;
+};
+
+const QUESTIONS: LikertQuestion[] = [
+  { id: 'q1', question: 'The summary accurately reflected the source text.' },
+  { id: 'q2', question: 'The summary was easy to understand.' },
+  { id: 'q3', question: 'The summary captured the most important points.' },
+  {
+    id: 'q4',
+    question: 'I would trust this summary without reading the original.',
+  },
+];
+
+export default function Survey() {
+  const [, navigate] = useLocation();
+
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const theme = useTheme();
+
+  const isComplete = useMemo(
+    () => QUESTIONS.every((q) => answers[q.id] != null),
+    [answers]
+  );
+
+  const handleAnswerChange = (id: string, value: number) => {
+    setAnswers((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setSubmitAttempted(true);
+    if (!isComplete || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      await logAction('survey_submit', { answers });
+      navigate('/about'); // or wherever "done" should go
+    } catch (err) {
+      console.error('Survey submit failed', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      <DrawerAppBar />
+
+      <Box
+        sx={{
+          maxWidth: 720,
+          mx: 'auto',
+          px: 4,
+          py: 5,
+          pb: 14, // leave room for the fixed submit button
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
+          Quick survey
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+          Please rate the following statements from 1 (strongly disagree) to 5
+          (strongly agree).
+        </Typography>
+
+        {QUESTIONS.map((q) => (
+          <LikertScale
+            key={q.id}
+            id={q.id}
+            question={q.question}
+            value={answers[q.id] ?? null}
+            onChange={handleAnswerChange}
+          />
+        ))}
+
+        {submitAttempted && !isComplete && (
+          <Typography
+            variant="caption"
+            color="error"
+            sx={{ mt: 1, display: 'block' }}
+          >
+            Please answer every question before submitting.
+          </Typography>
+        )}
+      </Box>
+
+      <Button
+        variant="default"
+        onClick={handleSubmit}
+        disabled={isSubmitting}
+        sx={{
+          position: 'fixed',
+          bottom: 10,
+          right: 20,
+          borderRadius: '999px',
+          px: 4,
+          py: 1.25,
+          boxShadow: theme.shadows[3],
+          zIndex: 1100,
+          textTransform: 'none',
+          fontWeight: 600,
+        }}
+      >
+        {isSubmitting ? 'Submitting…' : 'Submit'}
+      </Button>
+    </>
+  );
+}
