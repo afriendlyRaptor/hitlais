@@ -37,7 +37,15 @@ export default function Home() {
   }, [taskId, navigate]);
 
   const task = getStudyTask(taskId);
-  const { documentId, components } = task;
+  const { documentId, components, redirectTo } = task;
+
+  //if redirectTo is set in config it redirects
+  useEffect(() => {
+    if (taskId && redirectTo) {
+      logAction('task_redirect', { taskId, redirectTo });
+      navigate(redirectTo, { replace: true });
+    }
+  }, [taskId, redirectTo, navigate]);
 
   const [selectedSentences, setSelectedSentences] = useState<
     SelectedSentence[]

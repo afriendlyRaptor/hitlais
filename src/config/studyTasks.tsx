@@ -5,6 +5,7 @@ export type StudyTaskConfig = {
     task_timer: boolean;
     time?: number; // seconds, required if task_timer is true
   };
+  redirectTo?: string;
 };
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
@@ -30,6 +31,14 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
       score_display: false,
       task_timer: true,
       time: 300, // 5 minutes
+    },
+  },
+  taskD: {
+    documentId: null,
+    redirectTo: '/about',
+    components: {
+      score_display: false,
+      task_timer: false,
     },
   },
 };
