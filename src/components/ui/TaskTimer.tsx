@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useLocation } from 'wouter';
+import { logAction } from '~/services';
 
 type TaskTimerProps = {
   seconds: number;
@@ -19,17 +20,28 @@ export function TaskTimer({ seconds, onExpire, redirectTo }: TaskTimerProps) {
   const [remaining, setRemaining] = useState(seconds);
   const [, navigate] = useLocation();
   const hasExpiredRef = useRef(false);
+  const hasLoggedStartRef = useRef(false);
 
   // Reset if the configured duration changes (e.g. switching tasks)
   useEffect(() => {
     setRemaining(seconds);
     hasExpiredRef.current = false;
+    hasLoggedStartRef.current = false;
+  }, [seconds]);
+
+  // Log once when the timer (re)starts
+  useEffect(() => {
+    if (!hasLoggedStartRef.current) {
+      hasLoggedStartRef.current = true;
+      logAction('task_timer_start', { seconds });
+    }
   }, [seconds]);
 
   useEffect(() => {
     if (remaining <= 0) {
       if (!hasExpiredRef.current) {
         hasExpiredRef.current = true;
+        logAction('task_timer_expired', { seconds });
         onExpire?.();
         if (redirectTo) {
           navigate(redirectTo);
