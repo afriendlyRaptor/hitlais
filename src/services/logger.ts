@@ -38,11 +38,16 @@ export function clearUserId() {
   localStorage.removeItem(USER_ID_KEY);
 }
 
-export function getDocumentId(): number | null {
+export function getTaskId(): string | null {
   const params = new URLSearchParams(window.location.search);
   const taskId = params.get('task') ?? DEFAULT_TASK_ID;
+  return taskId;
+}
+
+export function getTask(): StudyTaskConfig | null {
+  const taskId = getTaskId();
   const task = getStudyTask(taskId);
-  return task?.documentId ?? null;
+  return task ?? null;
 }
 
 /**
@@ -61,7 +66,9 @@ function redirectToLogin() {
  */
 export function logAction(type: string, payload?: LogPayload) {
   const userId = getUserId();
-  const documentId = getDocumentId();
+  const task = getTask();
+  const params = new URLSearchParams(window.location.search);
+  const taskId = params.get('task') ?? DEFAULT_TASK_ID;
 
   if (!userId) {
     redirectToLogin();
@@ -70,7 +77,8 @@ export function logAction(type: string, payload?: LogPayload) {
 
   postApi('/log', {
     userId,
-    documentId,
+    taskId: taskId,
+    documentId: task.documentId,
     type,
     timestamp: Date.now(),
     payload,
