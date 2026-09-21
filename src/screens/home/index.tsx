@@ -12,7 +12,7 @@ import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
 import { useDocument } from '~/hooks/useDocument';
 import { useSearch, useLocation } from 'wouter';
-import { DEFAULT_TASK_ID, getStudyTask } from '~/config';
+import { DEFAULT_TASK_ID, getStudyTask, getNextTaskId } from '~/config';
 
 type ScoreEntry = {
   timestamp: number;
@@ -70,14 +70,14 @@ export default function Home() {
     return null;
   }
 
+  const nextTaskId = getNextTaskId(taskId);
+  const redirectToTimer = nextTaskId ? `/home?task=${nextTaskId}` : '/about'; // or wherever "done" should go, e.g. '/home?task=complete'
+
   return (
     <>
       <DrawerAppBar />
       {components.task_timer && components.time != null && (
-        <TaskTimer
-          seconds={components.time}
-          redirectTo="/task-complete" // or wherever you want to send them
-        />
+        <TaskTimer seconds={components.time} redirectTo={redirectToTimer} />
       )}
 
       <Box

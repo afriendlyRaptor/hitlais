@@ -14,6 +14,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
     components: {
       score_display: false,
       task_timer: false,
+      time: 3,
     },
   },
 
