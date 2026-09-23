@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useState } from 'react';
 import { Box, Button, ButtonGroup } from '@mui/material';
-import SelectedSentencesBox from './selectedsentencesbox';
+import ScoreDisplayPanel from './ScoreDisplayPanel';
 import { splitIntoParagraphs, flattenSentences } from './sentence-utils';
 import { useSentenceSelection } from './useSentenceSelection';
 
@@ -119,11 +119,9 @@ export default function SentenceSelector({
           ))}
         </Box>
 
-        <SelectedSentencesBox
-          sentences={selectedSentences}
+        <ScoreDisplayPanel
           height={boxHeight}
           setHeight={setBoxHeight}
-          onRemove={removeSentence}
           scoreHistory={scoreHistory}
           scoreDisplayEnabled={scoreDisplayEnabled}
         />

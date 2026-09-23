@@ -31,10 +31,8 @@ type ScoreEntry = {
 };
 
 type Props = {
-  sentences: Sentence[];
   height: number;
   setHeight: (height: number) => void;
-  onRemove: (index: number) => void;
   scoreHistory?: ScoreEntry[];
   scoreDisplayEnabled?: boolean;
 };
@@ -44,10 +42,8 @@ const MAX_CHART_WIDTH = 400;
 const DEFAULT_CHART_WIDTH = 220;
 
 export default function SelectedSentencesBox({
-  sentences,
   height,
   setHeight,
-  onRemove,
   scoreHistory = [],
   scoreDisplayEnabled = true,
 }: Props) {
@@ -67,19 +63,6 @@ export default function SelectedSentencesBox({
     scoreHistory.length > 0
       ? scoreHistory[scoreHistory.length - 1].score
       : undefined;
-
-  function toggleBox() {
-    logAction('selected_sentences_panel_toggled', { open: !open });
-
-    if (open) {
-      setPreviousHeight(height);
-      setHeight(0);
-    } else {
-      setHeight(previousHeight);
-    }
-
-    setOpen(!open);
-  }
 
   function handleResizeHeight(event: React.PointerEvent) {
     const startY = event.clientY;
@@ -200,22 +183,6 @@ export default function SelectedSentencesBox({
         </DialogActions>
       </Dialog>
 
-      <IconButton
-        onClick={toggleBox}
-        disabled={!scoreDisplayEnabled}
-        sx={{
-          position: 'fixed',
-          bottom: open ? height + 10 : 10,
-          right: 140,
-          border: '1px solid',
-          boxShadow: theme.shadows[3],
-          zIndex: 1100,
-          backgroundColor: 'background.paper',
-        }}
-      >
-        {open ? <CloseIcon /> : <InfoIcon />}
-      </IconButton>
-
       <Box
         sx={{
           position: 'fixed',
@@ -255,36 +222,6 @@ export default function SelectedSentencesBox({
             </Box>
 
             <Box sx={{ display: 'flex', flex: 1, minHeight: 0 }}>
-              <Box sx={{ px: 2, flex: 1, minWidth: 0 }}>
-                <h3 style={{ margin: '0 0 8px' }}>Selected sentences:</h3>
-
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignContent: 'flex-start',
-                    gap: '8px',
-                    overflowY: 'auto',
-                    maxHeight: `calc(${height}px - 80px)`,
-                  }}
-                >
-                  {sentences.map((sentence) => (
-                    <Box
-                      key={sentence.index}
-                      onClick={() => onRemove(sentence.index)}
-                      sx={{
-                        padding: '6px 10px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        backgroundColor: 'secondary.main',
-                      }}
-                    >
-                      {sentence.text}
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
-
               {/* Drag handle resizes the chart, not the score */}
               <Box
                 onPointerDown={handleResizeChartWidth}
