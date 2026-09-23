@@ -132,34 +132,27 @@ export default function Home() {
       >
         <Button
           variant="contained"
-          size="icon"
           onClick={() => {
-            if (!document) {
-              return;
-            }
+            if (!document) return;
 
             handleAnalyze(selectedSentences, document.summary);
           }}
           disabled={isAnalyzing}
-
           sx={{
-
-            minWidth: 30,
-            px: 3,
-            py: 3,
-
+            width: 50,
+            height: 80,
+            minWidth: 40,
+            padding: 0,
             borderRadius: '999px',
             boxShadow: 4,
-
             fontSize: '1.05rem',
             fontWeight: 600,
             textTransform: 'none',
           }}
           aria-label={isAnalyzing ? 'Generating summary' : 'Generate summary'}
-          className="h-20 w-10 rounded-full"
         >
           {isAnalyzing ? (
-            <CircularProgress size={22} color="primary.main" />
+            <CircularProgress size={22} color="inherit" />
           ) : (
             <ArrowForwardIcon />
           )}
