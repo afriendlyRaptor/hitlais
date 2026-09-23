@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Box, Typography, Button, useTheme } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { DrawerAppBar } from '~/components/ui';
 import { LikertScale } from '~/components/ui/LikertScale';
 import { logAction } from '~/services';
@@ -26,8 +26,6 @@ export default function Survey() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const theme = useTheme();
 
   const isComplete = useMemo(
     () => QUESTIONS.every((q) => answers[q.id] != null),

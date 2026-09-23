@@ -24,8 +24,6 @@ export default function ScoreDisplayPanel({
   const theme = useTheme();
   const search = useSearch();
 
-  const taskId = new URLSearchParams(search).get('task');
-
   const latestScore =
     scoreHistory.length > 0
       ? scoreHistory[scoreHistory.length - 1].score

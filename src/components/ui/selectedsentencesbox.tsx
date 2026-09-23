@@ -1,6 +1,5 @@
 import {
   Box,
-  IconButton,
   Button,
   useTheme,
   Dialog,
@@ -9,8 +8,6 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from 'react';
 import { logAction } from '~/services';
 import ScoreLineChart from './ScoreLineChart';
@@ -19,11 +16,6 @@ import { useLocation, useSearch } from 'wouter';
 import { getNextTaskId } from '~/config';
 import { useSentenceSelection } from './useSentenceSelection';
 import { useSummaryAnalysis } from '~/hooks';
-
-type Sentence = {
-  index: number;
-  text: string;
-};
 
 type ScoreEntry = {
   timestamp: number;
@@ -48,7 +40,6 @@ export default function SelectedSentencesBox({
   scoreDisplayEnabled = true,
 }: Props) {
   const [open, setOpen] = useState(scoreDisplayEnabled);
-  const [previousHeight, setPreviousHeight] = useState(height);
   const [chartWidth, setChartWidth] = useState(DEFAULT_CHART_WIDTH);
   const [, navigate] = useLocation();
   const search = useSearch();
