@@ -40,7 +40,7 @@ export function LikertScale({
         px: 3,
         borderRadius: 2,
         border: `1px solid ${theme.palette.divider}`,
-        mb: 2,
+        mb: 1,
       }}
     >
       <FormControl fullWidth disabled={disabled}>

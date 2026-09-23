@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
-import { DrawerAppBar, Button } from '~/components/ui';
+import { Box, Typography, Button, useTheme } from '@mui/material';
+import { DrawerAppBar } from '~/components/ui';
 import { LikertScale } from '~/components/ui/LikertScale';
 import { logAction } from '~/services';
 import { useLocation } from 'wouter';
@@ -95,25 +95,32 @@ export default function Survey() {
         )}
       </Box>
 
-      <Button
-        variant="default"
-        onClick={handleSubmit}
-        disabled={isSubmitting}
+      <Box
         sx={{
-          position: 'fixed',
-          bottom: 10,
-          right: 20,
-          borderRadius: '999px',
-          px: 4,
-          py: 1.25,
-          boxShadow: theme.shadows[3],
-          zIndex: 1100,
-          textTransform: 'none',
-          fontWeight: 600,
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 0,
+          pb: 2,
         }}
       >
-        {isSubmitting ? 'Submitting…' : 'Submit'}
-      </Button>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          sx={{
+            minWidth: 160,
+            px: 4,
+            py: 1.75,
+            borderRadius: '999px',
+            boxShadow: 4,
+            fontSize: '1.05rem',
+            fontWeight: 600,
+            textTransform: 'none',
+          }}
+        >
+          {isSubmitting ? 'Submitting…' : 'Submit'}
+        </Button>
+      </Box>
     </>
   );
 }
