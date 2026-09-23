@@ -3,7 +3,7 @@ import seedrandom from 'seedrandom';
 import { logAction } from '~/services';
 import { countTokens } from './sentence-utils';
 
-const TOKEN_LIMIT = 100;
+const TOKEN_LIMIT = 300;
 const RANDOM_SELECTION_SEED = 12345;
 
 const rng = seedrandom(RANDOM_SELECTION_SEED);
