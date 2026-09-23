@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect } from 'react';
 import { Box, Button, ButtonGroup } from '@mui/material';
 import ScoreDisplayPanel from './ScoreDisplayPanel';
 import { splitIntoParagraphs, flattenSentences } from './sentence-utils';
@@ -19,8 +19,6 @@ export default function SentenceSelector({
   scoreDisplayEnabled = true,
   taskId,
 }: Props) {
-  const [boxHeight, setBoxHeight] = useState(120);
-
   const paragraphs = useMemo(() => splitIntoParagraphs(text), [text]);
 
   const sentences = useMemo(() => flattenSentences(paragraphs), [paragraphs]);
@@ -29,7 +27,6 @@ export default function SentenceSelector({
     selected,
     selectedSentences,
     toggleSentence,
-    removeSentence,
     clearAll,
     selectFirstTokens,
     selectRandomTokens,
@@ -43,49 +40,7 @@ export default function SentenceSelector({
     <Box>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 1,
-          mb: 2,
-        }}
-      >
-        <ButtonGroup variant="outlined" aria-label="Sentence selection actions">
-          <Button
-            size="sm"
-            variant="outline"
-            logId="clear_all_sentences"
-            onClick={clearAll}
-            disabled={selected.length === 0}
-          >
-            Clear all
-          </Button>
-
-          <Button
-            size="sm"
-            variant="outline"
-            logId="select_first_tokens"
-            onClick={selectFirstTokens}
-            disabled={sentences.length === 0}
-          >
-            Select first
-          </Button>
-
-          <Button
-            size="sm"
-            variant="outline"
-            logId="select_random_tokens"
-            onClick={selectRandomTokens}
-            disabled={sentences.length === 0}
-          >
-            Select random
-          </Button>
-        </ButtonGroup>
-      </Box>
-
-      <Box
-        sx={{
-          paddingBottom: `${boxHeight + 20}px`,
+          paddingBottom: '100px',
         }}
       >
         <Box>
@@ -118,14 +73,74 @@ export default function SentenceSelector({
             </Box>
           ))}
         </Box>
-
-        <ScoreDisplayPanel
-          height={boxHeight}
-          setHeight={setBoxHeight}
-          scoreHistory={scoreHistory}
-          scoreDisplayEnabled={scoreDisplayEnabled}
-        />
       </Box>
+
+      {/* Fixed sentence-selection controls */}
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          left: 24,
+          zIndex: 1100,
+
+          display: 'flex',
+          alignItems: 'center',
+
+          p: 0.75,
+          borderRadius: '999px',
+
+          backgroundColor: 'background.paper',
+          boxShadow: 4,
+          border: '1px solid',
+          borderColor: 'divider',
+        }}
+      >
+        <ButtonGroup
+          variant="outlined"
+          aria-label="Sentence selection actions"
+          sx={{
+            '& .MuiButton-root': {
+              minWidth: 120,
+              px: 2,
+              py: 1.25,
+              border: 'none',
+              borderRadius: '999px',
+              fontSize: '0.95rem',
+              fontWeight: 600,
+              textTransform: 'none',
+            },
+          }}
+        >
+          <Button
+            logId="clear_all_sentences"
+            onClick={clearAll}
+            disabled={selected.length === 0}
+          >
+            Clear all
+          </Button>
+
+          <Button
+            logId="select_first_tokens"
+            onClick={selectFirstTokens}
+            disabled={sentences.length === 0}
+          >
+            Select first
+          </Button>
+
+          <Button
+            logId="select_random_tokens"
+            onClick={selectRandomTokens}
+            disabled={sentences.length === 0}
+          >
+            Select random
+          </Button>
+        </ButtonGroup>
+      </Box>
+
+      <ScoreDisplayPanel
+        scoreHistory={scoreHistory}
+        scoreDisplayEnabled={scoreDisplayEnabled}
+      />
     </Box>
   );
 }
