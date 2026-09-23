@@ -63,16 +63,22 @@ export function TaskTimer({ seconds, onExpire, redirectTo }: TaskTimerProps) {
     <Box
       sx={{
         position: 'fixed',
-        top: 70,
-        right: 5,
-        zIndex: (theme) => theme.zIndex.drawer + 10,
+        right: 200,
+        bottom: 27,
+        zIndex: 1100,
+
+        display: 'flex',
+        alignItems: 'center',
+
         bgcolor: 'background.paper',
         border: '1px solid',
         borderColor: isLow ? 'error.main' : 'divider',
-        borderRadius: 2,
+        borderRadius: '999px',
+
         px: 2,
-        py: 0.75,
-        boxShadow: 3,
+        py: 1.25,
+
+        boxShadow: 4,
       }}
     >
       <Typography
