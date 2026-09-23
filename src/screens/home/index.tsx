@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   DrawerAppBar,
   SentenceSelector,
   SummaryBox,
   TaskTimer,
-  Button,
 } from '~/components/ui';
 import { logAction } from '~/services';
 import { useSummaryAnalysis } from '~/hooks/useSummaryAnalysis';
@@ -132,8 +131,7 @@ export default function Home() {
         }}
       >
         <Button
-          logId="request_summary"
-          variant="default"
+          variant="contained"
           size="icon"
           onClick={() => {
             if (!document) {
@@ -143,8 +141,22 @@ export default function Home() {
             handleAnalyze(selectedSentences, document.summary);
           }}
           disabled={isAnalyzing}
+
+          sx={{
+
+            minWidth: 30,
+            px: 3,
+            py: 3,
+
+            borderRadius: '999px',
+            boxShadow: 4,
+
+            fontSize: '1.05rem',
+            fontWeight: 600,
+            textTransform: 'none',
+          }}
           aria-label={isAnalyzing ? 'Generating summary' : 'Generate summary'}
-          className="h-20 w-12 rounded-full"
+          className="h-20 w-10 rounded-full"
         >
           {isAnalyzing ? (
             <CircularProgress size={22} color="primary.main" />
