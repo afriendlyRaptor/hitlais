@@ -11,12 +11,15 @@ type LikertQuestion = {
 };
 
 const QUESTIONS: LikertQuestion[] = [
-  { id: 'q1', question: 'The summary accurately reflected the source text.' },
-  { id: 'q2', question: 'The summary was easy to understand.' },
-  { id: 'q3', question: 'The summary captured the most important points.' },
+  { id: 'q1', question: 'Ich kann besser zusammenfassen als eine KI.' },
+  { id: 'q2', question: 'Der Score hat meine Satzauswahl beeinflusst.' },
+  {
+    id: 'q3',
+    question: 'Zusammenfassungen von Menschen sind besser als die einer KI',
+  },
   {
     id: 'q4',
-    question: 'I would trust this summary without reading the original.',
+    question: 'Mit menschlicher Hilfe werden KI Zusammenfassungen besser.',
   },
 ];
 
