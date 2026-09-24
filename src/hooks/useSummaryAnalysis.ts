@@ -122,8 +122,8 @@ export function useSummaryAnalysis(taskId: string) {
 
       setComparison(result);
 
-      // Use BERTScore F1 as the main score for the history.
-      const score = result.bert_score.f1;
+      // Use RougeL as the main score for the history.
+      const score = result.rouge.rougeL;
 
       setScoreHistory((prev) => [
         ...prev,

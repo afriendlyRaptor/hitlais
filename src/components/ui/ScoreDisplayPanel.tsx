@@ -1,5 +1,4 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import { useSearch } from 'wouter';
 
 import ScoreLineChart from './ScoreLineChart';
 import ScoreDisplay from './ScoreDisplay';
@@ -22,7 +21,6 @@ export default function ScoreDisplayPanel({
   scoreDisplayEnabled = true,
 }: Props) {
   const theme = useTheme();
-  const search = useSearch();
 
   const latestScore =
     scoreHistory.length > 0
@@ -78,7 +76,7 @@ export default function ScoreDisplayPanel({
             lineHeight: 1,
           }}
         >
-          BERT Score
+          Score
         </Typography>
 
         <ScoreLineChart history={visibleScoreHistory} width={CHART_WIDTH} />
