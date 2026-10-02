@@ -10,7 +10,7 @@ export type StudyTaskConfig = {
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
-    documentId: 40404,
+    documentId: 67206,
     components: {
       score_display: false,
       task_timer: false,
@@ -19,7 +19,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
 
   taskB: {
-    documentId: 35813,
+    documentId: 14742,
     components: {
       score_display: true,
       task_timer: false,
@@ -27,7 +27,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
 
   taskC: {
-    documentId: 43187,
+    documentId: 60857,
     components: {
       score_display: false,
       task_timer: true,
