@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import seedrandom from 'seedrandom';
-import { logAction } from '~/services';
+import { logAction, Alertify } from '~/services';
 import { countTokens } from './sentence-utils';
 
 const TOKEN_LIMIT = 1024;
@@ -14,6 +14,12 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
   const [selected, setSelected] = useState<number[]>([]);
 
   const [hasLoadedSelection, setHasLoadedSelection] = useState(false);
+  
+
+  const sentenceTokenCounts = useMemo(
+    () => sentences.map((sentence) => countTokens(sentence)),
+    [sentences]
+  );
 
   useEffect(() => {
     const stored = localStorage.getItem(getStorageKey(taskId));
@@ -66,22 +72,39 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     [selected, sentences]
   );
 
-  function toggleSentence(index: number) {
-    const wasSelected = selected.includes(index);
+  
+function toggleSentence(index: number) {
+  const wasSelected = selected.includes(index);
 
-    logAction('sentence_toggled', {
-      index,
-      text: sentences[index],
-      selected: !wasSelected,
-    });
-
-    setSelected((previous) =>
-      wasSelected
-        ? previous.filter((item) => item !== index)
-        : [...previous, index]
+  if (!wasSelected) {
+    const currentTokenCount = selected.reduce(
+      (total, selectedIndex) =>
+        total + sentenceTokenCounts[selectedIndex],
+      0
     );
+
+    const newSentenceTokens = sentenceTokenCounts[index];
+
+    if (currentTokenCount + newSentenceTokens > TOKEN_LIMIT) {
+      Alertify.error(
+        "Die maximale Textmenge wurde erreicht."
+      );
+      return;
+    }
   }
 
+  logAction('sentence_toggled', {
+    index,
+    text: sentences[index],
+    selected: !wasSelected,
+  });
+
+  setSelected((previous) =>
+    wasSelected
+      ? previous.filter((item) => item !== index)
+      : [...previous, index]
+  );
+}
   function removeSentence(index: number) {
     logAction('sentence_removed', {
       index,
@@ -106,16 +129,18 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     let tokenCount = 0;
     const indexes: number[] = [];
 
-    for (let index = 0; index < sentences.length; index++) {
-      const tokens = countTokens(sentences[index]);
 
-      if (tokenCount + tokens > TOKEN_LIMIT) {
-        break;
-      }
+for (let index = 0; index < sentences.length; index++) {
+  const tokens = sentenceTokenCounts[index];
 
-      indexes.push(index);
-      tokenCount += tokens;
-    }
+  if (tokenCount + tokens > TOKEN_LIMIT) {
+    break;
+  }
+
+  indexes.push(index);
+  tokenCount += tokens;
+}
+
 
     logAction('first_tokens_selected', {
       token_count: tokenCount,
@@ -137,22 +162,22 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     let tokenCount = 0;
     const selectedIndexes: number[] = [];
 
-    for (const index of indexes) {
-      const tokens = countTokens(sentences[index]);
+for (const index of indexes) {
+  const tokens = sentenceTokenCounts[index];
 
-      if (tokens > TOKEN_LIMIT) {
-        continue;
-      }
+  if (tokens > TOKEN_LIMIT) {
+    continue;
+  }
 
-      if (tokenCount + tokens <= TOKEN_LIMIT) {
-        selectedIndexes.push(index);
-        tokenCount += tokens;
-      }
+  if (tokenCount + tokens <= TOKEN_LIMIT) {
+    selectedIndexes.push(index);
+    tokenCount += tokens;
+  }
 
-      if (tokenCount === TOKEN_LIMIT) {
-        break;
-      }
-    }
+  if (tokenCount === TOKEN_LIMIT) {
+    break;
+  }
+}
 
     logAction('random__tokens_selected', {
       token_count: tokenCount,
