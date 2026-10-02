@@ -40,7 +40,7 @@ export default function SummaryBox({ summary, isLoading }: SummaryProps) {
 
     const timer = setTimeout(() => {
       setSummaryUpdated(false);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [summary]);
