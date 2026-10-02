@@ -111,7 +111,7 @@ export function useSummaryAnalysis(taskId: string) {
         summary_length: generatedSummary.length,
         generated_summary: generatedSummary,
         reference_summary: referenceSummary,
-        respnse_time_seconds: analyzeResponse.result.response_time_seconds,
+        response_time_seconds: analyzeResponse.result.response_time_seconds,
       });
 
       const compareResponse = await compareTexts(
