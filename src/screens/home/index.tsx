@@ -116,7 +116,14 @@ export default function Home() {
           }}
         />
         {/* Summary */}
-        <Box sx={{ minWidth: 0 }}>
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 100,
+            alignSelf: 'flex-start',
+          }}
+        >
+          {' '}
           <SummaryBox summary={summary} isLoading={isAnalyzing} />
         </Box>{' '}
       </Box>

@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 
 import { logAction } from '~/services';
@@ -27,7 +27,23 @@ export default function SummaryBox({ summary, isLoading }: SummaryProps) {
 
   const [confirmOpen, setConfirmOpen] = useState(false);
 
+  const [summaryUpdated, setSummaryUpdated] = useState(false);
+
   const hasSummary = Boolean(summary.trim());
+
+  useEffect(() => {
+    if (!summary) {
+      return;
+    }
+
+    setSummaryUpdated(true);
+
+    const timer = setTimeout(() => {
+      setSummaryUpdated(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [summary]);
 
   const handleSubmit = () => {
     if (!hasSummary) {
@@ -62,26 +78,25 @@ export default function SummaryBox({ summary, isLoading }: SummaryProps) {
         <Box
           sx={{
             border: 1,
-            borderColor: 'divider',
+            borderColor: summaryUpdated ? 'rgba(76, 175, 80, 0.5)' : 'divider',
             p: 2,
-            minHeight: 300,
+            height: 300,
             mt: 1,
             borderRadius: 1,
-            bgcolor: 'background.paper',
+            bgcolor: summaryUpdated
+              ? 'rgba(76, 175, 80, 0.5)'
+              : 'background.paper',
+            overflowY: 'auto',
+            boxSizing: 'border-box',
+            transition: 'background-color 0.5s ease, border-color 0.5s ease',
           }}
         >
-          {isLoading ? (
-            <Typography color="text.secondary">
-              Generating summary...
-            </Typography>
-          ) : (
-            <Typography
-              color={summary ? 'text.primary' : 'text.secondary'}
-              sx={{ whiteSpace: 'pre-wrap' }}
-            >
-              {summary || 'Your summary will appear here...'}
-            </Typography>
-          )}
+          <Typography
+            color={isLoading ? 'text.secondary' : 'text.primary'}
+            sx={{ whiteSpace: 'pre-wrap' }}
+          >
+            {summary || 'Your summary will appear here...'}
+          </Typography>
         </Box>
       </Box>
 
