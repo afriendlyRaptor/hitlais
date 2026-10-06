@@ -19,37 +19,39 @@ type LikertQuestion = {
   question: string;
 };
 
-const SUMMARY_A = `Hier steht die erste Zusammenfassung des Textes. 
-Ersetzen Sie diesen Text durch die tatsächliche Zusammenfassung, die dem Benutzer angezeigt werden soll.`;
+const SUMMARY_A = 'Sample Text';
 
-const SUMMARY_B = `Hier steht die zweite Zusammenfassung des Textes.
-Ersetzen Sie diesen Text durch die andere Zusammenfassung, die der Benutzer bewerten soll.`;
+const SUMMARY_B = 'Sample Text';
 
 const QUESTIONS: LikertQuestion[] = [
   {
     id: 'q1',
     question:
-      'Ich war mir sicher, welche der beiden Zusammenfassungen besser ist.',
+      'Ich bin mir sicher, welche der beiden Zusammenfassungen besser ist.',
   },
   {
-    id: 'q2',
+    id: 'q2.1',
     question:
-      'Meine Entscheidung wurde durch die Qualität der Zusammenfassung beeinflusst.',
+      'Ich gehe davon aus, dass eine der beiden Zusammenfassungen von KI geschrieben wurde.',
   },
+  {
+    id: 'q2.2',
+    question:
+      'Ich gehe davon aus, dass beide der beiden Zusammenfassungen von KI geschrieben wurde.',
+  },
+
   {
     id: 'q3',
     question:
-      'Ich habe bei meiner Entscheidung auf bestimmte Formulierungen oder Sätze geachtet.',
+      'Ich wähle aus Prinzip die Zusammenfassung, welche auf mich menschlicher wirkt.',
   },
   {
     id: 'q4',
-    question:
-      'Ich konnte die Unterschiede zwischen den beiden Zusammenfassungen gut erkennen.',
+    question: 'Ich finde die beiden Zusammenfassungen sind gleichwertig.',
   },
   {
     id: 'q5',
-    question:
-      'Die Entscheidung zwischen den beiden Zusammenfassungen fiel mir leicht.',
+    question: 'Ich finde beide Zusammenfassungen schlecht.',
   },
 ];
 
@@ -232,7 +234,7 @@ export default function SummaryComparisonSurvey() {
         {/* Likert questions */}
         <Box sx={{ mt: 5 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
-            Ihre Entscheidung
+            Weitere Fragen:
           </Typography>
 
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>

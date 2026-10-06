@@ -16,7 +16,7 @@ const getSummaryKey = (taskId: string) => `generated-summary-${taskId}`;
 
 const getScoreHistoryKey = (taskId: string) => `score-history-${taskId}`;
 
-export function useSummaryAnalysis(taskId: string) {
+export function useSummaryAnalysis(taskId: string, compare = false) {
   const [summary, setSummary] = useState<string>(() => {
     return localStorage.getItem(getSummaryKey(taskId)) ?? '';
   });

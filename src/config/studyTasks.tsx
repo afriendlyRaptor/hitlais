@@ -5,6 +5,7 @@ export type StudyTaskConfig = {
     task_timer: boolean;
     time?: number; // seconds, required if task_timer is true
   };
+  compare?: boolean;
   redirectTo?: string;
 };
 
