@@ -19,8 +19,9 @@ const QUESTIONS: LikertQuestion[] = [
   },
   {
     id: 'q4',
-    question: 'Mit menschlicher Hilfe werden KI Zusammenfassungen besser.',
+    question: 'Mit menschlicher Hilfe werden KI-Zusammenfassungen besser.',
   },
+  { id: 'q5', question: 'Die Benutzeroberfläche hat mich gestört.' },
 ];
 
 export default function Survey() {
@@ -46,7 +47,7 @@ export default function Survey() {
     setIsSubmitting(true);
     try {
       await logAction('survey_submit', { answers });
-      navigate('/about'); // or wherever "done" should go
+      navigate('/survey2'); // or wherever "done" should go
     } catch (err) {
       console.error('Survey submit failed', err);
     } finally {

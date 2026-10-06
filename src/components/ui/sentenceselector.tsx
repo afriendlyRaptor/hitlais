@@ -44,41 +44,40 @@ export default function SentenceSelector({
         }}
       >
         <Box>
-         
-{paragraphs.map((paragraph, paragraphIndex) => {
-  const paragraphStartIndex = paragraphs
-    .slice(0, paragraphIndex)
-    .reduce((total, p) => total + p.length, 0);
+          {paragraphs.map((paragraph, paragraphIndex) => {
+            const paragraphStartIndex = paragraphs
+              .slice(0, paragraphIndex)
+              .reduce((total, p) => total + p.length, 0);
 
-  return (
-    <Box
-      key={paragraphIndex}
-      sx={{
-        mb: 2,
-      }}
-    >
-      {paragraph.map((sentence, sentenceIndex) => {
-        const index = paragraphStartIndex + sentenceIndex;
+            return (
+              <Box
+                key={paragraphIndex}
+                sx={{
+                  mb: 2,
+                }}
+              >
+                {paragraph.map((sentence, sentenceIndex) => {
+                  const index = paragraphStartIndex + sentenceIndex;
 
-        return (
-          <Box
-            component="span"
-            key={index}
-            onClick={() => toggleSentence(index)}
-            sx={{
-              backgroundColor: selected.includes(index)
-                ? 'secondary.main'
-                : 'transparent',
-              cursor: 'pointer',
-            }}
-          >
-            {sentence}{' '}
-          </Box>
-        );
-      })}
-    </Box>
-  );
-})}
+                  return (
+                    <Box
+                      component="span"
+                      key={index}
+                      onClick={() => toggleSentence(index)}
+                      sx={{
+                        backgroundColor: selected.includes(index)
+                          ? 'secondary.main'
+                          : 'transparent',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {sentence}{' '}
+                    </Box>
+                  );
+                })}
+              </Box>
+            );
+          })}
         </Box>
       </Box>
 
