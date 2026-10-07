@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   Alertify,
   analyzeSentences,
-  compareTexts,
   logAction,
-  type CompareResult,
 } from '~/services';
 
 type ScoreEntry = {
@@ -16,7 +14,7 @@ const getSummaryKey = (taskId: string) => `generated-summary-${taskId}`;
 
 const getScoreHistoryKey = (taskId: string) => `score-history-${taskId}`;
 
-export function useSummaryAnalysis(taskId: string, compare = false) {
+export function useSummaryAnalysis(taskId: string, ) {
   const [summary, setSummary] = useState<string>(() => {
     return localStorage.getItem(getSummaryKey(taskId)) ?? '';
   });
@@ -37,8 +35,6 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
     }
   });
 
-  const [comparison, setComparison] = useState<CompareResult | null>(null);
-
   useEffect(() => {
     const storedSummary = localStorage.getItem(getSummaryKey(taskId)) ?? '';
 
@@ -55,9 +51,6 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
     } else {
       setScoreHistory([]);
     }
-
-    // Comparison is not persisted, so reset it when changing tasks.
-    setComparison(null);
   }, [taskId]);
 
   // Persist summary
@@ -108,8 +101,6 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
 
       localStorage.setItem(getSummaryKey(taskId), generatedSummary);
 
-      // Compare generated summary with dataset summary
-
       logAction('rate_summary', {
         task_id: taskId,
         summary_length: generatedSummary.length,
@@ -119,7 +110,8 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
       });
 
       // Use RougeL as the main score for the history.
-      const score = result.rougeL;
+      // Upscaled to 0-100
+      const score = result.rougeL * 100;
 
       setScoreHistory((prev) => [
         ...prev,
@@ -154,19 +146,16 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
       task_id: taskId,
       summary: summary,
       score_history: scoreHistory,
-      comparison,
     });
     localStorage.removeItem(getSummaryKey(taskId));
     localStorage.removeItem(getScoreHistoryKey(taskId));
 
     setSummary('');
     setScoreHistory([]);
-    setComparison(null);
   };
 
   return {
     summary,
-    comparison,
     isAnalyzing,
     scoreHistory,
     handleAnalyze,

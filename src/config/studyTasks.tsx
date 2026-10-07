@@ -13,7 +13,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 67206,
     components: {
-      score_display: false,
+      score_display: true,
       task_timer: false,
       time: 3,
     },
