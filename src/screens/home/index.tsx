@@ -142,8 +142,8 @@ export default function Home() {
           onClick={() => {
             if (!document) return;
             logAction('summary_button', {
-              selectedSentences,
-              referenceSummary: document.summary,
+              selected_sentences,
+              reference_summary: document.summary,
             });
             handleAnalyze(selectedSentences, document.summary);
           }}

@@ -113,7 +113,7 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     logAction('selected_sentences_cleared', {
       task_id: taskId,
       count: selected.length,
-      selected_sentences: selectedSentences,
+      text: selectedSentences,
     });
 
     localStorage.removeItem(getStorageKey(taskId));

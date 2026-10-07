@@ -130,7 +130,7 @@ export function useSummaryAnalysis(taskId: string, ) {
         rouge1: result.rouge1,
         rouge2: result.rouge2,
         rougeL: result.rougeL,
-        summary: generatedSummary,
+        generated_summary: generatedSummary,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
@@ -144,7 +144,7 @@ export function useSummaryAnalysis(taskId: string, ) {
   const clearAnalysis = () => {
     logAction('analysis_cleared', {
       task_id: taskId,
-      summary: summary,
+      generated_summary: summary,
       score_history: scoreHistory,
     });
     localStorage.removeItem(getSummaryKey(taskId));

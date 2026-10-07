@@ -27,9 +27,6 @@ export async function analyzeSentences(
     args: [text, referenceSummary],
   });
 
-  console.log('FULL RESPONSE:', response);
-  console.log('RESPONSE DATA:', response.data);
-  console.log('RESULT:', response.data.result);
 
   return response.data;
 }
