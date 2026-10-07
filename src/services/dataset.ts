@@ -13,7 +13,7 @@ export interface DocumentResponse {
 export async function getDocument(id: number): Promise<DocumentResponse> {
   const response = await postApi<DocumentResponse>('/run-script', {
     scriptId: 'getDocument',
-    args: id,
+    args: [String(id)],
   });
 
   return response.data;

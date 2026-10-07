@@ -96,9 +96,13 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
     try {
       // Generate summary
 
-      const analyzeResponse = await analyzeSentences(selectedSentences);
+      const analyzeResponse = await analyzeSentences(
+        selectedSentences,
+        referenceSummary
+      );
 
-      const generatedSummary = analyzeResponse.result.summary;
+      const result = analyzeResponse.result;
+      const generatedSummary = result.summary;
 
       setSummary(generatedSummary);
 
@@ -111,20 +115,11 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
         summary_length: generatedSummary.length,
         generated_summary: generatedSummary,
         reference_summary: referenceSummary,
-        response_time_seconds: analyzeResponse.result.response_time_seconds,
+        response_time_seconds: result.response_time_seconds,
       });
 
-      const compareResponse = await compareTexts(
-        referenceSummary,
-        generatedSummary
-      );
-
-      const result = compareResponse.result;
-
-      setComparison(result);
-
       // Use RougeL as the main score for the history.
-      const score = result.rouge.rougeL;
+      const score = result.rougeL;
 
       setScoreHistory((prev) => [
         ...prev,
@@ -139,10 +134,10 @@ export function useSummaryAnalysis(taskId: string, compare = false) {
 
       logAction('summary_scores', {
         summary_length: generatedSummary.length,
-        bert_score: result.bert_score.f1,
-        rouge1: result.rouge.rouge1,
-        rouge2: result.rouge.rouge2,
-        rougeL: result.rouge.rougeL,
+        bert_score: result.bertscore_f1,
+        rouge1: result.rouge1,
+        rouge2: result.rouge2,
+        rougeL: result.rougeL,
         summary: generatedSummary,
       });
     } catch (error) {

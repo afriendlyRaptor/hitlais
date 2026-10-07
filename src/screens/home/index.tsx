@@ -141,7 +141,10 @@ export default function Home() {
           variant="contained"
           onClick={() => {
             if (!document) return;
-
+            logAction('summary_button', {
+              selectedSentences,
+              referenceSummary: document.summary,
+            });
             handleAnalyze(selectedSentences, document.summary);
           }}
           disabled={isAnalyzing}
