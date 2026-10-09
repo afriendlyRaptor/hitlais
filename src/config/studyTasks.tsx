@@ -13,7 +13,7 @@ export type StudyTaskConfig = {
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 67322,
-    description: 'Create the best possible summary using the tools.',
+    description: 'Erstellen Sie die best mögliche Zusammenfassung.',
     components: {
       score_display: true,
       task_timer: false,
@@ -23,6 +23,8 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
 
   taskB: {
     documentId: 65921,
+    description:
+      'Erstellen Sie die die Zusammenfassung mit der höchsten Punktzahl.',
     components: {
       score_display: true,
       task_timer: false,
@@ -30,6 +32,8 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
 
   taskC: {
+    description:
+      'Erstellen Sie die best mögliche Zusammenfassung in der vorgegebenen Zeit.',
     documentId: 65438,
     components: {
       score_display: false,

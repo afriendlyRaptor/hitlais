@@ -76,7 +76,7 @@ export default function ScoreDisplayPanel({
             lineHeight: 1,
           }}
         >
-          Score
+          Punkte:
         </Typography>
 
         <ScoreLineChart history={visibleScoreHistory} width={CHART_WIDTH} />

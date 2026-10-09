@@ -73,7 +73,7 @@ export default function SummaryBox({ summary, isLoading }: SummaryProps) {
   return (
     <>
       <Box sx={{ flex: 1 }}>
-        <Typography variant="h5">Summary</Typography>
+        <Typography variant="h5">Zusammenfassung</Typography>
 
         <Box
           sx={{

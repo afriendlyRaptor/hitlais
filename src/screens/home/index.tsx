@@ -87,7 +87,20 @@ export default function Home() {
         }}
       >
         {/* Sentence selection */}
-        <Box sx={{ minWidth: 0 }}>
+                <Box sx={{ minWidth: 0 }}>
+ <Typography
+            variant="h5"
+            sx={{
+              mt: 0,
+              mb: 0,
+              display: 'block',
+              color: 'text.main',
+            }}
+          >
+          Aufgabe:
+          </Typography>
+
+
           {description && (
             <Typography
               variant="body1"
@@ -103,6 +116,18 @@ export default function Home() {
               {description}
             </Typography>
           )}
+          <Typography
+            variant="h8"
+            sx={{
+              mt: 0,
+              mb: 3,
+              fontWeight: 700,
+              display: 'block',
+              color: 'text.main',
+            }}
+          >
+            Sätze können mit klicken Ausgewählt werden:
+          </Typography>
           {isDocumentLoading ? (
             <Box
               sx={{
