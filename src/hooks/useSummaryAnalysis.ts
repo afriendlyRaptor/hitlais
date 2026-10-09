@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Alertify,
-  analyzeSentences,
-  logAction,
-} from '~/services';
+import { Alertify, analyzeSentences, logAction } from '~/services';
 
 type ScoreEntry = {
   timestamp: number;
@@ -14,7 +10,7 @@ const getSummaryKey = (taskId: string) => `generated-summary-${taskId}`;
 
 const getScoreHistoryKey = (taskId: string) => `score-history-${taskId}`;
 
-export function useSummaryAnalysis(taskId: string, ) {
+export function useSummaryAnalysis(taskId: string) {
   const [summary, setSummary] = useState<string>(() => {
     return localStorage.getItem(getSummaryKey(taskId)) ?? '';
   });

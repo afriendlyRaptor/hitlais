@@ -13,7 +13,7 @@ export type StudyTaskConfig = {
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 67322,
-    description: "Create the best possible summary using the tools.",
+    description: 'Create the best possible summary using the tools.',
     components: {
       score_display: true,
       task_timer: false,

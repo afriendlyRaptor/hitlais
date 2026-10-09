@@ -31,7 +31,7 @@ export default function Home() {
   }, [taskId, navigate]);
 
   const task = getStudyTask(taskId);
-const { documentId, components, redirectTo, description } = task;
+  const { documentId, components, redirectTo, description } = task;
 
   //if redirectTo is set in config it redirects
   useEffect(() => {
@@ -88,20 +88,21 @@ const { documentId, components, redirectTo, description } = task;
       >
         {/* Sentence selection */}
         <Box sx={{ minWidth: 0 }}>
-  {description && (
-    <Typography
-      variant="body1"
-      sx={{
-        mb: 2,
-        p: 2,
-        bgcolor: 'grey.100',
-        borderRadius: 2,
-        whiteSpace: 'pre-line',
-      }}
-    >
-      {description}
-    </Typography>
-  )}
+          {description && (
+            <Typography
+              variant="body1"
+              sx={{
+                mb: 3,
+                color: 'primary.main',
+                fontSize: '1.2rem',
+                fontWeight: 700,
+                lineHeight: 2,
+                whiteSpace: 'pre-line',
+              }}
+            >
+              {description}
+            </Typography>
+          )}
           {isDocumentLoading ? (
             <Box
               sx={{

@@ -27,6 +27,5 @@ export async function analyzeSentences(
     args: [text, referenceSummary],
   });
 
-
   return response.data;
 }
