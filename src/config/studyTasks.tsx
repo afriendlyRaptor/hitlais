@@ -1,5 +1,6 @@
 export type StudyTaskConfig = {
   documentId: number;
+  description?: string;
   components: {
     score_display: boolean;
     task_timer: boolean;
@@ -11,7 +12,8 @@ export type StudyTaskConfig = {
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
-    documentId: 67206,
+    documentId: 67322,
+    description: "Create the best possible summary using the tools.",
     components: {
       score_display: true,
       task_timer: false,
@@ -20,7 +22,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
 
   taskB: {
-    documentId: 63226,
+    documentId: 65921,
     components: {
       score_display: true,
       task_timer: false,
@@ -28,7 +30,7 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
   },
 
   taskC: {
-    documentId: 60857,
+    documentId: 65438,
     components: {
       score_display: false,
       task_timer: true,

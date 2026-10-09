@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   DrawerAppBar,
@@ -31,7 +31,7 @@ export default function Home() {
   }, [taskId, navigate]);
 
   const task = getStudyTask(taskId);
-  const { documentId, components, redirectTo } = task;
+const { documentId, components, redirectTo, description } = task;
 
   //if redirectTo is set in config it redirects
   useEffect(() => {
@@ -88,6 +88,20 @@ export default function Home() {
       >
         {/* Sentence selection */}
         <Box sx={{ minWidth: 0 }}>
+  {description && (
+    <Typography
+      variant="body1"
+      sx={{
+        mb: 2,
+        p: 2,
+        bgcolor: 'grey.100',
+        borderRadius: 2,
+        whiteSpace: 'pre-line',
+      }}
+    >
+      {description}
+    </Typography>
+  )}
           {isDocumentLoading ? (
             <Box
               sx={{
