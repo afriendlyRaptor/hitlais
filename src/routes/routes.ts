@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
 // Lazy-loaded screens
-const Home = lazy(() => import('~/screens/home'));
+const Summarizer = lazy(() => import('~/screens/summarizer'));
 const NotFound = lazy(() => import('~/screens/not-found'));
 const About = lazy(() => import('~/screens/about'));
 const Login = lazy(() => import('~/screens/user-login'));
@@ -26,8 +26,8 @@ export const routes: RouteConfig[] = [
     title: 'User Login',
   },
   {
-    path: '/home',
-    component: Home,
+    path: '/summarizer',
+    component: Summarizer,
     title: 'Home',
   },
 
