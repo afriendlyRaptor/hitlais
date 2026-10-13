@@ -1,8 +1,8 @@
 import { useMemo, useEffect } from 'react';
 import { Box, Button, ButtonGroup } from '@mui/material';
 import ScoreDisplayPanel from './ScoreDisplayPanel';
-import { splitIntoParagraphs, flattenSentences } from './sentence-utils';
-import { useSentenceSelection } from './useSentenceSelection';
+import { splitIntoParagraphs, flattenSentences } from '~/lib/sentence-utils';
+import { useSentenceSelection } from '~/hooks';
 
 type Props = {
   text: string;

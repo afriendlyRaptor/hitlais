@@ -14,8 +14,7 @@ import ScoreLineChart from './ScoreLineChart';
 import ScoreDisplay from './ScoreDisplay';
 import { useLocation, useSearch } from 'wouter';
 import { getNextTaskId } from '~/config';
-import { useSentenceSelection } from './useSentenceSelection';
-import { useSummaryAnalysis } from '~/hooks';
+import { useSummaryAnalysis, useSentenceSelection } from '~/hooks';
 
 type ScoreEntry = {
   timestamp: number;

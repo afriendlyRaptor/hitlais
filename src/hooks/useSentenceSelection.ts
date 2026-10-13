@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import seedrandom from 'seedrandom';
 import { logAction, Alertify } from '~/services';
-import { countTokens } from './sentence-utils';
+import { countTokens } from '~/lib/sentence-utils';
 
 const TOKEN_LIMIT = 1010;
 const RANDOM_SELECTION_SEED = 12345;
