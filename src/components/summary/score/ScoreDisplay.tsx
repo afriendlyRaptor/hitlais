@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 
 type Props = {
-  latestScore?: number;
+  score?: number;
 };
 
-export function ScoreDisplay({ latestScore }: Props) {
+export function ScoreDisplay({ score }: Props) {
   return (
     <Box
       sx={{
@@ -18,7 +18,7 @@ export function ScoreDisplay({ latestScore }: Props) {
       }}
     >
       <Typography sx={{ fontSize: 24, fontWeight: 600, lineHeight: 1 }}>
-        {latestScore !== undefined ? Math.round(latestScore) : '--'}
+        {score !== undefined ? Math.round(score) : '--'}
       </Typography>
       <Typography variant="caption" color="text.secondary">
         / 100

@@ -27,3 +27,15 @@ export function jsonArrayCodec<T>(): StorageCodec<T[]> {
     stringify: (value) => JSON.stringify(value),
   };
 }
+
+/** Integers; a missing key reads as 0. */
+export const numberCodec: StorageCodec<number> = {
+  parse: (raw) => Number(raw) || 0,
+  stringify: (value) => String(value),
+};
+
+/** Integers or null; a missing key reads as null. */
+export const nullableNumberCodec: StorageCodec<number | null> = {
+  parse: (raw) => (raw ? Number(raw) : null),
+  stringify: (value) => (value === null ? '' : String(value)),
+};

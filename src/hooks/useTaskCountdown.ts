@@ -1,23 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'wouter';
 import { logAction } from '~/services';
 
 type Options = {
   seconds: number;
-  onExpire?: () => void;
-  redirectTo?: string;
+  onExpire: () => void;
 };
 
 /**
  * Counts down from `seconds` to 0 and returns the remaining seconds.
- * Logs start/expiry; on expiry calls `onExpire` and navigates to `redirectTo`.
+ * Logs start/expiry and calls `onExpire` once when time is up.
  */
-export function useTaskCountdown({ seconds, onExpire, redirectTo }: Options) {
+export function useTaskCountdown({ seconds, onExpire }: Options) {
   const [remaining, setRemaining] = useState(seconds);
-  const [, navigate] = useLocation();
   const hasExpiredRef = useRef(false);
+  const onExpireRef = useRef(onExpire);
 
-  // (Re)start when the configured duration changes (e.g. switching tasks).
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  });
+
+  // (Re)start when the configured duration changes.
   useEffect(() => {
     setRemaining(seconds);
     hasExpiredRef.current = false;
@@ -29,10 +31,7 @@ export function useTaskCountdown({ seconds, onExpire, redirectTo }: Options) {
       if (!hasExpiredRef.current) {
         hasExpiredRef.current = true;
         logAction('task_timer_expired', { seconds });
-        onExpire?.();
-        if (redirectTo) {
-          navigate(redirectTo);
-        }
+        onExpireRef.current();
       }
       return;
     }
@@ -42,7 +41,7 @@ export function useTaskCountdown({ seconds, onExpire, redirectTo }: Options) {
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [remaining, seconds, onExpire, redirectTo, navigate]);
+  }, [remaining, seconds]);
 
   return remaining;
 }

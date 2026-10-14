@@ -8,6 +8,7 @@ export {
   type ToastState,
 } from './alertify-services';
 export { logAction, type LogPayload } from './logger';
+export { setLogContext } from './logContext';
 export {
   getUserId,
   setUserId,

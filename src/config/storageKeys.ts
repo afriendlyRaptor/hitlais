@@ -1,7 +1,8 @@
 /** Every localStorage key the app uses, in one place. */
 export const storageKeys = {
   userId: 'study_user_id',
+  progress: 'study-progress',
   selection: (taskId: string) => `sentence-selection-${taskId}`,
-  summary: (taskId: string) => `generated-summary-${taskId}`,
-  scoreHistory: (taskId: string) => `score-history-${taskId}`,
+  history: (taskId: string) => `summary-history-${taskId}`,
+  activeEntry: (taskId: string) => `summary-active-entry-${taskId}`,
 } as const;

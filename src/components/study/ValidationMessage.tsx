@@ -9,11 +9,7 @@ type Props = {
 
 export function ValidationMessage({ children, mt = 1 }: Props) {
   return (
-    <Typography
-      variant="caption"
-      color="error"
-      sx={{ mt, display: 'block' }}
-    >
+    <Typography variant="caption" color="error" sx={{ mt, display: 'block' }}>
       {children}
     </Typography>
   );

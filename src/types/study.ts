@@ -4,8 +4,11 @@ export interface SelectedSentence {
   text: string;
 }
 
-/** One point in the score history chart. */
-export interface ScoreEntry {
-  timestamp: number;
+/** One generated summary with the selection that produced it. */
+export interface HistoryEntry {
+  /** Creation time in ms; also the unique id. */
+  id: number;
   score: number;
+  summary: string;
+  selected: number[];
 }

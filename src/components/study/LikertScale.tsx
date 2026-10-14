@@ -7,11 +7,11 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-
-export type LikertQuestion = {
-  id: string;
-  question: string;
-};
+import {
+  LIKERT_HIGH_LABEL,
+  LIKERT_LOW_LABEL,
+  LIKERT_POINTS,
+} from '~/config';
 
 type LikertScaleProps = {
   id: string;
@@ -20,19 +20,17 @@ type LikertScaleProps = {
   onChange: (id: string, value: number) => void;
   lowLabel?: string;
   highLabel?: string;
-  disabled?: boolean;
 };
 
-const SCALE = [1, 2, 3, 4, 5];
+const SCALE = Array.from({ length: LIKERT_POINTS }, (_, i) => i + 1);
 
 export function LikertScale({
   id,
   question,
   value,
   onChange,
-  lowLabel = 'Strongly disagree',
-  highLabel = 'Strongly agree',
-  disabled = false,
+  lowLabel = LIKERT_LOW_LABEL,
+  highLabel = LIKERT_HIGH_LABEL,
 }: LikertScaleProps) {
   return (
     <Box
@@ -45,7 +43,7 @@ export function LikertScale({
         mb: 1,
       }}
     >
-      <FormControl fullWidth disabled={disabled}>
+      <FormControl fullWidth>
         <FormLabel
           id={`${id}-label`}
           sx={{

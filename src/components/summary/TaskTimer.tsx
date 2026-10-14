@@ -4,15 +4,14 @@ import { formatClock } from '~/lib/time';
 
 type TaskTimerProps = {
   seconds: number;
-  onExpire?: () => void;
-  redirectTo?: string;
+  onExpire: () => void;
 };
 
 const LOW_TIME_THRESHOLD_SECONDS = 30;
 
 /** Floating countdown pill; turns red when little time is left. */
-export function TaskTimer({ seconds, onExpire, redirectTo }: TaskTimerProps) {
-  const remaining = useTaskCountdown({ seconds, onExpire, redirectTo });
+export function TaskTimer({ seconds, onExpire }: TaskTimerProps) {
+  const remaining = useTaskCountdown({ seconds, onExpire });
   const isLow = remaining <= LOW_TIME_THRESHOLD_SECONDS;
 
   return (

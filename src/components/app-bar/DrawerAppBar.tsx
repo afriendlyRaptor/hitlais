@@ -8,25 +8,43 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import HistoryIcon from '@mui/icons-material/History';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'wouter';
 import { APP_NAME } from '~/config';
 import { useUserId } from '~/hooks';
-import { ROUTES } from '~/routes/paths';
 import { logAction } from '~/services';
+import type { HistoryEntry } from '~/types';
+import { HistoryDrawer, type HistoryPanel } from './HistoryDrawer';
 import { NavDrawer } from './NavDrawer';
 import { getNavItems, type NavItem } from './navItems';
+
+type Props = {
+  /** Adds a button that opens the version history. */
+  history?: HistoryPanel;
+};
 
 /**
  * https://mui.com/material-ui/react-app-bar/
  */
-export function DrawerAppBar() {
+export function DrawerAppBar({ history }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const navItems = getNavItems(useUserId());
 
   const handleDrawerToggle = () => {
     logAction('drawer_toggled', { open: !mobileOpen });
     setMobileOpen((previous) => !previous);
+  };
+
+  const handleHistoryToggle = () => {
+    logAction('history_drawer_toggled', { open: !historyOpen });
+    setHistoryOpen((previous) => !previous);
+  };
+
+  const handleRestore = (entry: HistoryEntry) => {
+    history?.onRestore(entry);
+    setHistoryOpen(false);
   };
 
   // logs nav items identified by path
@@ -49,15 +67,11 @@ export function DrawerAppBar() {
           </IconButton>
 
           <Box
-            component={Link}
-            href={ROUTES.root}
             sx={{
               display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               gap: 1.5,
               flexGrow: 1,
-              color: 'inherit',
-              textDecoration: 'none',
             }}
           >
             <Box
@@ -81,18 +95,33 @@ export function DrawerAppBar() {
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            {navItems.map((item) => (
-              <ListItemButton
-                key={item.path}
-                component={Link}
-                href={item.path}
-                onClick={() => handleNavClick(item)}
-                sx={{ textAlign: 'center' }}
-              >
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            ))}
+            {navItems.map((item) =>
+              item.path ? (
+                <ListItemButton
+                  key={item.name}
+                  component={Link}
+                  href={item.path}
+                  onClick={() => handleNavClick(item)}
+                  sx={{ textAlign: 'center' }}
+                >
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              ) : (
+                <ListItemText key={item.name} primary={item.name} sx={{ px: 2 }} />
+              )
+            )}
           </Box>
+
+          {history && (
+            <IconButton
+              color="inherit"
+              aria-label="Verlauf"
+              onClick={handleHistoryToggle}
+              sx={{ ml: 'auto' }}
+            >
+              <HistoryIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -102,6 +131,16 @@ export function DrawerAppBar() {
         onToggle={handleDrawerToggle}
         onItemClick={handleNavClick}
       />
+
+      {history && (
+        <HistoryDrawer
+          open={historyOpen}
+          onClose={handleHistoryToggle}
+          entries={history.entries}
+          activeId={history.activeId}
+          onRestore={handleRestore}
+        />
+      )}
 
       {/* Spacer so page content starts below the fixed AppBar */}
       <Box sx={{ p: 3 }}>

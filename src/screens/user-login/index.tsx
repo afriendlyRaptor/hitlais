@@ -1,11 +1,18 @@
 import { type FormEvent } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { useLocation } from 'wouter';
+import { Redirect, useLocation } from 'wouter';
+import { ALLOW_MANUAL_USER_ID } from '~/config';
+import { useUserId } from '~/hooks';
 import { ROUTES } from '~/routes/paths';
 import { logAction, setUserId } from '~/services';
 
 export default function Login() {
   const [, navigate] = useLocation();
+  const userId = useUserId();
+
+  if (userId) {
+    return <Redirect to={ROUTES.study} replace />;
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,7 +25,7 @@ export default function Login() {
     setUserId(id);
 
     logAction('userId_set', { userID: id });
-    navigate(ROUTES.summarizer);
+    navigate(ROUTES.study, { replace: true });
   };
 
   return (
@@ -48,23 +55,29 @@ export default function Login() {
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            Please enter your user ID to continue.
+            {ALLOW_MANUAL_USER_ID
+              ? 'Please enter your user ID to continue.'
+              : 'Sie sind nicht angemeldet.'}
           </Typography>
         </Box>
 
-        <TextField
-          label="User ID"
-          variant="outlined"
-          fullWidth
-          required
-          autoFocus
-          name="userId"
-          placeholder="Enter your ID"
-        />
+        {ALLOW_MANUAL_USER_ID && (
+          <>
+            <TextField
+              label="User ID"
+              variant="outlined"
+              fullWidth
+              required
+              autoFocus
+              name="userId"
+              placeholder="Enter your ID"
+            />
 
-        <Button type="submit" variant="contained" size="large" fullWidth>
-          Continue
-        </Button>
+            <Button type="submit" variant="contained" size="large" fullWidth>
+              Continue
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
   );

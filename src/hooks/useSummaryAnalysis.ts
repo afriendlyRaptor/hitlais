@@ -1,26 +1,15 @@
 import { useState } from 'react';
-import { storageKeys } from '~/config';
-import { jsonArrayCodec, stringCodec } from '~/lib/storage';
 import { Alertify, analyzeSentences, logAction } from '~/services';
-import type { ScoreEntry, SelectedSentence } from '~/types';
-import { usePersistedState } from './usePersistedState';
+import type { HistoryEntry, SelectedSentence } from '~/types';
 
-const scoreHistoryCodec = jsonArrayCodec<ScoreEntry>();
-
-export function useSummaryAnalysis(taskId: string) {
-  const [summary, setSummary] = usePersistedState(
-    storageKeys.summary(taskId),
-    stringCodec
-  );
-
-  const [scoreHistory, setScoreHistory] = usePersistedState(
-    storageKeys.scoreHistory(taskId),
-    scoreHistoryCodec
-  );
-
+/** Rates a selection via the API and hands the resulting version to `onResult`. */
+export function useSummaryAnalysis(
+  taskId: string,
+  onResult: (entry: HistoryEntry) => void
+) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const handleAnalyze = async (
+  const analyze = async (
     selectedSentences: SelectedSentence[],
     referenceSummary: string
   ) => {
@@ -41,43 +30,34 @@ export function useSummaryAnalysis(taskId: string) {
     setIsAnalyzing(true);
 
     try {
-      const analyzeResponse = await analyzeSentences(
+      const { result } = await analyzeSentences(
         selectedSentences,
         referenceSummary
       );
 
-      const result = analyzeResponse.result;
-      const generatedSummary = result.summary;
-
-      setSummary(generatedSummary);
+      onResult({
+        id: Date.now(),
+        // RougeL as the main score, upscaled to 0-100
+        score: result.rougeL * 100,
+        summary: result.summary,
+        selected: selectedSentences.map(({ index }) => index),
+      });
 
       logAction('rate_summary', {
         task_id: taskId,
-        summary_length: generatedSummary.length,
-        generated_summary: generatedSummary,
+        summary_length: result.summary.length,
+        generated_summary: result.summary,
         reference_summary: referenceSummary,
         response_time_seconds: result.response_time_seconds,
       });
 
-      // Use RougeL as the main score for the history.
-      // Upscaled to 0-100
-      const score = result.rougeL * 100;
-
-      setScoreHistory((previous) => [
-        ...previous,
-        {
-          timestamp: Date.now(),
-          score,
-        },
-      ]);
-
       logAction('summary_scores', {
-        summary_length: generatedSummary.length,
+        summary_length: result.summary.length,
         bert_score: result.bertscore_f1,
         rouge1: result.rouge1,
         rouge2: result.rouge2,
         rougeL: result.rougeL,
-        generated_summary: generatedSummary,
+        generated_summary: result.summary,
       });
     } catch (error) {
       console.error('Analysis failed:', error);
@@ -88,22 +68,5 @@ export function useSummaryAnalysis(taskId: string) {
     }
   };
 
-  const clearAnalysis = () => {
-    logAction('analysis_cleared', {
-      task_id: taskId,
-      generated_summary: summary,
-      score_history: scoreHistory,
-    });
-
-    setSummary('');
-    setScoreHistory([]);
-  };
-
-  return {
-    summary,
-    isAnalyzing,
-    scoreHistory,
-    handleAnalyze,
-    clearAnalysis,
-  };
+  return { analyze, isAnalyzing };
 }

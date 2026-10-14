@@ -1,32 +1,23 @@
 import { Box, Typography } from '@mui/material';
-import type { ScoreEntry } from '~/types';
+import type { HistoryEntry } from '~/types';
 import { ScoreDisplay } from './ScoreDisplay';
 import { ScoreLineChart } from './ScoreLineChart';
 
 type Props = {
-  scoreHistory?: ScoreEntry[];
-  scoreDisplayEnabled?: boolean;
+  history: HistoryEntry[];
+  activeId: number | null;
+  onSelect: (entry: HistoryEntry) => void;
 };
 
 const CHART_WIDTH = 220;
 const MAX_VISIBLE_POINTS = 5;
 
-/** Floating panel (bottom centre) with the score trend and the latest score. */
-export function ScoreDisplayPanel({
-  scoreHistory = [],
-  scoreDisplayEnabled = true,
-}: Props) {
-  if (!scoreDisplayEnabled) {
-    return null;
-  }
+/** Floating panel (bottom centre): clickable score trend and the shown score. */
+export function ScoreDisplayPanel({ history, activeId, onSelect }: Props) {
+  const shown = history.find((entry) => entry.id === activeId);
 
-  const latestScore =
-    scoreHistory.length > 0
-      ? scoreHistory[scoreHistory.length - 1].score
-      : undefined;
-
-  // Only show the five most recent scores.
-  const visibleScoreHistory = scoreHistory.slice(-MAX_VISIBLE_POINTS);
+  // Only show the five most recent versions.
+  const visibleHistory = history.slice(-MAX_VISIBLE_POINTS);
 
   return (
     <Box
@@ -73,10 +64,15 @@ export function ScoreDisplayPanel({
           Punkte:
         </Typography>
 
-        <ScoreLineChart history={visibleScoreHistory} width={CHART_WIDTH} />
+        <ScoreLineChart
+          history={visibleHistory}
+          activeId={activeId}
+          onSelect={onSelect}
+          width={CHART_WIDTH}
+        />
       </Box>
 
-      <ScoreDisplay latestScore={latestScore} />
+      <ScoreDisplay score={shown?.score} />
     </Box>
   );
 }

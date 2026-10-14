@@ -5,11 +5,6 @@
 export const ROUTES = {
   root: '/',
   login: '/login',
-  summarizer: '/summarizer',
+  study: '/study',
   about: '/about',
-  survey1: '/survey1',
-  survey2: '/survey2',
 } as const;
-
-export const summarizerPath = (taskId: string) =>
-  `${ROUTES.summarizer}?task=${taskId}`;

@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
-import { useLocation } from 'wouter';
 import { ConfirmDialog, largePillSx } from '~/components/common';
-import { useStudyTask } from '~/hooks';
-import { summarizerPath } from '~/routes/paths';
 import { logAction } from '~/services';
 
 type Props = {
   disabled?: boolean;
+  onConfirm: () => void;
 };
 
-/** Floating "Next" button: asks for confirmation, then moves on to the next task. */
-export function NextTaskButton({ disabled = false }: Props) {
-  const [, navigate] = useLocation();
-  const { nextTaskId } = useStudyTask();
+/** Floating "Next" button: asks for confirmation, then calls `onConfirm`. */
+export function NextTaskButton({ disabled = false, onConfirm }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleSubmit = () => {
@@ -29,10 +25,7 @@ export function NextTaskButton({ disabled = false }: Props) {
   const handleConfirm = () => {
     setConfirmOpen(false);
     logAction('submit_dialog_confirm', { open: false });
-
-    if (nextTaskId) {
-      navigate(summarizerPath(nextTaskId));
-    }
+    onConfirm();
   };
 
   return (

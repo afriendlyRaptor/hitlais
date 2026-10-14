@@ -1,74 +1,55 @@
-import { ROUTES } from '~/routes/paths';
-
 export type StudyTaskConfig = {
-  /** `null` for tasks that only redirect somewhere else. */
-  documentId: number | null;
-  description?: string;
-  components: {
-    score_display: boolean;
-    task_timer: boolean;
-    /** Seconds. Required if `task_timer` is true. */
-    time?: number;
-  };
-  compare?: boolean;
-  redirectTo?: string;
+  /** A fixed id from VALID_DOCUMENT_IDS, or 'random' to draw one per participant. */
+  documentId: number | 'random';
+  /** Shown above the text while working on the task. */
+  description: string;
+  /** Shown on the instruction screen before the task starts. */
+  instructions: string;
+  /** Show the score chart and the version history. */
+  showScore: boolean;
+  timeLimitSeconds?: number;
 };
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 61434,
     description: 'Erstellen Sie die best mögliche Zusammenfassung.',
-    components: {
-      score_display: true,
-      task_timer: false,
-      time: 3,
-    },
+    instructions: `Sie sehen gleich einen Text. Klicken Sie auf Sätze, um sie auszuwählen. Aus den ausgewählten Sätzen erstellt eine KI eine Zusammenfassung.
+
+Mit dem Pfeil in der Mitte erstellen Sie eine neue Zusammenfassung. Rechts sehen Sie das Ergebnis, unten Ihre bisherigen Punkte. Ein Klick auf einen Punkt bringt Sie zu dieser Version zurück.
+
+Klicken Sie auf "Next", wenn Sie mit Ihrer Zusammenfassung zufrieden sind.`,
+    showScore: true,
   },
 
   taskB: {
     documentId: 64550,
     description:
       'Erstellen Sie die die Zusammenfassung mit der höchsten Punktzahl.',
-    components: {
-      score_display: true,
-      task_timer: false,
-    },
+    instructions: `Auch in dieser Aufgabe wählen Sie Sätze aus, aus denen eine KI eine Zusammenfassung erstellt.
+
+Ihr Ziel ist es, die höchstmögliche Punktzahl zu erreichen. Frühere Versionen erreichen Sie über die Punkte unten oder den Verlauf oben rechts.`,
+    showScore: true,
   },
 
   taskC: {
+    documentId: 62138,
     description:
       'Erstellen Sie die best mögliche Zusammenfassung in der vorgegebenen Zeit.',
-    documentId: 62138,
-    components: {
-      score_display: false,
-      task_timer: true,
-      time: 300, // 5 minutes
-    },
-  },
+    instructions: `In dieser Aufgabe erstellen Sie wieder eine Zusammenfassung, diesmal ohne Punktzahl und mit einem Zeitlimit.
 
-  taskD: {
-    documentId: null,
-    redirectTo: ROUTES.survey1,
-    components: {
-      score_display: false,
-      task_timer: false,
-    },
+Wenn die Zeit abgelaufen ist, geht es automatisch weiter.`,
+    showScore: false,
+    timeLimitSeconds: 300,
   },
 };
 
-export const DEFAULT_TASK_ID = 'taskA';
+export function getStudyTask(taskId: string): StudyTaskConfig {
+  const task = studyTasks[taskId];
 
-export function getStudyTask(taskId: string | null): StudyTaskConfig {
-  return studyTasks[taskId ?? DEFAULT_TASK_ID] ?? studyTasks[DEFAULT_TASK_ID];
-}
-
-export function getNextTaskId(taskId: string | null): string | null {
-  const taskIds = Object.keys(studyTasks);
-  const currentIndex = taskIds.indexOf(taskId ?? DEFAULT_TASK_ID);
-
-  if (currentIndex === -1 || currentIndex === taskIds.length - 1) {
-    return null;
+  if (!task) {
+    throw new Error(`Unknown study task "${taskId}"`);
   }
 
-  return taskIds[currentIndex + 1];
+  return task;
 }

@@ -1,8 +1,8 @@
 import { FormControlLabel, Paper, Radio, Typography } from '@mui/material';
-import type { SummaryOption } from './content';
+import type { ComparisonOption } from '~/lib/comparison';
 
 type Props = {
-  option: SummaryOption;
+  option: ComparisonOption;
   selected: boolean;
 };
 
@@ -21,9 +21,13 @@ export function SummaryChoiceCard({ option, selected }: Props) {
       }}
     >
       <FormControlLabel
-        value={option.value}
+        value={option.position}
         control={<Radio />}
-        label={<Typography sx={{ fontWeight: 600 }}>{option.title}</Typography>}
+        label={
+          <Typography sx={{ fontWeight: 600 }}>
+            Zusammenfassung {option.position}
+          </Typography>
+        }
         sx={{
           alignItems: 'flex-start',
           m: 0,

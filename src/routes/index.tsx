@@ -26,4 +26,4 @@ export function AppRouter() {
 }
 
 export { routes } from './routes';
-export { ROUTES, summarizerPath } from './paths';
+export { ROUTES } from './paths';

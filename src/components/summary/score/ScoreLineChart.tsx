@@ -1,16 +1,26 @@
 import { Box, useTheme } from '@mui/material';
 import { LineChart, Line } from 'recharts';
-import type { ScoreEntry } from '~/types';
+import type { HistoryEntry } from '~/types';
+import { HistoryDot } from './HistoryDot';
+
+type DotProps = { cx?: number; cy?: number; payload?: HistoryEntry };
 
 type Props = {
-  history?: ScoreEntry[];
+  history?: HistoryEntry[];
+  activeId: number | null;
+  onSelect: (entry: HistoryEntry) => void;
   width: number;
 };
 
 const POINT_SLOT = 16;
 const CHART_PADDING = 16;
 
-export function ScoreLineChart({ history = [], width }: Props) {
+export function ScoreLineChart({
+  history = [],
+  activeId,
+  onSelect,
+  width,
+}: Props) {
   const theme = useTheme();
 
   const chartWidth = Math.max(width - CHART_PADDING, 40);
@@ -37,6 +47,20 @@ export function ScoreLineChart({ history = [], width }: Props) {
     );
   }
 
+  const renderDot = ({ cx, cy, payload }: DotProps) =>
+    cx === undefined || cy === undefined || !payload ? (
+      <g key={payload?.id} />
+    ) : (
+      <HistoryDot
+        key={payload.id}
+        cx={cx}
+        cy={cy}
+        entry={payload}
+        active={payload.id === activeId}
+        onSelect={onSelect}
+      />
+    );
+
   return (
     <Box sx={{ width, flexShrink: 0, px: 2 }}>
       <LineChart width={chartWidth} height={60} data={visible}>
@@ -45,7 +69,8 @@ export function ScoreLineChart({ history = [], width }: Props) {
           dataKey="score"
           stroke={theme.palette.primary.main}
           strokeWidth={2}
-          dot={{ r: 3, fill: theme.palette.primary.main }}
+          dot={renderDot}
+          activeDot={false}
           isAnimationActive={false}
         />
       </LineChart>

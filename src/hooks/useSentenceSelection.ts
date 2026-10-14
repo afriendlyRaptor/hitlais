@@ -96,6 +96,11 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     setSelected([]);
   }
 
+  function replaceSelection(indexes: number[]) {
+    setSelected(indexes);
+  }
+
+  /** Selects sentences from the start of the text; returns the chosen indexes. */
   function selectFirstTokens() {
     const { indexes, tokenCount } = pickFirstWithinLimit(
       sentenceTokenCounts,
@@ -108,6 +113,8 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     });
 
     setSelected(indexes);
+
+    return indexes;
   }
 
   function selectRandomTokens() {
@@ -117,9 +124,7 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
       rng
     );
 
-    // NOTE: event name (with the double underscore) is kept as-is so existing
-    // log data stays comparable.
-    logAction('random__tokens_selected', {
+    logAction('random_tokens_selected', {
       token_count: tokenCount,
       sentence_count: indexes.length,
       seed: RANDOM_SELECTION_SEED,
@@ -134,6 +139,7 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     toggleSentence,
     removeSentence,
     clearAll,
+    replaceSelection,
     selectFirstTokens,
     selectRandomTokens,
   };

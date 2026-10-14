@@ -2,14 +2,12 @@ import { ROUTES } from '~/routes/paths';
 
 export type NavItem = {
   name: string;
-  path: string;
+  /** Items without a path are plain labels. */
+  path?: string;
 };
 
 export const getNavItems = (userId: string | null): NavItem[] => [
-  // { name: 'Home', path: '/home' },
-  // { name: 'About', path: '/about' },
-  {
-    name: userId ? `ID: ${userId}` : 'Login',
-    path: ROUTES.login,
-  },
+  userId
+    ? { name: `ID: ${userId}` }
+    : { name: 'Login', path: ROUTES.login },
 ];

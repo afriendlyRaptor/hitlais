@@ -1,3 +1,5 @@
+import { shuffle } from './random';
+
 /**
  * Pure helpers for picking sentences under a token budget.
  * `counts[i]` is the token count of sentence `i`.
@@ -26,19 +28,16 @@ export function pickFirstWithinLimit(counts: number[], limit: number) {
   return { indexes, tokenCount };
 }
 
-/** Shuffle (Fisher–Yates, driven by `rng`) and greedily fill up to `limit`. */
+/** Shuffle (driven by `rng`) and greedily fill up to `limit`. */
 export function pickRandomWithinLimit(
   counts: number[],
   limit: number,
   rng: () => number
 ) {
-  const order = counts.map((_, index) => index);
-
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-
-    [order[i], order[j]] = [order[j], order[i]];
-  }
+  const order = shuffle(
+    counts.map((_, index) => index),
+    rng
+  );
 
   let tokenCount = 0;
   const indexes: number[] = [];

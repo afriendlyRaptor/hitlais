@@ -1,6 +1,6 @@
 import { postApi } from './api';
+import { getLogContext } from './logContext';
 import { getUserId } from './user';
-import { getStudyTask } from '~/config';
 import { ROUTES } from '~/routes/paths';
 
 export type LogPayload = Record<string, unknown>;
@@ -15,7 +15,7 @@ function redirectToLogin() {
 }
 
 /**
- * Every log entry contains the persisted user ID.
+ * Every log entry contains the persisted user ID and the current study step.
  * If there is no user ID, the user is redirected to the login page
  * and the log is not sent.
  */
@@ -27,12 +27,13 @@ export function logAction(type: string, payload?: LogPayload) {
     return;
   }
 
-  const taskId = new URLSearchParams(window.location.search).get('task');
+  const { step, taskId, documentId } = getLogContext();
 
   postApi('/log', {
     userId,
     taskId: taskId ?? 'None',
-    documentId: getStudyTask(taskId).documentId,
+    documentId,
+    step,
     type,
     timestamp: Date.now(),
     payload,

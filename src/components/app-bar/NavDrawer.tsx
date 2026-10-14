@@ -53,15 +53,19 @@ export function NavDrawer({
 
           <List>
             {items.map((item) => (
-              <ListItem key={item.path} disablePadding>
-                <ListItemButton
-                  component={Link}
-                  href={item.path}
-                  onClick={() => onItemClick(item)}
-                  sx={{ textAlign: 'center' }}
-                >
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
+              <ListItem key={item.name} disablePadding>
+                {item.path ? (
+                  <ListItemButton
+                    component={Link}
+                    href={item.path}
+                    onClick={() => onItemClick(item)}
+                    sx={{ textAlign: 'center' }}
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ) : (
+                  <ListItemText primary={item.name} sx={{ py: 1 }} />
+                )}
               </ListItem>
             ))}
           </List>

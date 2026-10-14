@@ -55,3 +55,4 @@ export type DeepPartial<T> = {
 export type RequireKeys<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 export * from './study';
+export * from './questionnaire';
