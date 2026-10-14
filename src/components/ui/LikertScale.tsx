@@ -20,7 +20,7 @@ type LikertScaleProps = {
   disabled?: boolean;
 };
 
-const SCALE = [1, 2, 3, 4];
+const SCALE = [1, 2, 3, 4, 5];
 
 export function LikertScale({
   id,

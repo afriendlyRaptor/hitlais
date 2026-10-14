@@ -15,7 +15,7 @@ const QUESTIONS: LikertQuestion[] = [
   { id: 'q2', question: 'Der Score hat meine Satzauswahl beeinflusst.' },
   {
     id: 'q3',
-    question: 'Zusammenfassungen von Menschen sind besser als die einer KI',
+    question: 'Durch die gezielte Auswahl wichtiger Sätze konnte ich die Qualität der Zusammenfassung verbessern.',
   },
   {
     id: 'q4',

@@ -17,7 +17,7 @@ export default function Login() {
     setUserId(id);
 
     logAction('userId_set', { userID: id });
-    navigate('/home');
+    navigate('/summarizer');
   };
 
   return (
