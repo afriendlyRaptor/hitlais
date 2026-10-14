@@ -1,7 +1,12 @@
+import { Box, Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'wouter';
-import { Home, ArrowLeft } from 'lucide-react';
-import { Button } from '@mui/material';
+import { pillSx } from '~/components/common';
+import { ROUTES } from '~/routes/paths';
 import { logAction } from '~/services';
+
+const buttonSx = { ...pillSx, px: 4, py: 1.25 };
 
 export default function NotFound() {
   const handleGoBack = () => {
@@ -10,50 +15,75 @@ export default function NotFound() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="text-center">
-        <h1 className="text-muted-foreground/20 text-9xl font-bold">404</h1>
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 4,
+      }}
+    >
+      <Box sx={{ textAlign: 'center' }}>
+        <Box
+          component="h1"
+          sx={{
+            m: 0,
+            fontSize: '8rem',
+            fontWeight: 700,
+            lineHeight: 1,
+            color: 'text.secondary',
+            opacity: 0.2,
+          }}
+        >
+          404
+        </Box>
 
-        <h2 className="mt-4 text-2xl font-semibold">Page not found</h2>
+        <Box
+          component="h2"
+          sx={{
+            mt: 2,
+            mb: 0,
+            fontSize: '1.5rem',
+            lineHeight: '2rem',
+            fontWeight: 600,
+          }}
+        >
+          Page not found
+        </Box>
 
-        <p className="text-muted-foreground mt-2">
+        <Box component="p" sx={{ mt: 1, mb: 0, color: 'text.secondary' }}>
           Sorry, we couldn't find the page you're looking for.
-        </p>
+        </Box>
 
-        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <Box
+          sx={{
+            mt: 4,
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
+            justifyContent: { sm: 'center' },
+            gap: 2,
+          }}
+        >
           <Button
             component={Link}
-            href="/"
+            href={ROUTES.root}
             variant="contained"
             onClick={() => logAction('not_found_go_home')}
-            sx={{
-              borderRadius: '999px',
-              px: 4,
-              py: 1.25,
-              textTransform: 'none',
-              fontWeight: 600,
-            }}
+            sx={buttonSx}
           >
-            <Home className="mr-2 h-4 w-4" />
+            <HomeIcon sx={{ mr: 1, fontSize: 16 }} />
             Go home
           </Button>
 
-          <Button
-            variant="outlined"
-            onClick={handleGoBack}
-            sx={{
-              borderRadius: '999px',
-              px: 4,
-              py: 1.25,
-              textTransform: 'none',
-              fontWeight: 600,
-            }}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button variant="outlined" onClick={handleGoBack} sx={buttonSx}>
+            <ArrowBackIcon sx={{ mr: 1, fontSize: 16 }} />
             Go back
           </Button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }

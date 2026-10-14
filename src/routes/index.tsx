@@ -1,21 +1,7 @@
 import { Suspense } from 'react';
 import { Router, Route, Switch } from 'wouter';
 import { routes } from './routes';
-import { Skeleton } from '~/components/ui';
-
-/**
- * Loading fallback component
- */
-function RouteLoading() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <Skeleton className="h-12 w-12 rounded-full" />
-        <Skeleton className="h-4 w-32" />
-      </div>
-    </div>
-  );
-}
+import { RouteLoading } from './RouteLoading';
 
 /**
  * Application router using Wouter
@@ -40,3 +26,4 @@ export function AppRouter() {
 }
 
 export { routes } from './routes';
+export { ROUTES, summarizerPath } from './paths';

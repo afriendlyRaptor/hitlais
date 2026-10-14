@@ -1,5 +1,5 @@
-import { Box, Container, Typography, Link, Divider } from '@mui/material';
-import { DrawerAppBar } from '~/components/ui';
+import { Box, Container, Divider, Link, Typography } from '@mui/material';
+import { DrawerAppBar } from '~/components/app-bar';
 
 export default function About() {
   return (
@@ -12,12 +12,10 @@ export default function About() {
             About
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" sx={{ mb: 2 }}>
             This Web interface is part of my bachelor thesis. It allows for
             human in the loop sentence selection to aid AI summaries.
           </Typography>
-
-          <Typography variant="body1" paragraph></Typography>
 
           <Divider sx={{ my: 4 }} />
 

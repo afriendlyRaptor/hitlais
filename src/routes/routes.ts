@@ -1,4 +1,5 @@
-import { lazy } from 'react';
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
+import { ROUTES } from './paths';
 
 // Lazy-loaded screens
 const Summarizer = lazy(() => import('~/screens/summarizer'));
@@ -10,7 +11,7 @@ const Survey2 = lazy(() => import('~/screens/summary-comparison'));
 
 export interface RouteConfig {
   path: string;
-  component: React.LazyExoticComponent<React.ComponentType>;
+  component: LazyExoticComponent<ComponentType>;
   title: string;
   isPrivate?: boolean;
 }
@@ -20,45 +21,13 @@ export interface RouteConfig {
  * Add new routes here - they'll automatically be registered in the router
  */
 export const routes: RouteConfig[] = [
-  {
-    path: '/',
-    component: Login,
-    title: 'User Login',
-  },
-  {
-    path: '/summarizer',
-    component: Summarizer,
-    title: 'Home',
-  },
-
-  {
-    path: '/about',
-    component: About,
-    title: 'About',
-  },
-
-  {
-    path: '/login',
-    component: Login,
-    title: 'User Login',
-  },
-
-  {
-    path: '/survey1',
-    component: Survey1,
-    title: 'Survey',
-  },
-  {
-    path: '/survey2',
-    component: Survey2,
-    title: 'Comparison',
-  },
-
-  {
-    path: '*',
-    component: NotFound,
-    title: 'Not Found',
-  },
+  { path: ROUTES.root, component: Login, title: 'User Login' },
+  { path: ROUTES.summarizer, component: Summarizer, title: 'Home' },
+  { path: ROUTES.about, component: About, title: 'About' },
+  { path: ROUTES.login, component: Login, title: 'User Login' },
+  { path: ROUTES.survey1, component: Survey1, title: 'Survey' },
+  { path: ROUTES.survey2, component: Survey2, title: 'Comparison' },
+  { path: '*', component: NotFound, title: 'Not Found' },
 ];
 
 /**

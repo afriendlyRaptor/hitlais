@@ -1,11 +1,19 @@
 export * from './api';
-export { Alertify, default as alertify } from './alertify-services';
 export {
-  logAction,
+  Alertify,
+  default as alertify,
+  toastStore,
+  type ToastPosition,
+  type ToastSeverity,
+  type ToastState,
+} from './alertify-services';
+export { logAction, type LogPayload } from './logger';
+export {
   getUserId,
+  setUserId,
+  clearUserId,
   USER_ID_CHANGED_EVENT,
-  type LogPayload,
-} from './logger';
+} from './user';
 
 export { analyzeSentences, type AnalyzeResponse } from './analyzer';
 

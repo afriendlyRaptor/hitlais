@@ -1,66 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { storageKeys } from '~/config';
+import { jsonArrayCodec, stringCodec } from '~/lib/storage';
 import { Alertify, analyzeSentences, logAction } from '~/services';
+import type { ScoreEntry, SelectedSentence } from '~/types';
+import { usePersistedState } from './usePersistedState';
 
-type ScoreEntry = {
-  timestamp: number;
-  score: number;
-};
-
-const getSummaryKey = (taskId: string) => `generated-summary-${taskId}`;
-
-const getScoreHistoryKey = (taskId: string) => `score-history-${taskId}`;
+const scoreHistoryCodec = jsonArrayCodec<ScoreEntry>();
 
 export function useSummaryAnalysis(taskId: string) {
-  const [summary, setSummary] = useState<string>(() => {
-    return localStorage.getItem(getSummaryKey(taskId)) ?? '';
-  });
+  const [summary, setSummary] = usePersistedState(
+    storageKeys.summary(taskId),
+    stringCodec
+  );
+
+  const [scoreHistory, setScoreHistory] = usePersistedState(
+    storageKeys.scoreHistory(taskId),
+    scoreHistoryCodec
+  );
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>(() => {
-    const stored = localStorage.getItem(getScoreHistoryKey(taskId));
-
-    if (!stored) {
-      return [];
-    }
-
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    const storedSummary = localStorage.getItem(getSummaryKey(taskId)) ?? '';
-
-    const storedScoreHistory = localStorage.getItem(getScoreHistoryKey(taskId));
-
-    setSummary(storedSummary);
-
-    if (storedScoreHistory) {
-      try {
-        setScoreHistory(JSON.parse(storedScoreHistory));
-      } catch {
-        setScoreHistory([]);
-      }
-    } else {
-      setScoreHistory([]);
-    }
-  }, [taskId]);
-
-  // Persist summary
-  useEffect(() => {
-    localStorage.setItem(getSummaryKey(taskId), summary);
-  }, [taskId, summary]);
-
-  // Persist score history
-  useEffect(() => {
-    localStorage.setItem(
-      getScoreHistoryKey(taskId),
-      JSON.stringify(scoreHistory)
-    );
-  }, [taskId, scoreHistory]);
 
   const handleAnalyze = async (
     selectedSentences: SelectedSentence[],
@@ -83,8 +41,6 @@ export function useSummaryAnalysis(taskId: string) {
     setIsAnalyzing(true);
 
     try {
-      // Generate summary
-
       const analyzeResponse = await analyzeSentences(
         selectedSentences,
         referenceSummary
@@ -94,8 +50,6 @@ export function useSummaryAnalysis(taskId: string) {
       const generatedSummary = result.summary;
 
       setSummary(generatedSummary);
-
-      localStorage.setItem(getSummaryKey(taskId), generatedSummary);
 
       logAction('rate_summary', {
         task_id: taskId,
@@ -109,16 +63,13 @@ export function useSummaryAnalysis(taskId: string) {
       // Upscaled to 0-100
       const score = result.rougeL * 100;
 
-      setScoreHistory((prev) => [
-        ...prev,
+      setScoreHistory((previous) => [
+        ...previous,
         {
           timestamp: Date.now(),
           score,
         },
       ]);
-      // ---------------------------------------------------
-      // 3. Logging
-      // ---------------------------------------------------
 
       logAction('summary_scores', {
         summary_length: generatedSummary.length,
@@ -143,8 +94,6 @@ export function useSummaryAnalysis(taskId: string) {
       generated_summary: summary,
       score_history: scoreHistory,
     });
-    localStorage.removeItem(getSummaryKey(taskId));
-    localStorage.removeItem(getScoreHistoryKey(taskId));
 
     setSummary('');
     setScoreHistory([]);

@@ -1,4 +1,5 @@
 import { postApi } from './api';
+import type { SelectedSentence } from '~/types';
 
 export interface AnalyzeResult {
   job_id: string;

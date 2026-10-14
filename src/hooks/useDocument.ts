@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { getDocument } from '~/services';
+import { useCallback, useState } from 'react';
+import { getDocument, type DocumentResult } from '~/services';
 
 export function useDocument() {
   const [document, setDocument] = useState<DocumentResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function loadDocument(id: number) {
+  const loadDocument = useCallback(async (id: number) => {
     setIsLoading(true);
 
     try {
@@ -17,7 +17,7 @@ export function useDocument() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   return {
     document,

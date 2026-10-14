@@ -1,61 +1,16 @@
 import { postApi } from './api';
-import { DEFAULT_TASK_ID, getStudyTask } from '~/config';
+import { getUserId } from './user';
+import { getStudyTask } from '~/config';
+import { ROUTES } from '~/routes/paths';
 
 export type LogPayload = Record<string, unknown>;
-
-const USER_ID_KEY = 'study_user_id';
-const LOGIN_PATH = '/login';
-export const USER_ID_CHANGED_EVENT = 'study-user-id-changed';
-
-/**
- * Store the user ID persistently.
- */
-
-export function setUserId(id: string) {
-  const trimmedId = id.trim();
-
-  if (!trimmedId) {
-    return;
-  }
-
-  localStorage.clear();
-  localStorage.setItem(USER_ID_KEY, trimmedId);
-
-  window.dispatchEvent(new Event(USER_ID_CHANGED_EVENT));
-}
-
-/**
- * Get the currently logged-in user ID.
- */
-export function getUserId(): string | null {
-  return localStorage.getItem(USER_ID_KEY);
-}
-
-/**
- * Remove the current user ID.
- */
-export function clearUserId() {
-  localStorage.removeItem(USER_ID_KEY);
-}
-
-export function getTaskId(): string | null {
-  const params = new URLSearchParams(window.location.search);
-  const taskId = params.get('task') ?? DEFAULT_TASK_ID;
-  return taskId;
-}
-
-export function getTask(): StudyTaskConfig | null {
-  const taskId = getTaskId();
-  const task = getStudyTask(taskId);
-  return task ?? null;
-}
 
 /**
  * Redirect to the login page.
  */
 function redirectToLogin() {
-  if (window.location.pathname !== LOGIN_PATH) {
-    window.location.replace(LOGIN_PATH);
+  if (window.location.pathname !== ROUTES.login) {
+    window.location.replace(ROUTES.login);
   }
 }
 
@@ -66,19 +21,18 @@ function redirectToLogin() {
  */
 export function logAction(type: string, payload?: LogPayload) {
   const userId = getUserId();
-  const task = getTask();
-  const params = new URLSearchParams(window.location.search);
-  const taskId = params.get('task') ?? 'None';
 
   if (!userId) {
     redirectToLogin();
     return;
   }
 
+  const taskId = new URLSearchParams(window.location.search).get('task');
+
   postApi('/log', {
     userId,
-    taskId: taskId,
-    documentId: task.documentId,
+    taskId: taskId ?? 'None',
+    documentId: getStudyTask(taskId).documentId,
     type,
     timestamp: Date.now(),
     payload,

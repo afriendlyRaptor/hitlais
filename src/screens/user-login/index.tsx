@@ -1,12 +1,13 @@
+import { type FormEvent } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { setUserId } from '~/services/logger';
 import { useLocation } from 'wouter';
-import { logAction } from '~/services';
+import { ROUTES } from '~/routes/paths';
+import { logAction, setUserId } from '~/services';
 
 export default function Login() {
   const [, navigate] = useLocation();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -17,7 +18,7 @@ export default function Login() {
     setUserId(id);
 
     logAction('userId_set', { userID: id });
-    navigate('/summarizer');
+    navigate(ROUTES.summarizer);
   };
 
   return (

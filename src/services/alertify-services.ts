@@ -1,6 +1,17 @@
-import toast from 'react-hot-toast';
+/**
+ * Alertify - imperative toast API (usable outside React components).
+ *
+ * This file only holds the state; the <ToastHost /> component (rendered once in
+ * RootLayout) subscribes to it and draws the toast with MUI.
+ * Only one toast is visible at a time: showing a new one replaces the old one.
+ *
+ * @example
+ * Alertify.success('User created successfully');
+ * Alertify.error('Failed to save changes');
+ * Alertify.info('Please wait...');
+ */
 
-type ToastPosition =
+export type ToastPosition =
   | 'top-left'
   | 'top-center'
   | 'top-right'
@@ -8,93 +19,104 @@ type ToastPosition =
   | 'bottom-center'
   | 'bottom-right';
 
-// Track the current toast ID to dismiss before showing new one
-let currentToastId: string | undefined;
+export type ToastSeverity = 'success' | 'error' | 'info' | 'loading';
 
-/**
- * Alertify Service - Wrapper around react-hot-toast
- * Auto-dismisses previous toast before showing new one
- *
- * @example
- * Alertify.success('User created successfully');
- * Alertify.error('Failed to save changes');
- * Alertify.info('Please wait...');
- */
-export const Alertify = {
-  /**
-   * Show a success toast
-   */
-  success(message: string, position: ToastPosition = 'bottom-right') {
-    if (currentToastId) {
-      toast.dismiss(currentToastId);
-    }
-    currentToastId = toast.success(message, { position });
-    return currentToastId;
-  },
+export interface ToastState {
+  id: string;
+  message: string;
+  severity: ToastSeverity;
+  position: ToastPosition;
+}
 
-  /**
-   * Show an error toast
-   */
-  error(message: string, position: ToastPosition = 'bottom-right') {
-    if (currentToastId) {
-      toast.dismiss(currentToastId);
-    }
-    currentToastId = toast.error(message, { position });
-    return currentToastId;
-  },
+let current: ToastState | null = null;
+let nextId = 0;
+const listeners = new Set<() => void>();
 
-  /**
-   * Show an info toast (default style)
-   */
-  info(message: string, position: ToastPosition = 'bottom-right') {
-    if (currentToastId) {
-      toast.dismiss(currentToastId);
-    }
-    currentToastId = toast(message, {
-      position,
-      icon: 'ℹ️',
-    });
-    return currentToastId;
-  },
+function emit() {
+  listeners.forEach((listener) => listener());
+}
 
-  /**
-   * Show a loading toast (returns a function to update/dismiss it)
-   */
-  loading(message: string, position: ToastPosition = 'bottom-right') {
-    if (currentToastId) {
-      toast.dismiss(currentToastId);
-    }
-    currentToastId = toast.loading(message, { position });
-    return {
-      id: currentToastId,
-      success: (successMessage: string) => {
-        toast.success(successMessage, { id: currentToastId });
-      },
-      error: (errorMessage: string) => {
-        toast.error(errorMessage, { id: currentToastId });
-      },
-      dismiss: () => {
-        toast.dismiss(currentToastId);
-      },
+/** Subscription interface consumed by <ToastHost /> via useSyncExternalStore. */
+export const toastStore = {
+  subscribe(listener: () => void) {
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
     };
   },
+  getSnapshot: () => current,
+};
+
+function show(
+  severity: ToastSeverity,
+  message: string,
+  position: ToastPosition
+): string {
+  nextId += 1;
+  const id = `toast-${nextId}`;
+
+  current = { id, message, severity, position };
+  emit();
+
+  return id;
+}
+
+function update(id: string, severity: ToastSeverity, message: string) {
+  if (current?.id !== id) {
+    return;
+  }
+
+  current = { ...current, severity, message };
+  emit();
+}
+
+function dismiss(toastId?: string) {
+  if (!current || (toastId && toastId !== current.id)) {
+    return;
+  }
+
+  current = null;
+  emit();
+}
+
+export const Alertify = {
+  success(message: string, position: ToastPosition = 'bottom-right') {
+    return show('success', message, position);
+  },
+
+  error(message: string, position: ToastPosition = 'bottom-right') {
+    return show('error', message, position);
+  },
+
+  info(message: string, position: ToastPosition = 'bottom-right') {
+    return show('info', message, position);
+  },
+
+  /**
+   * Show a loading toast (returns handles to update/dismiss it)
+   */
+  loading(message: string, position: ToastPosition = 'bottom-right') {
+    const id = show('loading', message, position);
+
+    return {
+      id,
+      success: (successMessage: string) =>
+        update(id, 'success', successMessage),
+      error: (errorMessage: string) => update(id, 'error', errorMessage),
+      dismiss: () => dismiss(id),
+    };
+  },
+
+  /**
+   * Dismiss a specific toast (defaults to the current one)
+   */
+  dismiss,
 
   /**
    * Dismiss all toasts
    */
   dismissAll() {
-    toast.dismiss();
-    currentToastId = undefined;
-  },
-
-  /**
-   * Dismiss a specific toast
-   */
-  dismiss(toastId?: string) {
-    toast.dismiss(toastId || currentToastId);
-    if (!toastId || toastId === currentToastId) {
-      currentToastId = undefined;
-    }
+    dismiss();
   },
 };
 

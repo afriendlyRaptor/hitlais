@@ -1,54 +1,35 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import seedrandom from 'seedrandom';
-import { logAction, Alertify } from '~/services';
+import { RANDOM_SELECTION_SEED, TOKEN_LIMIT, storageKeys } from '~/config';
 import { countTokens } from '~/lib/sentence-utils';
+import { jsonArrayCodec } from '~/lib/storage';
+import {
+  pickFirstWithinLimit,
+  pickRandomWithinLimit,
+  sumTokens,
+} from '~/lib/token-budget';
+import { Alertify, logAction } from '~/services';
+import type { SelectedSentence } from '~/types';
+import { usePersistedState } from './usePersistedState';
 
-const TOKEN_LIMIT = 1010;
-const RANDOM_SELECTION_SEED = 12345;
+const selectionCodec = jsonArrayCodec<number>();
 
+// Shared by every hook instance, so repeated "select random" clicks walk one
+// deterministic sequence.
 const rng = seedrandom(RANDOM_SELECTION_SEED);
 
-const getStorageKey = (taskId: string) => `sentence-selection-${taskId}`;
-
 export function useSentenceSelection(sentences: string[], taskId: string) {
-  const [selected, setSelected] = useState<number[]>([]);
-
-  const [hasLoadedSelection, setHasLoadedSelection] = useState(false);
+  const [selected, setSelected] = usePersistedState(
+    storageKeys.selection(taskId),
+    selectionCodec
+  );
 
   const sentenceTokenCounts = useMemo(
     () => sentences.map((sentence) => countTokens(sentence)),
     [sentences]
   );
 
-  useEffect(() => {
-    const stored = localStorage.getItem(getStorageKey(taskId));
-
-    if (!stored) {
-      setSelected([]);
-    } else {
-      try {
-        setSelected(JSON.parse(stored));
-      } catch {
-        setSelected([]);
-      }
-    }
-
-    setHasLoadedSelection(true);
-  }, [taskId]);
-
-  useEffect(() => {
-    if (!hasLoadedSelection) {
-      return;
-    }
-
-    localStorage.setItem(getStorageKey(taskId), JSON.stringify(selected));
-  }, [taskId, selected, hasLoadedSelection]);
-
-  // Persist selection
-  useEffect(() => {
-    localStorage.setItem(getStorageKey(taskId), JSON.stringify(selected));
-  }, [taskId, selected]);
-
+  // Drop stored indexes that don't exist in the loaded document.
   useEffect(() => {
     if (sentences.length === 0) {
       return;
@@ -57,9 +38,9 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     setSelected((previous) =>
       previous.filter((index) => index >= 0 && index < sentences.length)
     );
-  }, [sentences.length]);
+  }, [sentences.length, setSelected]);
 
-  const selectedSentences = useMemo(
+  const selectedSentences = useMemo<SelectedSentence[]>(
     () =>
       [...selected]
         .sort((a, b) => a - b)
@@ -75,14 +56,9 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     const wasSelected = selected.includes(index);
 
     if (!wasSelected) {
-      const currentTokenCount = selected.reduce(
-        (total, selectedIndex) => total + sentenceTokenCounts[selectedIndex],
-        0
-      );
+      const currentTokenCount = sumTokens(selected, sentenceTokenCounts);
 
-      const newSentenceTokens = sentenceTokenCounts[index];
-
-      if (currentTokenCount + newSentenceTokens > TOKEN_LIMIT) {
+      if (currentTokenCount + sentenceTokenCounts[index] > TOKEN_LIMIT) {
         Alertify.error('Die maximale Textmenge wurde erreicht.');
         return;
       }
@@ -100,6 +76,7 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
         : [...previous, index]
     );
   }
+
   function removeSentence(index: number) {
     logAction('sentence_removed', {
       index,
@@ -116,24 +93,14 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
       text: selectedSentences,
     });
 
-    localStorage.removeItem(getStorageKey(taskId));
     setSelected([]);
   }
 
   function selectFirstTokens() {
-    let tokenCount = 0;
-    const indexes: number[] = [];
-
-    for (let index = 0; index < sentences.length; index++) {
-      const tokens = sentenceTokenCounts[index];
-
-      if (tokenCount + tokens > TOKEN_LIMIT) {
-        break;
-      }
-
-      indexes.push(index);
-      tokenCount += tokens;
-    }
+    const { indexes, tokenCount } = pickFirstWithinLimit(
+      sentenceTokenCounts,
+      TOKEN_LIMIT
+    );
 
     logAction('first_tokens_selected', {
       token_count: tokenCount,
@@ -144,41 +111,21 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
   }
 
   function selectRandomTokens() {
-    const indexes = sentences.map((_, index) => index);
+    const { indexes, tokenCount } = pickRandomWithinLimit(
+      sentenceTokenCounts,
+      TOKEN_LIMIT,
+      rng
+    );
 
-    for (let i = indexes.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-
-      [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
-    }
-
-    let tokenCount = 0;
-    const selectedIndexes: number[] = [];
-
-    for (const index of indexes) {
-      const tokens = sentenceTokenCounts[index];
-
-      if (tokens > TOKEN_LIMIT) {
-        continue;
-      }
-
-      if (tokenCount + tokens <= TOKEN_LIMIT) {
-        selectedIndexes.push(index);
-        tokenCount += tokens;
-      }
-
-      if (tokenCount === TOKEN_LIMIT) {
-        break;
-      }
-    }
-
+    // NOTE: event name (with the double underscore) is kept as-is so existing
+    // log data stays comparable.
     logAction('random__tokens_selected', {
       token_count: tokenCount,
-      sentence_count: selectedIndexes.length,
+      sentence_count: indexes.length,
       seed: RANDOM_SELECTION_SEED,
     });
 
-    setSelected(selectedIndexes);
+    setSelected(indexes);
   }
 
   return {
