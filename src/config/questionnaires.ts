@@ -11,29 +11,59 @@ const taskQuestionnaire: Questionnaire = {
   description: likertHint,
   items: [
     {
-      id: 'satisfied',
+      id: 'startSummaryQuality',
       type: 'likert',
-      question: 'Ich bin mit meiner finalen Zusammenfassung zufrieden.',
+      question:
+        'Die zu Beginn angezeigte Zusammenfassung war bereits von guter Qualität.',
     },
     {
-      id: 'betterThanAi',
+      id: 'controlledImprovement',
       type: 'likert',
-      question: 'Ich kann besser zusammenfassen als eine KI.',
+      question:
+        'Durch die gezielte Auswahl wichtiger Sätze konnte ich die Qualität der Zusammenfassung verbessern.',
     },
     {
-      id: 'humanHelps',
+      id: 'easeOfSelection',
       type: 'likert',
-      question: 'Mit menschlicher Hilfe werden KI-Zusammenfassungen besser.',
+      question:
+        'Es ﬁel mir leicht, relevante Sätze im Originaldokument zu identiﬁzieren.',
+    },
+    //    {
+    //      id: 'easeOfUse',
+    //      type: 'likert',
+    //      question: 'Die Auswahl und Abwahl von Sätzen war einfach und intuitiv.',
+    //    },
+    {
+      id: 'coherantGeneration',
+      type: 'likert',
+      question:
+        'Ich konnte gut nachvollziehen, wie sich meine Satzauswahl auf die generierte Zusammenfassung auswirkte.',
+    },
+
+    {
+      id: 'feelingInControll',
+      type: 'likert',
+      question:
+        'Ich hatte das Gefühl, die generierte Zusammenfassung durch meine Satzauswahl gezielt beeinﬂussen zu können.',
+    },
+
+    {
+      id: 'betterWriteMyself',
+      type: 'likert',
+      question:
+        'Es wäre für mich einfacher gewesen, direkt selbst eine Zusammenfassung zu schreiben.',
     },
     {
-      id: 'uiDisturbed',
+      id: 'summarySatisfaction',
       type: 'likert',
-      question: 'Die Benutzeroberfläche hat mich gestört.',
+      question:
+        'Ich bin mit der Qualität meiner ﬁnalen Zusammenfassung zufrieden.',
     },
     {
-      id: 'strategy',
+      id: 'troubles',
       type: 'text',
-      question: 'Wie sind Sie bei der Auswahl der Sätze vorgegangen?',
+      question:
+        'Was hat Ihnen bei der Verbesserung der Zusammenfassung besonders viel Mühe bereitet?',
       required: true,
     },
     {
@@ -49,10 +79,54 @@ const scoreTaskQuestionnaire: Questionnaire = {
   items: [
     ...taskQuestionnaire.items.slice(0, 4),
     {
-      id: 'scoreInfluenced',
+      id: 'scoreHelped',
       type: 'likert',
-      question: 'Der Score hat meine Satzauswahl beeinflusst.',
+      question:
+        ' Der angezeigte Score hat mir geholfen, die Qualität der generierten Zusammenfassungen einzuschätzen.',
     },
+    {
+      id: 'scoreSpeed',
+      type: 'likert',
+      question:
+        'Mithilfe des Scores konnte ich schneller eine gute Zusammenfassung erstellen.',
+    },
+    {
+      id: 'scoreInfluence',
+      type: 'likert',
+      question:
+        'Der Score hat meine Entscheidung beeinﬂusst, welche Sätze ich auswähle.',
+    },
+    {
+      id: 'scoreInfluence',
+      type: 'likert',
+      question:
+        'Der Score hat meine Entscheidung beeinﬂusst, welche Sätze ich auswähle.',
+    },
+    {
+      id: 'scoreCoherant',
+      type: 'likert',
+      question:
+        'Die Veränderungen des Scores nach einer Anpassung meiner Satzauswahl waren für mich nachvollziehbar.',
+    },
+    {
+      id: 'scoreMaximized',
+      type: 'likert',
+      question:
+        'Ich habe gezielt verschiedene Satzauswahlen ausprobiert, um einen möglichst hohen Score zu erreichen.',
+    },
+    {
+      id: 'scoreSensible',
+      type: 'likert',
+      question:
+        'Ich hatte den Eindruck, dass eine höhere Punktzahl tatsächlich einer besseren Zusammenfassung entsprach.',
+    },
+    {
+      id: 'scoreWanted',
+      type: 'likert',
+      question:
+        'Ich würde es bevorzugen, auch bei zukünftigen Zusammenfassungsaufgaben einen solchen Score angezeigt zu bekommen.',
+    },
+
     ...taskQuestionnaire.items.slice(4),
   ],
 };
@@ -66,40 +140,43 @@ const comparisonQuestionnaire: Questionnaire = {
       id: 'sureWhichIsBetter',
       type: 'likert',
       question:
-        'Ich bin mir sicher, welche der beiden Zusammenfassungen besser ist.',
+        'Ich konnte klar erkennen, welche der beiden Zusammenfassungen die bessere Qualität aufweist.',
     },
     {
       id: 'oneWrittenByAi',
       type: 'likert',
       question:
-        'Ich gehe davon aus, dass eine der beiden Zusammenfassungen von KI geschrieben wurde.',
+        'Ich vermute, dass mindestens eine der beiden Zusammenfassungen mithilfe einer KI erstellt wurde.',
     },
     {
       id: 'bothWrittenByAi',
       type: 'likert',
       question:
-        'Ich gehe davon aus, dass beide Zusammenfassungen von KI geschrieben wurden.',
+        'Ich vermute, dass beide Zusammenfassungen mithilfe einer KI erstellt wurden.',
     },
     {
       id: 'chooseMoreHuman',
       type: 'likert',
       question:
-        'Ich wähle aus Prinzip die Zusammenfassung, welche auf mich menschlicher wirkt.',
+        'Bei meiner Entscheidung habe ich besonders darauf geachtet, wie natürlich und menschlich die Zusammenfassungen formuliert sind.',
     },
     {
       id: 'equalQuality',
       type: 'likert',
-      question: 'Ich finde die beiden Zusammenfassungen sind gleichwertig.',
+      question:
+        'Ich empﬁnde die beiden Zusammenfassungen hinsichtlich ihrer Qualität als weitgehend gleichwertig.',
     },
     {
       id: 'bothBad',
       type: 'likert',
-      question: 'Ich finde beide Zusammenfassungen schlecht.',
+      question:
+        'Ich bin mit der Qualität keiner der beiden Zusammenfassungen zufrieden.',
     },
     {
       id: 'reason',
       type: 'text',
-      question: 'Warum haben Sie sich für diese Zusammenfassung entschieden?',
+      question:
+        'Was waren die wichtigsten Gründe dafür, dass Sie diese Zusammenfassung bevorzugt haben?',
       required: true,
     },
     {

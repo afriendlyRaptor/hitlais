@@ -9,7 +9,7 @@ export const RANDOMIZE_BLOCK_ORDER = false;
 
 /** A task is always followed by its questionnaire. */
 export const STUDY_BLOCKS: StudyBlock[] = [
-  { taskId: 'taskA', questionnaireId: 'scoreTaskQuestionnaire' },
+  { taskId: 'taskA', questionnaireId: 'taskQuestionnaire' },
   { taskId: 'taskB', questionnaireId: 'scoreTaskQuestionnaire' },
   { taskId: 'taskC', questionnaireId: 'taskQuestionnaire' },
 ];
