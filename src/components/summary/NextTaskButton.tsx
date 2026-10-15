@@ -43,14 +43,14 @@ export function NextTaskButton({ disabled = false, onConfirm }: Props) {
           zIndex: 1100,
         }}
       >
-        Next
+        Weiter
       </Button>
 
       <ConfirmDialog
         open={confirmOpen}
         id="submit-dialog"
-        title="Submit"
-        description="Are you satisfied with the summary? You will not be able to make any changes after submitting."
+        title="Einreichen"
+        description="Sind Sie mit der Zusammenfassung zufrieden? Nach dem Einreichen können Sie keine Änderungen mehr vornehmen."
         onCancel={handleCancel}
         onConfirm={handleConfirm}
       />
