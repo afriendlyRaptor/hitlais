@@ -56,15 +56,16 @@ export function ScoreDisplayPanel({ history, activeId, onSelect }: Props) {
         <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
           <Typography
             variant="caption"
-            sx={{ fontWeight: 600, color: 'text.secondary', lineHeight: 1 }}
-          >
-            Punkte:
-          </Typography>
-          <Typography
-            variant="caption"
             sx={{ color: 'text.secondary', fontSize: '0.7rem', lineHeight: 1 }}
           >
-            Punkt anklicken, um die Version zu laden
+            Punkt anklicken, um die Version zu laden.
+          </Typography>
+
+          <Typography
+            variant="caption"
+            sx={{ fontWeight: 600, color: 'text.secondary', lineHeight: 1 }}
+          >
+            Score:
           </Typography>
         </Box>
 
