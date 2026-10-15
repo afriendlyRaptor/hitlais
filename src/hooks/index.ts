@@ -11,5 +11,6 @@ export { useTaskSession } from './useTaskSession';
 export { useTaskCountdown } from './useTaskCountdown';
 export { useRecentlyChanged } from './useRecentlyChanged';
 export { useStudyProgress } from './useStudyProgress';
+export { useAdminMode } from './useAdminMode';
 export { useBlockBackNavigation } from './useBlockBackNavigation';
 export { useQuestionnaireForm } from './useQuestionnaireForm';

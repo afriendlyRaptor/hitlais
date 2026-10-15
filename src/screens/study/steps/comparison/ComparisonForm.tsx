@@ -80,6 +80,7 @@ export function ComparisonForm({
               key={option.position}
               option={option}
               selected={selectedPosition === option.position}
+              onSelect={() => setSelectedPosition(option.position)}
             />
           ))}
         </Box>

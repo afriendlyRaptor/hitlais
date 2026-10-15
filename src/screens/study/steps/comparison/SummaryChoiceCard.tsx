@@ -4,14 +4,18 @@ import type { ComparisonOption } from '~/lib/comparison';
 type Props = {
   option: ComparisonOption;
   selected: boolean;
+  onSelect: () => void;
 };
 
 /** One selectable summary. Must be rendered inside a RadioGroup. */
-export function SummaryChoiceCard({ option, selected }: Props) {
+export function SummaryChoiceCard({ option, selected, onSelect }: Props) {
   return (
     <Paper
       variant="outlined"
+      onClick={onSelect}
       sx={{
+        cursor: 'pointer',
+        '&:hover': { borderColor: 'primary.main' },
         p: 2.5,
         borderRadius: 2,
         borderColor: selected ? 'primary.main' : 'divider',

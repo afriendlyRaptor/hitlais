@@ -12,7 +12,6 @@ import { DocumentGate } from '~/components/study';
 import { getStudyTask } from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
-import { TaskHeader } from './TaskHeader';
 
 type Props = {
   taskId: string;
@@ -22,7 +21,8 @@ type Props = {
 
 /** One summarizing task: pick sentences on the left, see the summary on the right. */
 export function TaskStep({ taskId, documentId, onFinish }: Props) {
-  const { description, showScore, timeLimitSeconds } = getStudyTask(taskId);
+  const { description, instructions, showScore, timeLimitSeconds } =
+    getStudyTask(taskId);
   const session = useTaskSession(taskId, documentId);
   const { selection, history } = session;
 
@@ -34,7 +34,10 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
 
   return (
     <>
-      <DrawerAppBar history={showScore ? historyPanel : undefined} />
+      <DrawerAppBar
+        history={showScore ? historyPanel : undefined}
+        taskInfo={{ description, instructions }}
+      />
 
       {timeLimitSeconds != null && (
         <TaskTimer seconds={timeLimitSeconds} onExpire={onFinish} />
@@ -54,7 +57,9 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
       >
         {/* Sentence selection */}
         <Box sx={{ minWidth: 0 }}>
-          <TaskHeader description={description} />
+          <Box sx={{ display: 'block', mb: 3, fontWeight: 700 }}>
+            Sätze können mit klicken Ausgewählt werden:
+          </Box>
 
           <DocumentGate
             isLoading={session.isLoading}

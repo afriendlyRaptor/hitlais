@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import { LineChart, Line } from 'recharts';
+import { CartesianGrid, Line, LineChart, YAxis } from 'recharts';
 import type { HistoryEntry } from '~/types';
 import { HistoryDot } from './HistoryDot';
 
@@ -12,8 +12,16 @@ type Props = {
   width: number;
 };
 
+const CHART_HEIGHT = 72;
 const POINT_SLOT = 16;
 const CHART_PADDING = 16;
+const MARGIN = { top: 12, right: 12, bottom: 12, left: 12 };
+
+/** Keeps the line off the edges without ever leaving the 0-100 range. */
+const paddedDomain: [(min: number) => number, (max: number) => number] = [
+  (min) => Math.max(0, Math.floor(min - 5)),
+  (max) => Math.min(100, Math.ceil(max + 5)),
+];
 
 export function ScoreLineChart({
   history = [],
@@ -34,7 +42,7 @@ export function ScoreLineChart({
         sx={{
           width,
           flexShrink: 0,
-          height: 60,
+          height: CHART_HEIGHT,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -63,12 +71,24 @@ export function ScoreLineChart({
 
   return (
     <Box sx={{ width, flexShrink: 0, px: 2 }}>
-      <LineChart width={chartWidth} height={60} data={visible}>
+      <LineChart
+        width={chartWidth}
+        height={CHART_HEIGHT}
+        data={visible}
+        margin={MARGIN}
+      >
+        <CartesianGrid
+          vertical={false}
+          strokeDasharray="3 3"
+          stroke={theme.palette.divider}
+        />
+        <YAxis hide domain={paddedDomain} />
         <Line
           type="monotone"
           dataKey="score"
           stroke={theme.palette.primary.main}
           strokeWidth={2}
+          strokeOpacity={0.5}
           dot={renderDot}
           activeDot={false}
           isAnimationActive={false}

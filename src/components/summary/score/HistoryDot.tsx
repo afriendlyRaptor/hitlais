@@ -1,4 +1,5 @@
-import { useTheme } from '@mui/material';
+import { useState } from 'react';
+import { alpha, useTheme } from '@mui/material';
 import type { HistoryEntry } from '~/types';
 
 type Props = {
@@ -9,22 +10,44 @@ type Props = {
   onSelect: (entry: HistoryEntry) => void;
 };
 
-/** A clickable point of the score chart; click to return to that version. */
+/**
+ * A clickable point of the score chart. The shown version is red with a halo;
+ * other points grow on hover to signal they can be clicked.
+ */
 export function HistoryDot({ cx, cy, entry, active, onSelect }: Props) {
   const theme = useTheme();
+  const [hovered, setHovered] = useState(false);
+
+  const color = active ? theme.palette.error.main : theme.palette.primary.main;
+  const radius = active ? 6 : hovered ? 6 : 4;
 
   return (
-    <g onClick={() => onSelect(entry)} style={{ cursor: 'pointer' }}>
-      <title>{`${Math.round(entry.score)} Punkte – zu dieser Version zurückkehren`}</title>
+    <g
+      onClick={() => onSelect(entry)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ cursor: 'pointer' }}
+    >
+      <title>
+        {active
+          ? `${Math.round(entry.score)} Punkte (angezeigt)`
+          : `${Math.round(entry.score)} Punkte – klicken, um zu dieser Version zurückzukehren`}
+      </title>
+
       {/* larger invisible target, easier to hit */}
-      <circle cx={cx} cy={cy} r={10} fill="transparent" />
+      <circle cx={cx} cy={cy} r={12} fill="transparent" />
+
+      {(active || hovered) && (
+        <circle cx={cx} cy={cy} r={10} fill={alpha(color, 0.2)} />
+      )}
+
       <circle
         cx={cx}
         cy={cy}
-        r={active ? 5 : 3}
-        fill={theme.palette.primary.main}
-        stroke={active ? theme.palette.background.paper : 'none'}
-        strokeWidth={active ? 2 : 0}
+        r={radius}
+        fill={color}
+        stroke={theme.palette.background.paper}
+        strokeWidth={2}
       />
     </g>
   );

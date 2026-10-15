@@ -3,34 +3,44 @@ import {
   AppBar,
   Box,
   IconButton,
-  ListItemButton,
-  ListItemText,
   Toolbar,
   Typography,
 } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'wouter';
+import { AdminDialog, useAdmin } from '~/components/admin';
 import { APP_NAME } from '~/config';
 import { useUserId } from '~/hooks';
 import { logAction } from '~/services';
 import type { HistoryEntry } from '~/types';
 import { HistoryDrawer, type HistoryPanel } from './HistoryDrawer';
 import { NavDrawer } from './NavDrawer';
+import { NavEntry } from './NavEntry';
 import { getNavItems, type NavItem } from './navItems';
+import { TaskInfoDialog, type TaskInfo } from './TaskInfoDialog';
 
 type Props = {
   /** Adds a button that opens the version history. */
   history?: HistoryPanel;
+  /** Adds an info icon (top left) that shows the current task. */
+  taskInfo?: TaskInfo;
 };
 
 /**
  * https://mui.com/material-ui/react-app-bar/
  */
-export function DrawerAppBar({ history }: Props) {
+export function DrawerAppBar({ history, taskInfo }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const navItems = getNavItems(useUserId());
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+
+  const admin = useAdmin();
+  const navItems = getNavItems(useUserId(), {
+    isAdmin: admin?.isAdmin ?? false,
+    onIdClick: admin ? () => setAdminOpen(true) : undefined,
+  });
 
   const handleDrawerToggle = () => {
     logAction('drawer_toggled', { open: !mobileOpen });
@@ -40,6 +50,11 @@ export function DrawerAppBar({ history }: Props) {
   const handleHistoryToggle = () => {
     logAction('history_drawer_toggled', { open: !historyOpen });
     setHistoryOpen((previous) => !previous);
+  };
+
+  const handleInfoToggle = () => {
+    logAction('task_info_toggled', { open: !infoOpen });
+    setInfoOpen((previous) => !previous);
   };
 
   const handleRestore = (entry: HistoryEntry) => {
@@ -65,6 +80,17 @@ export function DrawerAppBar({ history }: Props) {
           >
             <MenuIcon />
           </IconButton>
+
+          {taskInfo && (
+            <IconButton
+              color="inherit"
+              aria-label="Aufgabe anzeigen"
+              onClick={handleInfoToggle}
+              sx={{ mr: 1, ml: { xs: 0, sm: -1.5 } }}
+            >
+              <InfoOutlinedIcon />
+            </IconButton>
+          )}
 
           <Box
             sx={{
@@ -95,21 +121,9 @@ export function DrawerAppBar({ history }: Props) {
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            {navItems.map((item) =>
-              item.path ? (
-                <ListItemButton
-                  key={item.name}
-                  component={Link}
-                  href={item.path}
-                  onClick={() => handleNavClick(item)}
-                  sx={{ textAlign: 'center' }}
-                >
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              ) : (
-                <ListItemText key={item.name} primary={item.name} sx={{ px: 2 }} />
-              )
-            )}
+            {navItems.map((item) => (
+              <NavEntry key={item.name} item={item} onNavigate={handleNavClick} />
+            ))}
           </Box>
 
           {history && (
@@ -141,6 +155,16 @@ export function DrawerAppBar({ history }: Props) {
           onRestore={handleRestore}
         />
       )}
+
+      {taskInfo && (
+        <TaskInfoDialog
+          open={infoOpen}
+          onClose={handleInfoToggle}
+          {...taskInfo}
+        />
+      )}
+
+      <AdminDialog open={adminOpen} onClose={() => setAdminOpen(false)} />
 
       {/* Spacer so page content starts below the fixed AppBar */}
       <Box sx={{ p: 3 }}>

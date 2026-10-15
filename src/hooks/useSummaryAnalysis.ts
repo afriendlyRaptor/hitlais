@@ -35,16 +35,21 @@ export function useSummaryAnalysis(
         referenceSummary
       );
 
-      onResult({
+      const entry: HistoryEntry = {
         id: Date.now(),
         // RougeL as the main score, upscaled to 0-100
         score: result.rougeL * 100,
         summary: result.summary,
         selected: selectedSentences.map(({ index }) => index),
-      });
+      };
 
+      onResult(entry);
+
+      // entry_id ties what the participant sees to the log (see history_restored)
       logAction('rate_summary', {
+        entry_id: entry.id,
         task_id: taskId,
+        selected_indexes: entry.selected,
         summary_length: result.summary.length,
         generated_summary: result.summary,
         reference_summary: referenceSummary,
@@ -52,6 +57,7 @@ export function useSummaryAnalysis(
       });
 
       logAction('summary_scores', {
+        entry_id: entry.id,
         summary_length: result.summary.length,
         bert_score: result.bertscore_f1,
         rouge1: result.rouge1,

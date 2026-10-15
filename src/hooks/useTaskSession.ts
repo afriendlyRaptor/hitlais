@@ -78,7 +78,7 @@ export function useTaskSession(taskId: string, documentId: number) {
     logAction('history_restored', {
       entry_id: entry.id,
       score: entry.score,
-      selected_count: entry.selected.length,
+      selected_indexes: entry.selected,
     });
     history.activate(entry.id);
     selection.replaceSelection(entry.selected);

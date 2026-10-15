@@ -4,12 +4,10 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemButton,
-  ListItemText,
   Typography,
 } from '@mui/material';
-import { Link } from 'wouter';
 import { APP_NAME } from '~/config';
+import { NavEntry } from './NavEntry';
 import type { NavItem } from './navItems';
 
 const DRAWER_WIDTH = 240;
@@ -54,18 +52,7 @@ export function NavDrawer({
           <List>
             {items.map((item) => (
               <ListItem key={item.name} disablePadding>
-                {item.path ? (
-                  <ListItemButton
-                    component={Link}
-                    href={item.path}
-                    onClick={() => onItemClick(item)}
-                    sx={{ textAlign: 'center' }}
-                  >
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                ) : (
-                  <ListItemText primary={item.name} sx={{ py: 1 }} />
-                )}
+                <NavEntry item={item} onNavigate={onItemClick} />
               </ListItem>
             ))}
           </List>

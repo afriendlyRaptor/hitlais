@@ -20,6 +20,18 @@ export interface StudyPlan {
 
 export const stepId = (step: StudyStep) => `${step.kind}:${step.taskId}`;
 
+const STEP_LABELS: Record<StudyStep['kind'], string> = {
+  instructions: 'Anleitung',
+  task: 'Aufgabe',
+  questionnaire: 'Fragebogen',
+  comparison: 'Vergleich',
+};
+
+export const stepLabel = (step: StudyStep) =>
+  step.kind === 'comparison'
+    ? STEP_LABELS.comparison
+    : `${STEP_LABELS[step.kind]} – ${step.taskId}`;
+
 /** The complete, ordered list of screens one participant goes through. */
 export function buildStudyPlan(userId: string): StudyPlan {
   const blocks = RANDOMIZE_BLOCK_ORDER

@@ -5,7 +5,7 @@ import { usePersistedState } from './usePersistedState';
 
 /**
  * Index of the current study step, kept in localStorage so a reload resumes
- * where the participant was. `advance` only ever moves forward.
+ * where the participant was. Participants only `advance`; `jumpTo` is for admins.
  */
 export function useStudyProgress(stepCount: number) {
   const [index, setIndex] = usePersistedState(
@@ -18,5 +18,10 @@ export function useStudyProgress(stepCount: number) {
     [setIndex, stepCount]
   );
 
-  return [Math.min(index, stepCount), advance] as const;
+  const jumpTo = useCallback(
+    (target: number) => setIndex(Math.max(0, Math.min(target, stepCount))),
+    [setIndex, stepCount]
+  );
+
+  return { index: Math.min(index, stepCount), advance, jumpTo };
 }

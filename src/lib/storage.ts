@@ -39,3 +39,9 @@ export const nullableNumberCodec: StorageCodec<number | null> = {
   parse: (raw) => (raw ? Number(raw) : null),
   stringify: (value) => (value === null ? '' : String(value)),
 };
+
+/** Booleans stored as 'true'; anything else reads as false. */
+export const booleanCodec: StorageCodec<boolean> = {
+  parse: (raw) => raw === 'true',
+  stringify: (value) => String(value),
+};

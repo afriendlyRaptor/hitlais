@@ -1,6 +1,11 @@
 import { useEffect, useLayoutEffect, useMemo } from 'react';
-import { useBlockBackNavigation, useStudyProgress } from '~/hooks';
-import { buildStudyPlan, stepId } from '~/lib/studyPlan';
+import { AdminProvider } from '~/components/admin';
+import {
+  useAdminMode,
+  useBlockBackNavigation,
+  useStudyProgress,
+} from '~/hooks';
+import { buildStudyPlan, stepId, stepLabel } from '~/lib/studyPlan';
 import { logAction, setLogContext } from '~/services';
 import { FinishedStep } from './steps/FinishedStep';
 import { InstructionsStep } from './steps/InstructionsStep';
@@ -15,7 +20,12 @@ type Props = {
 /** Walks the participant through the study plan, one step at a time. */
 export function StudyFlow({ userId }: Props) {
   const plan = useMemo(() => buildStudyPlan(userId), [userId]);
-  const [stepIndex, advance] = useStudyProgress(plan.steps.length);
+  const {
+    index: stepIndex,
+    advance,
+    jumpTo,
+  } = useStudyProgress(plan.steps.length);
+  const { isAdmin, unlock, lock } = useAdminMode();
   const step = plan.steps[stepIndex];
 
   useBlockBackNavigation();
@@ -39,46 +49,66 @@ export function StudyFlow({ userId }: Props) {
     logAction('step_entered', { index: stepIndex });
   }, [stepIndex, plan]);
 
-  if (!step) {
-    return <FinishedStep />;
-  }
+  const renderStep = () => {
+    if (!step) {
+      return <FinishedStep />;
+    }
 
-  const documentId = plan.documentIds[step.taskId];
+    const documentId = plan.documentIds[step.taskId];
 
-  switch (step.kind) {
-    case 'instructions':
-      return (
-        <InstructionsStep
-          key={stepIndex}
-          taskId={step.taskId}
-          onContinue={advance}
-        />
-      );
-    case 'task':
-      return (
-        <TaskStep
-          key={stepIndex}
-          taskId={step.taskId}
-          documentId={documentId}
-          onFinish={advance}
-        />
-      );
-    case 'questionnaire':
-      return (
-        <QuestionnaireStep
-          key={stepIndex}
-          questionnaireId={step.questionnaireId}
-          onFinish={advance}
-        />
-      );
-    case 'comparison':
-      return (
-        <ComparisonStep
-          key={stepIndex}
-          userId={userId}
-          documentId={documentId}
-          onFinish={advance}
-        />
-      );
-  }
+    switch (step.kind) {
+      case 'instructions':
+        return (
+          <InstructionsStep
+            key={stepIndex}
+            taskId={step.taskId}
+            onContinue={advance}
+          />
+        );
+      case 'task':
+        return (
+          <TaskStep
+            key={stepIndex}
+            taskId={step.taskId}
+            documentId={documentId}
+            onFinish={advance}
+          />
+        );
+      case 'questionnaire':
+        return (
+          <QuestionnaireStep
+            key={stepIndex}
+            questionnaireId={step.questionnaireId}
+            onFinish={advance}
+          />
+        );
+      case 'comparison':
+        return (
+          <ComparisonStep
+            key={stepIndex}
+            userId={userId}
+            documentId={documentId}
+            onFinish={advance}
+          />
+        );
+    }
+  };
+
+  return (
+    <AdminProvider
+      value={{
+        isAdmin,
+        unlock,
+        lock,
+        steps: [...plan.steps.map(stepLabel), 'Abschluss'],
+        currentIndex: stepIndex,
+        jumpTo: (index) => {
+          logAction('admin_jump', { from: stepIndex, to: index });
+          jumpTo(index);
+        },
+      }}
+    >
+      {renderStep()}
+    </AdminProvider>
+  );
 }
