@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -81,17 +75,6 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
             <MenuIcon />
           </IconButton>
 
-          {taskInfo && (
-            <IconButton
-              color="inherit"
-              aria-label="Aufgabe anzeigen"
-              onClick={handleInfoToggle}
-              sx={{ mr: 1, ml: { xs: 0, sm: -1.5 } }}
-            >
-              <InfoOutlinedIcon />
-            </IconButton>
-          )}
-
           <Box
             sx={{
               display: { xs: 'none', sm: 'flex' },
@@ -120,9 +103,23 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
             </Typography>
           </Box>
 
+          {taskInfo && (
+            <IconButton
+              color="inherit"
+              aria-label="Aufgabe anzeigen"
+              onClick={handleInfoToggle}
+              sx={{ mr: 1, ml: { xs: 0, sm: -1.5 } }}
+            >
+              <InfoOutlinedIcon />
+            </IconButton>
+          )}
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {navItems.map((item) => (
-              <NavEntry key={item.name} item={item} onNavigate={handleNavClick} />
+              <NavEntry
+                key={item.name}
+                item={item}
+                onNavigate={handleNavClick}
+              />
             ))}
           </Box>
 

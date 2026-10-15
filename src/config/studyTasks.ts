@@ -13,34 +13,56 @@ export type StudyTaskConfig = {
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     documentId: 61434,
-    description: 'Erstellen Sie die best mögliche Zusammenfassung.',
-    instructions: `Sie sehen gleich einen Text. Klicken Sie auf Sätze, um sie auszuwählen. Aus den ausgewählten Sätzen erstellt eine KI eine Zusammenfassung.
+    description: '',
+    instructions: `
+Sie sehen ein Originaldokument und eine daraus automatisch generierte
+Zusammenfassung.
+Ihre Aufgabe besteht darin, die Qualität dieser Zusammenfassung
+zu verbessern, indem Sie gezielt wichtige Sätze aus dem Originaldokument auswählen.
+Auf Basis Ihrer Auswahl können Sie eine neue Zusammenfassung generiert lassen. 
+Sie können Ihre Satzauswahl beliebig oft verändern und die Zusammenfassungen
+beliebig oft generieren lassen.
 
-Mit dem Pfeil in der Mitte erstellen Sie eine neue Zusammenfassung. Rechts sehen Sie das Ergebnis, unten Ihre bisherigen Punkte. Ein Klick auf einen Punkt bringt Sie zu dieser Version zurück.
-
-Klicken Sie auf "Next", wenn Sie mit Ihrer Zusammenfassung zufrieden sind.`,
-    showScore: true,
+Versuchen Sie, innerhalb des Zeitlimits eine möglichst gute
+Zusammenfassung zu erstellen. Sobald Sie mit dem Ergebnis zufrieden sind, können
+Sie Ihre ﬁnale Zusammenfassung jederzeit einreichen.
+`,
+    showScore: false,
+    timeLimitSeconds: 1200, // 20 min
   },
 
   taskB: {
     documentId: 64550,
-    description:
-      'Erstellen Sie die die Zusammenfassung mit der höchsten Punktzahl.',
-    instructions: `Auch in dieser Aufgabe wählen Sie Sätze aus, aus denen eine KI eine Zusammenfassung erstellt.
+    description: ``,
 
-Ihr Ziel ist es, die höchstmögliche Punktzahl zu erreichen. Frühere Versionen erreichen Sie über die Punkte unten oder den Verlauf oben rechts.`,
+    instructions: `
+Wie in der vorherigen Aufgabe können Sie durch die Auswahl relevanter Sätze aus
+dem Originaldokument eine automatisch generierte Zusammenfassung verbessern.
+
+Zusätzlich wird Ihnen nun ein Score angezeigt, der die Qualität der aktuell generierten
+Zusammenfassung bewertet. Nutzen Sie diesen Score als zusätzliche Orientierung, um
+Ihre Satzauswahl und damit die Zusammenfassung schrittweise zu verbessern.
+
+Versuchen Sie, innerhalb des Zeitlimits eine möglichst gute Zusammenfassung 
+zu erreichen. Sobald Sie mit dem Ergebnis zufrieden sind, können Sie Ihre Zusammenfassung einreichen.
+    `,
+
     showScore: true,
+    timeLimitSeconds: 1200, // 20 min
   },
 
   taskC: {
     documentId: 62138,
-    description:
-      'Erstellen Sie die best mögliche Zusammenfassung in der vorgegebenen Zeit.',
-    instructions: `In dieser Aufgabe erstellen Sie wieder eine Zusammenfassung, diesmal ohne Punktzahl und mit einem Zeitlimit.
-
-Wenn die Zeit abgelaufen ist, geht es automatisch weiter.`,
+    description: ``,
+    instructions: `
+Verbessern Sie die angezeigte Zusammenfassung durch die gezielte Auswahl wichtiger
+Sätze aus dem Originaldokument. Für diese Aufgabe steht Ihnen weinger Zeit zur Verfügung.
+Versuchen Sie, innerhalb dieser Zeit eine möglichst gute Zusammenfassung zu
+erstellen. Überlegen Sie, welche Sätze besonders relevant sind, und konzentrieren Sie
+sich auf diese. Sie können Ihre Zusammenfassung jederzeit vor Ablauf der Zeit
+einreichen.`,
     showScore: false,
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 900, // 15 min
   },
 };
 

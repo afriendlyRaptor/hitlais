@@ -7,11 +7,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import {
-  LIKERT_HIGH_LABEL,
-  LIKERT_LOW_LABEL,
-  LIKERT_POINTS,
-} from '~/config';
+import { LIKERT_HIGH_LABEL, LIKERT_LOW_LABEL, LIKERT_POINTS } from '~/config';
 
 type LikertScaleProps = {
   id: string;

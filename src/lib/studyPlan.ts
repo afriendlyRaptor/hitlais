@@ -1,8 +1,4 @@
-import {
-  COMPARISON,
-  RANDOMIZE_BLOCK_ORDER,
-  STUDY_BLOCKS,
-} from '~/config';
+import { COMPARISON, RANDOMIZE_BLOCK_ORDER, STUDY_BLOCKS } from '~/config';
 import { assignDocuments } from './documentAssignment';
 import { seededRng, shuffle } from './random';
 
