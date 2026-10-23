@@ -97,12 +97,6 @@ const scoreTaskQuestionnaire: Questionnaire = {
         'Der Score hat meine Entscheidung beeinﬂusst, welche Sätze ich auswähle.',
     },
     {
-      id: 'scoreInfluence',
-      type: 'likert',
-      question:
-        'Der Score hat meine Entscheidung beeinﬂusst, welche Sätze ich auswähle.',
-    },
-    {
       id: 'scoreCoherant',
       type: 'likert',
       question:

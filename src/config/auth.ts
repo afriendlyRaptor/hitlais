@@ -9,4 +9,4 @@ export const ALLOW_MANUAL_USER_ID = true;
  * Client-side only, meant for testing: set VITE_ADMIN_PASSWORD, don't rely on it for security.
  */
 export const ADMIN_PASSWORD: string =
-  import.meta.env.VITE_ADMIN_PASSWORD ?? 'admin';
+  import.meta.env.VITE_ADMIN_PASSWORD ?? 'adminPassword';
