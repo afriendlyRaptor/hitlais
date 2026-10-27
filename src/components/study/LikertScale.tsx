@@ -8,11 +8,13 @@ import {
   Typography,
 } from '@mui/material';
 import { LIKERT_HIGH_LABEL, LIKERT_LOW_LABEL, LIKERT_POINTS } from '~/config';
+import { ValidationMessage } from './ValidationMessage';
 
 type LikertScaleProps = {
   id: string;
   question: string;
   value: number | null;
+  error?: boolean;
   onChange: (id: string, value: number) => void;
   lowLabel?: string;
   highLabel?: string;
@@ -24,6 +26,7 @@ export function LikertScale({
   id,
   question,
   value,
+  error = false,
   onChange,
   lowLabel = LIKERT_LOW_LABEL,
   highLabel = LIKERT_HIGH_LABEL,
@@ -35,7 +38,7 @@ export function LikertScale({
         px: 3,
         borderRadius: 2,
         border: 1,
-        borderColor: 'divider',
+        borderColor: error ? 'error.main' : 'divider',
         mb: 1,
       }}
     >
@@ -90,6 +93,12 @@ export function LikertScale({
             {highLabel}
           </Typography>
         </Box>
+
+        {error && (
+          <ValidationMessage>
+            Bitte beantworten Sie diese Frage.
+          </ValidationMessage>
+        )}
       </FormControl>
     </Box>
   );

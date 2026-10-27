@@ -1,5 +1,7 @@
 import {
+  getMissingIds,
   QuestionnaireItems,
+  scrollToQuestion,
   StepHeader,
   StepLayout,
   ValidationMessage,
@@ -27,14 +29,24 @@ export function QuestionnaireStep({ questionnaireId, onFinish }: Props) {
     },
   });
 
+  const missingIds = getMissingIds(items, form.answers);
+
+  const handleSubmit = () => {
+    if (missingIds.length > 0) {
+      scrollToQuestion(missingIds[0]);
+    }
+    form.handleSubmit();
+  };
+
   return (
-    <StepLayout onSubmit={form.handleSubmit} isSubmitting={form.isSubmitting}>
+    <StepLayout onSubmit={handleSubmit} isSubmitting={form.isSubmitting}>
       <StepHeader title={title} description={description} />
 
       <QuestionnaireItems
         items={items}
         answers={form.answers}
         onChange={form.setAnswer}
+        missingIds={form.submitAttempted ? missingIds : []}
       />
 
       {form.submitAttempted && !form.isComplete && (

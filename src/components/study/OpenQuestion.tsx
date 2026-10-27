@@ -1,10 +1,12 @@
 import { Box, TextField, Typography } from '@mui/material';
+import { ValidationMessage } from './ValidationMessage';
 
 type Props = {
   id: string;
   question: string;
   value: string;
   required?: boolean;
+  error?: boolean;
   onChange: (id: string, value: string) => void;
 };
 
@@ -13,6 +15,7 @@ export function OpenQuestion({
   question,
   value,
   required = false,
+  error = false,
   onChange,
 }: Props) {
   return (
@@ -26,9 +29,16 @@ export function OpenQuestion({
         multiline
         minRows={4}
         value={value}
+        error={error}
         onChange={(event) => onChange(id, event.target.value)}
         placeholder={required ? 'Ihre Antwort' : 'Ihre Antwort (optional)'}
       />
+
+      {error && (
+        <ValidationMessage>
+          Bitte beantworten Sie diese Frage.
+        </ValidationMessage>
+      )}
     </Box>
   );
 }
