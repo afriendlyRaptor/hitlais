@@ -12,7 +12,7 @@ export type StudyTaskConfig = {
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
-    documentId: 61434,
+    documentId: 'random',
     description: '',
     instructions: `
 Sie sehen ein Originaldokument und eine daraus automatisch generierte
@@ -32,7 +32,7 @@ Sie Ihre ﬁnale Zusammenfassung jederzeit einreichen.
   },
 
   taskB: {
-    documentId: 64550,
+    documentId: 'random',
     description: ``,
 
     instructions: `
@@ -52,7 +52,7 @@ zu erreichen. Sobald Sie mit dem Ergebnis zufrieden sind, können Sie Ihre Zusam
   },
 
   taskC: {
-    documentId: 62138,
+    documentId: 'random',
     description: ``,
     instructions: `
 Verbessern Sie die angezeigte Zusammenfassung durch die gezielte Auswahl wichtiger
