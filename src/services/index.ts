@@ -29,3 +29,8 @@ export {
   type CompareResponse,
   type CompareResult,
 } from './compare';
+
+export {
+  countTokens,
+  type CountTokensResponse,
+} from './countTokens';
