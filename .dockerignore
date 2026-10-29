@@ -10,6 +10,8 @@ venv/
 .venv/
 __pycache__/
 dataset/
+preprocess/
+
 
 # Ignore Vite, Webpack, and React-specific build artifacts
 .vite/
