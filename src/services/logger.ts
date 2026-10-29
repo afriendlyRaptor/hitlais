@@ -1,4 +1,4 @@
-import { postApi } from './api';
+import { writeLog } from '~/server/log';
 import { getLogContext } from './logContext';
 import { getUserId } from './user';
 import { ROUTES } from '~/routes/paths';
@@ -29,7 +29,7 @@ export function logAction(type: string, payload?: LogPayload) {
 
   const { step, taskId, documentId } = getLogContext();
 
-  postApi('/log', {
+  writeLog({
     userId,
     taskId: taskId ?? 'None',
     documentId,

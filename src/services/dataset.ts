@@ -1,4 +1,4 @@
-import { postApi } from './api';
+import { runScript } from '~/server/runScript';
 
 export interface DocumentResult {
   id: number;
@@ -11,10 +11,5 @@ export interface DocumentResponse {
 }
 
 export async function getDocument(id: number): Promise<DocumentResponse> {
-  const response = await postApi<DocumentResponse>('/run-script', {
-    scriptId: 'getDocument',
-    args: [String(id)],
-  });
-
-  return response.data;
+  return runScript<DocumentResult>('getDocument', [String(id)]);
 }

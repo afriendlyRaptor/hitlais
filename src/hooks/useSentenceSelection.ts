@@ -1,14 +1,13 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import seedrandom from 'seedrandom';
 import { RANDOM_SELECTION_SEED, TOKEN_LIMIT, storageKeys } from '~/config';
-import { countTokens } from '~/lib/sentence-utils';
 import { jsonArrayCodec } from '~/lib/storage';
 import {
   pickFirstWithinLimit,
   pickRandomWithinLimit,
   sumTokens,
 } from '~/lib/token-budget';
-import { Alertify, logAction } from '~/services';
+import { Alertify, countTokens, logAction } from '~/services';
 import type { SelectedSentence } from '~/types';
 import { usePersistedState } from './usePersistedState';
 
@@ -16,7 +15,9 @@ const selectionCodec = jsonArrayCodec<number>();
 
 // Shared by every hook instance, so repeated "select random" clicks walk one
 // deterministic sequence.
-const rng = seedrandom(RANDOM_SELECTION_SEED);
+// seedrandom is typed for string seeds; the number is passed unchanged so the
+// sequence stays identical to the one used so far.
+const rng = seedrandom(RANDOM_SELECTION_SEED as unknown as string);
 
 export function useSentenceSelection(sentences: string[], taskId: string) {
   const [selected, setSelected] = usePersistedState(
@@ -24,10 +25,30 @@ export function useSentenceSelection(sentences: string[], taskId: string) {
     selectionCodec
   );
 
-  const sentenceTokenCounts = useMemo(
-    () => sentences.map((sentence) => countTokens(sentence)),
-    [sentences]
-  );
+  const [sentenceTokenCounts, setSentenceTokenCounts] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (sentences.length === 0) {
+      return;
+    }
+
+    let cancelled = false;
+
+    countTokens(sentences)
+      .then((counts) => {
+        if (!cancelled) {
+          setSentenceTokenCounts(counts);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to count tokens:', error);
+        Alertify.error('Die Tokens konnten nicht gezählt werden.');
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sentences]);
 
   // Drop stored indexes that don't exist in the loaded document.
   useEffect(() => {

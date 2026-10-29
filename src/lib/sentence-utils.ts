@@ -1,5 +1,3 @@
-import { countTokens as countTokensApi } from '~/services/countTokens';
-
 export function splitIntoParagraphs(text: string): string[][] {
   if (!text) {
     return [];
@@ -30,9 +28,4 @@ export function splitIntoParagraphs(text: string): string[][] {
 
 export function flattenSentences(paragraphs: string[][]): string[] {
   return paragraphs.flat();
-}
-
-export async function countTokens(text: string): Promise<number> {
-  const response = await countTokensApi(text);
-  return response.result;
 }

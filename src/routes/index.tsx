@@ -11,7 +11,7 @@ import { RouteLoading } from './RouteLoading';
  */
 export function AppRouter() {
   return (
-    <Router base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <Router>
       <Suspense fallback={<RouteLoading />}>
         <Switch>
           {routes.map(({ path, component: Component }) => (

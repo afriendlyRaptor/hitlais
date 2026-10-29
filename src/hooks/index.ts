@@ -1,6 +1,5 @@
 export { useDebounce } from './useDebounce';
 export { useLoader } from './useLoader';
-export { useCancelToken } from './useCancelToken';
 export { usePersistedState } from './usePersistedState';
 export { useDocument } from './useDocument';
 export { useUserId } from './useUserId';

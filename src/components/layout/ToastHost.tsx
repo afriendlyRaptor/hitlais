@@ -41,7 +41,7 @@ export function ToastHost() {
     >
       <Alert
         variant="outlined"
-        severity={isLoading ? 'info' : toast.severity}
+        severity={toast.severity === 'loading' ? 'info' : toast.severity}
         icon={isLoading ? <CircularProgress size={20} /> : undefined}
         sx={{
           bgcolor: 'background.paper',

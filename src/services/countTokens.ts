@@ -1,12 +1,11 @@
-import { postApi } from './api';
+import { runScriptBatch } from '~/server/runScript';
 
-export async function countTokens(text: string): Promise<number> {
-  const response = await postApi<{ result: number }>('/run-script', {
-    scriptId: 'countToken',
-    args: [text],
-  });
+/** Token count of every text, in the same order. */
+export async function countTokens(texts: string[]): Promise<number[]> {
+  const { result } = await runScriptBatch<number>(
+    'countToken',
+    texts.map((text) => [text])
+  );
 
-  console.log(response.data.result)
-
-  return response.data.result;
+  return result;
 }

@@ -1,4 +1,4 @@
-import { postApi } from './api';
+import { runScript } from '~/server/runScript';
 
 export interface CompareResult {
   bert_score: {
@@ -22,13 +22,8 @@ export async function compareTexts(
   reference: string,
   candidate: string
 ): Promise<CompareResponse> {
-  const response = await postApi<CompareResponse>('/run-script', {
-    scriptId: 'compare',
-    args: {
-      reference,
-      candidate,
-    },
-  });
-
-  return response.data;
+  // compare.py reads one JSON string from argv[1]
+  return runScript<CompareResult>('compare', [
+    JSON.stringify({ reference, candidate }),
+  ]);
 }

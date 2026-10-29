@@ -85,7 +85,7 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
           >
             <Box
               component="img"
-              src={`${import.meta.env.BASE_URL}icon.png`}
+              src="/icon.png"
               alt={APP_NAME}
               sx={{
                 width: 32,

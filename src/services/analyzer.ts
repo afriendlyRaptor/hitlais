@@ -1,4 +1,4 @@
-import { postApi } from './api';
+import { runScript } from '~/server/runScript';
 import type { SelectedSentence } from '~/types';
 
 export interface AnalyzeResult {
@@ -23,10 +23,5 @@ export async function analyzeSentences(
 ): Promise<AnalyzeResponse> {
   const text = selectedSentences.map(({ text }) => text).join(' ');
 
-  const response = await postApi<AnalyzeResponse>('/run-script', {
-    scriptId: 'analyze',
-    args: [text, referenceSummary],
-  });
-
-  return response.data;
+  return runScript<AnalyzeResult>('analyze', [text, referenceSummary]);
 }

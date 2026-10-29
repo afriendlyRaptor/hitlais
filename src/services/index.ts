@@ -1,4 +1,3 @@
-export * from './api';
 export {
   Alertify,
   default as alertify,
@@ -30,7 +29,4 @@ export {
   type CompareResult,
 } from './compare';
 
-export {
-  countTokens,
-  type CountTokensResponse,
-} from './countTokens';
+export { countTokens } from './countTokens';
