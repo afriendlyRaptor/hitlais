@@ -2,12 +2,19 @@
 
 import sys
 import json
-import tiktoken
+import requests
+
+API_URL = "http://100.105.103.45:8000/token-count"
 
 
 def count_tokens(text: str) -> int:
-    encoding = tiktoken.encoding_for_model("gpt-4o")
-    return len(encoding.encode(text))
+    response = requests.post(
+        API_URL,
+        json={"text": text},
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()["token_count"]
 
 
 def main():
@@ -27,3 +34,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
