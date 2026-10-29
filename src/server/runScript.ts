@@ -14,34 +14,7 @@ const TIMEOUT_MS = 15_000;
 const ALLOWED_SCRIPTS: Record<string, string> = {
   analyze: 'scripts/analyze.py',
   compare: 'scripts/compare.py',
-  getDocument: 'scripts/get_document.py',
-  countToken: 'scripts/countToken.py',
 };
-
-// A batch (e.g. counting every sentence) must not start hundreds of Pythons at once.
-const MAX_PARALLEL_SCRIPTS = 8;
-let runningScripts = 0;
-const waitingScripts: Array<() => void> = [];
-
-async function acquireSlot() {
-  if (runningScripts < MAX_PARALLEL_SCRIPTS) {
-    runningScripts++;
-    return;
-  }
-
-  // The slot is handed over by releaseSlot, so the counter stays unchanged.
-  await new Promise<void>((resolve) => waitingScripts.push(resolve));
-}
-
-function releaseSlot() {
-  const next = waitingScripts.shift();
-
-  if (next) {
-    next();
-  } else {
-    runningScripts--;
-  }
-}
 
 function execScript(scriptPath: string, args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -72,29 +45,11 @@ export async function runScript<T = unknown>(
     throw new Error(`unknown scriptId "${scriptId}"`);
   }
 
-  await acquireSlot();
+  const stdout = await execScript(scriptPath, Array.isArray(args) ? args : []);
 
   try {
-    const stdout = await execScript(scriptPath, Array.isArray(args) ? args : []);
-
-    try {
-      return { result: JSON.parse(stdout) };
-    } catch {
-      return { result: stdout.trim() as T };
-    }
-  } finally {
-    releaseSlot();
+    return { result: JSON.parse(stdout) };
+  } catch {
+    return { result: stdout.trim() as T };
   }
-}
-
-/** Runs the same script once per argument list, in one round trip. */
-export async function runScriptBatch<T = unknown>(
-  scriptId: string,
-  argsList: string[][]
-): Promise<{ result: T[] }> {
-  const results = await Promise.all(
-    argsList.map((args) => runScript<T>(scriptId, args))
-  );
-
-  return { result: results.map(({ result }) => result) };
 }

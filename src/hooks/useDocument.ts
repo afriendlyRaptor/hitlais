@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { Alertify, getDocument, type DocumentResult } from '~/services';
+import { Alertify, getDocument } from '~/services';
+import type { DocumentResult } from '~/types';
 
 export function useDocument() {
   const [document, setDocument] = useState<DocumentResult | null>(null);
@@ -11,9 +12,7 @@ export function useDocument() {
     setError(null);
 
     try {
-      const response = await getDocument(id);
-
-      setDocument(response.result);
+      setDocument(await getDocument(id));
     } catch (err) {
       console.error('Failed to load document:', err);
       setError(err instanceof Error ? err : new Error(String(err)));

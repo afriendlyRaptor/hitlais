@@ -25,13 +25,14 @@ RUN python3 -m venv venv \
  && venv/bin/pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu \
  && venv/bin/pip install --no-cache-dir -r requirements.txt
 COPY scripts ./scripts
+# Prepared documents (run preprocess/prepare-documents.mjs before building)
+COPY data ./data
 
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 
-# Mount these at runtime:
-#   /app/dataset  (dodis-historical-documents/data/*.parquet)
-#   /app/logs     (study logs)
+# Mount at runtime:
+#   /app/logs  (study logs)
 EXPOSE 3000
 CMD ["node", "server.js"]

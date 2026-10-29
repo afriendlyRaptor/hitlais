@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { flattenSentences, splitIntoParagraphs } from '~/lib/sentence-utils';
+import { groupByParagraph } from '~/lib/sentence-utils';
 import { logAction } from '~/services';
 import type { HistoryEntry } from '~/types';
 import { useDocument } from './useDocument';
@@ -26,13 +26,21 @@ export function useTaskSession(taskId: string, documentId: number) {
     reload();
   }, [reload]);
 
+  const documentSentences = useMemo(() => document?.sentences ?? [], [document]);
   const paragraphs = useMemo(
-    () => splitIntoParagraphs(document?.transcript ?? ''),
-    [document]
+    () => groupByParagraph(documentSentences),
+    [documentSentences]
   );
-  const sentences = useMemo(() => flattenSentences(paragraphs), [paragraphs]);
+  const sentences = useMemo(
+    () => documentSentences.map(({ text }) => text),
+    [documentSentences]
+  );
+  const tokenCounts = useMemo(
+    () => documentSentences.map(({ tokens }) => tokens),
+    [documentSentences]
+  );
 
-  const selection = useSentenceSelection(sentences, taskId);
+  const selection = useSentenceSelection(sentences, tokenCounts, taskId);
   const history = useTaskHistory(taskId);
   const { analyze, isAnalyzing } = useSummaryAnalysis(taskId, history.push);
 

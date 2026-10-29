@@ -17,11 +17,7 @@ export {
 
 export { analyzeSentences, type AnalyzeResponse } from './analyzer';
 
-export {
-  getDocument,
-  type DocumentResult,
-  type DocumentResponse,
-} from './dataset';
+export { getDocument } from '~/server/documents';
 
 export {
   compareTexts,
@@ -29,4 +25,3 @@ export {
   type CompareResult,
 } from './compare';
 
-export { countTokens } from './countTokens';

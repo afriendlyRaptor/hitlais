@@ -1,31 +1,12 @@
-export function splitIntoParagraphs(text: string): string[][] {
-  if (!text) {
-    return [];
+import type { DocumentSentence } from '~/types';
+
+/** Groups the flat sentence list back into paragraphs of sentence texts. */
+export function groupByParagraph(sentences: DocumentSentence[]): string[][] {
+  const paragraphs: string[][] = [];
+
+  for (const { paragraph, text } of sentences) {
+    (paragraphs[paragraph] ??= []).push(text);
   }
 
-  const segmenter = new Intl.Segmenter('de', {
-    granularity: 'sentence',
-  });
-
-  return text
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-    .map((paragraph) => {
-      // Protect dates such as "25. Januar" from sentence splitting.
-      const protectedText = paragraph.replace(
-        /\b(\d{1,2})\.\s+(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)\b/gi,
-        '$1§ $2'
-      );
-
-      const sentences = Array.from(segmenter.segment(protectedText))
-        .map(({ segment }) => segment.replace(/§/g, '.').trim())
-        .filter((sentence) => sentence.length > 0);
-
-      return sentences;
-    });
-}
-
-export function flattenSentences(paragraphs: string[][]): string[] {
-  return paragraphs.flat();
+  return paragraphs;
 }
