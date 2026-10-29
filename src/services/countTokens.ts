@@ -6,5 +6,7 @@ export async function countTokens(text: string): Promise<number> {
     args: [text],
   });
 
+  console.log(response.data.result)
+
   return response.data.result;
 }
