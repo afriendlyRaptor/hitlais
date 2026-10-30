@@ -62,7 +62,7 @@ erstellen. Überlegen Sie, welche Sätze besonders relevant sind, und konzentrie
 sich auf diese. Sie können Ihre Zusammenfassung jederzeit vor Ablauf der Zeit
 einreichen.`,
     showScore: false,
-    timeLimitSeconds: 900, // 15 min
+    timeLimitSeconds: 300, // 5 min
   },
 };
 
