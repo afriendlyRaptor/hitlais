@@ -13,6 +13,7 @@ import { getStudyTask, STUDY_BLOCKS } from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
 import type { StudyTaskConfig } from '~/types';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   taskId: string;
@@ -37,6 +38,23 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
   const tasks: Record<string, StudyTaskConfig> = Object.fromEntries(
     STUDY_BLOCKS.map(({ taskId }) => [taskId, getStudyTask(taskId)])
   );
+
+  const generatedFor = useRef(selection.selected);
+
+  const generate = () => {
+    generatedFor.current = selection.selected;
+    session.generate();
+  };
+
+  // generate shortly after the selection stops changing
+  useEffect(() => {
+    const changed = selection.selected !== generatedFor.current;
+    if (!changed || session.isAnalyzing || selection.selected.length === 0) {
+      return;
+    }
+    const timer = setTimeout(generate, 1000);
+    return () => clearTimeout(timer);
+  }, [selection.selected, session.isAnalyzing]);
 
   return (
     <>
@@ -111,8 +129,8 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
       </Box>
       <GenerateSummaryButton
         isAnalyzing={session.isAnalyzing}
-        onClick={session.generate}
-      />
+        onClick={generate}
+      />{' '}
       <NextTaskButton
         disabled={!session.summary.trim() || session.isAnalyzing}
         onConfirm={onFinish}
