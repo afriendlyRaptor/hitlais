@@ -8,6 +8,7 @@ export { useTaskHistory } from './useTaskHistory';
 export { useSummaryAnalysis } from './useSummaryAnalysis';
 export { useTaskSession } from './useTaskSession';
 export { useTaskCountdown } from './useTaskCountdown';
+export { useElementWidth } from './useElementWidth';
 export { useRecentlyChanged } from './useRecentlyChanged';
 export { useStudyProgress } from './useStudyProgress';
 export { useAdminMode } from './useAdminMode';

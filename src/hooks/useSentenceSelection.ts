@@ -53,6 +53,11 @@ export function useSentenceSelection(
     [selected, sentences]
   );
 
+  const selectedTokenCount = useMemo(
+    () => sumTokens(selected, sentenceTokenCounts),
+    [selected, sentenceTokenCounts]
+  );
+
   function toggleSentence(index: number) {
     const wasSelected = selected.includes(index);
 
@@ -137,6 +142,7 @@ export function useSentenceSelection(
   return {
     selected,
     selectedSentences,
+    selectedTokenCount,
     toggleSentence,
     removeSentence,
     clearAll,

@@ -1,18 +1,22 @@
-import { Box, ButtonGroup } from '@mui/material';
+import { Box, ButtonGroup, Typography } from '@mui/material';
 import { LoggedButton } from '~/components/common';
 
 type Props = {
   canClear: boolean;
   canSelect: boolean;
+  tokensUsed: number;
+  tokenLimit: number;
   onClear: () => void;
   onSelectFirst: () => void;
   onSelectRandom: () => void;
 };
 
-/** Floating button bar (bottom left) with the quick-selection actions. */
+/** Floating bar (bottom centre): token usage and the quick-selection actions. */
 export function SelectionControls({
   canClear,
   canSelect,
+  tokensUsed,
+  tokenLimit,
   onClear,
   onSelectFirst,
   onSelectRandom,
@@ -22,14 +26,17 @@ export function SelectionControls({
       sx={{
         position: 'fixed',
         bottom: 24,
-        left: 24,
+        left: '50%',
+        transform: 'translateX(-50%)',
         zIndex: 1100,
 
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
+        gap: 0.5,
 
         p: 0.75,
-        borderRadius: '999px',
+        borderRadius: '28px',
 
         backgroundColor: 'background.paper',
         boxShadow: 4,
@@ -37,6 +44,13 @@ export function SelectionControls({
         borderColor: 'divider',
       }}
     >
+      <Typography
+        variant="caption"
+        sx={{ fontWeight: 600, color: 'text.secondary', pt: 0.5 }}
+      >
+        {tokensUsed} out of {tokenLimit} Tokens used
+      </Typography>
+
       <ButtonGroup
         variant="outlined"
         aria-label="Sentence selection actions"

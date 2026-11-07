@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { useElementWidth } from '~/hooks';
 import type { HistoryEntry } from '~/types';
 import { ScoreDisplay } from './ScoreDisplay';
 import { ScoreLineChart } from './ScoreLineChart';
@@ -9,32 +10,21 @@ type Props = {
   onSelect: (entry: HistoryEntry) => void;
 };
 
-const CHART_WIDTH = 220;
-const MAX_VISIBLE_POINTS = 5;
-
-/** Floating panel (bottom centre): clickable score trend and the shown score. */
+/** Panel below the history button: clickable score trend and the shown score. */
 export function ScoreDisplayPanel({ history, activeId, onSelect }: Props) {
   const shown = history.find((entry) => entry.id === activeId);
 
-  // Only show the five most recent versions.
-  const visibleHistory = history.slice(-MAX_VISIBLE_POINTS);
+  // The chart fills the free width and shows as many recent versions as fit.
+  const { ref, width: chartWidth } = useElementWidth<HTMLDivElement>();
 
   return (
     <Box
       sx={{
-        position: 'fixed',
-        bottom: 20,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 1000,
-
         display: 'flex',
         alignItems: 'center',
         gap: 2,
 
-        width: 'fit-content',
-        maxWidth: 'calc(100vw - 40px)',
-
+        mt: 2,
         px: 2,
         py: 1.5,
 
@@ -44,12 +34,16 @@ export function ScoreDisplayPanel({ history, activeId, onSelect }: Props) {
 
         backgroundColor: 'background.paper',
         boxShadow: 4,
+        boxSizing: 'border-box',
       }}
     >
       <Box
+        ref={ref}
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          flex: 1,
+          minWidth: 0,
           gap: 0.5,
         }}
       >
@@ -70,10 +64,10 @@ export function ScoreDisplayPanel({ history, activeId, onSelect }: Props) {
         </Box>
 
         <ScoreLineChart
-          history={visibleHistory}
+          history={history}
           activeId={activeId}
           onSelect={onSelect}
-          width={CHART_WIDTH}
+          width={chartWidth}
         />
       </Box>
 

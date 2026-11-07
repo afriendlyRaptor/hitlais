@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { DrawerAppBar } from '~/components/app-bar';
 import {
+  HistoryButton,
   NextTaskButton,
   ScoreDisplayPanel,
   SelectionControls,
@@ -9,7 +10,7 @@ import {
   TaskTimer,
 } from '~/components/summary';
 import { DocumentGate } from '~/components/study';
-import { getStudyTask, STUDY_BLOCKS } from '~/config';
+import { getStudyTask, STUDY_BLOCKS, TOKEN_LIMIT } from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
 import type { StudyTaskConfig } from '~/types';
@@ -58,10 +59,7 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
 
   return (
     <>
-      <DrawerAppBar
-        history={historyPanel}
-        taskInfo={{ description, instructions }}
-      />{' '}
+      <DrawerAppBar taskInfo={{ description, instructions }} />{' '}
       {timeLimitSeconds != null && (
         <TaskTimer seconds={timeLimitSeconds} onExpire={onFinish} />
       )}
@@ -96,17 +94,12 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             <SelectionControls
               canClear={selection.selected.length > 0}
               canSelect={session.paragraphs.length > 0}
+              tokensUsed={selection.selectedTokenCount}
+              tokenLimit={TOKEN_LIMIT}
               onClear={selection.clearAll}
               onSelectFirst={selection.selectFirstTokens}
               onSelectRandom={selection.selectRandomTokens}
             />
-            {showScore && (
-              <ScoreDisplayPanel
-                history={history.entries}
-                activeId={history.activeId}
-                onSelect={session.restore}
-              />
-            )}
           </DocumentGate>
         </Box>
 
@@ -125,6 +118,14 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             summary={session.summary}
             isLoading={session.isAnalyzing}
           />
+          <HistoryButton {...historyPanel} />
+          {showScore && (
+            <ScoreDisplayPanel
+              history={history.entries}
+              activeId={history.activeId}
+              onSelect={session.restore}
+            />
+          )}
         </Box>
       </Box>
       <GenerateSummaryButton

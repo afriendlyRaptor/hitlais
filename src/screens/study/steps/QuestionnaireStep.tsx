@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import {
   getMissingIds,
   QuestionnaireItems,
@@ -28,6 +29,11 @@ export function QuestionnaireStep({ questionnaireId, onFinish }: Props) {
       onFinish();
     },
   });
+
+  // The task page's scroll position carries over; always start at the top.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const missingIds = getMissingIds(items, form.answers);
 

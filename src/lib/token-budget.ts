@@ -6,7 +6,7 @@ import { shuffle } from './random';
  */
 
 export function sumTokens(indexes: number[], counts: number[]): number {
-  return indexes.reduce((total, index) => total + counts[index], 0);
+  return indexes.reduce((total, index) => total + (counts[index] ?? 0), 0);
 }
 
 /** Take sentences from the start until the next one would exceed `limit`. */

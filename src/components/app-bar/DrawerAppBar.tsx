@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
-import HistoryIcon from '@mui/icons-material/History';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AdminDialog, useAdmin } from '~/components/admin';
 import { APP_NAME } from '~/config';
 import { useUserId } from '~/hooks';
 import { logAction } from '~/services';
-import type { HistoryEntry } from '~/types';
-import { HistoryDrawer, type HistoryPanel } from './HistoryDrawer';
 import { NavDrawer } from './NavDrawer';
 import { NavEntry } from './NavEntry';
 import { getNavItems, type NavItem } from './navItems';
@@ -16,8 +13,6 @@ import { TaskInfoDialog, type TaskInfo } from './TaskInfoDialog';
 import { StudyProgress } from './StudyProgress';
 
 type Props = {
-  /** Adds a button that opens the version history. */
-  history?: HistoryPanel;
   /** Adds an info icon (top left) that shows the current task. */
   taskInfo?: TaskInfo;
 };
@@ -25,9 +20,8 @@ type Props = {
 /**
  * https://mui.com/material-ui/react-app-bar/
  */
-export function DrawerAppBar({ history, taskInfo }: Props) {
+export function DrawerAppBar({ taskInfo }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [historyOpen, setHistoryOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
 
@@ -42,19 +36,9 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
     setMobileOpen((previous) => !previous);
   };
 
-  const handleHistoryToggle = () => {
-    logAction('history_drawer_toggled', { open: !historyOpen });
-    setHistoryOpen((previous) => !previous);
-  };
-
   const handleInfoToggle = () => {
     logAction('task_info_toggled', { open: !infoOpen });
     setInfoOpen((previous) => !previous);
-  };
-
-  const handleRestore = (entry: HistoryEntry) => {
-    history?.onRestore(entry);
-    setHistoryOpen(false);
   };
 
   // logs nav items identified by path
@@ -134,17 +118,6 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
               />
             ))}
           </Box>
-
-          {history && (
-            <IconButton
-              color="inherit"
-              aria-label="Verlauf"
-              onClick={handleHistoryToggle}
-              sx={{ ml: 'auto' }}
-            >
-              <HistoryIcon />
-            </IconButton>
-          )}
         </Toolbar>
       </AppBar>
 
@@ -154,17 +127,6 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
         onToggle={handleDrawerToggle}
         onItemClick={handleNavClick}
       />
-
-      {history && (
-        <HistoryDrawer
-          open={historyOpen}
-          onClose={handleHistoryToggle}
-          entries={history.entries}
-          activeId={history.activeId}
-          onRestore={handleRestore}
-          showScore={history.showScore}
-        />
-      )}
 
       {taskInfo && (
         <TaskInfoDialog
