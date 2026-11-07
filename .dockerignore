@@ -24,6 +24,7 @@ cypress/
 cypress/screenshots/
 cypress/videos/
 reports/
+.next/
 
 # Ignore environment and config files (sensitive data)
 *.env*
