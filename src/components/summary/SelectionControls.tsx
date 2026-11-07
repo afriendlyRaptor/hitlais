@@ -48,7 +48,7 @@ export function SelectionControls({
         variant="caption"
         sx={{ fontWeight: 600, color: 'text.secondary', pt: 0.5 }}
       >
-        {tokensUsed} out of {tokenLimit} Tokens used
+        {tokensUsed} / {tokenLimit} Tokens verwendet
       </Typography>
 
       <ButtonGroup
@@ -72,7 +72,7 @@ export function SelectionControls({
           onClick={onClear}
           disabled={!canClear}
         >
-          Clear all
+          Auswahl aufheben
         </LoggedButton>
 
         <LoggedButton
@@ -80,7 +80,7 @@ export function SelectionControls({
           onClick={onSelectFirst}
           disabled={!canSelect}
         >
-          Select first
+          Erste auswählen
         </LoggedButton>
 
         <LoggedButton
@@ -88,7 +88,7 @@ export function SelectionControls({
           onClick={onSelectRandom}
           disabled={!canSelect}
         >
-          Select random
+          Zufällige auswählen
         </LoggedButton>
       </ButtonGroup>
     </Box>
