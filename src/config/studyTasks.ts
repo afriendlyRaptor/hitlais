@@ -1,6 +1,8 @@
 export type StudyTaskConfig = {
   /** A fixed id from VALID_DOCUMENT_IDS, or 'random' to draw one per participant. */
   documentId: number | 'random';
+  /** Heading of the instruction screen, so a new task is noticed. */
+  title: string;
   /** Shown above the text while working on the task. */
   description: string;
   /** Shown on the instruction screen before the task starts. */
@@ -12,6 +14,7 @@ export type StudyTaskConfig = {
 
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
+    title: 'Task A',
     documentId: 69198,
     description: '',
     instructions: `
@@ -32,6 +35,7 @@ Sie Ihre ﬁnale Zusammenfassung jederzeit einreichen.
   },
 
   taskB: {
+    title: 'Task B',
     documentId: 69828,
     description: ``,
 
@@ -52,6 +56,7 @@ zu erreichen. Sobald Sie mit dem Ergebnis zufrieden sind, können Sie Ihre Zusam
   },
 
   taskC: {
+    title: 'Task C',
     documentId: 61082,
     description: ``,
     instructions: `

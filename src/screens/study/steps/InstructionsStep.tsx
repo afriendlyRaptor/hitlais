@@ -8,11 +8,11 @@ type Props = {
 };
 
 export function InstructionsStep({ taskId, onContinue }: Props) {
-  const { instructions, timeLimitSeconds } = getStudyTask(taskId);
+  const { title, instructions, timeLimitSeconds } = getStudyTask(taskId);
 
   return (
     <StepLayout onSubmit={onContinue}>
-      <StepHeader title="Anleitung" />
+      <StepHeader title={title} />
 
       <Typography sx={{ whiteSpace: 'pre-line', lineHeight: 1.7 }}>
         {instructions}
