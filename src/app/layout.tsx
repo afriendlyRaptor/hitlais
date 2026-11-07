@@ -3,7 +3,8 @@ import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'HITLAIS',
-  description: 'Human-in-the-loop sentence selection for AI-generated summaries',
+  description:
+    'Human-in-the-loop sentence selection for AI-generated summaries',
   icons: { icon: '/icon.png' },
 };
 

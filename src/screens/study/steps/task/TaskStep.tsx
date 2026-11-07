@@ -30,12 +30,13 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
     entries: history.entries,
     activeId: history.activeId,
     onRestore: session.restore,
+    showScore,
   };
 
   return (
     <>
       <DrawerAppBar
-        history={showScore ? historyPanel : undefined}
+        history={historyPanel}
         taskInfo={{ description, instructions }}
       />
 

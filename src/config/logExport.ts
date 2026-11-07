@@ -6,6 +6,7 @@
  * Generate a token and its hash:
  *   TOKEN=$(openssl rand -hex 32); echo "$TOKEN"; printf %s "$TOKEN" | sha256sum
  */
-export const LOG_EXPORT_TOKEN_SHA256 = '598ecd772dab0cd12bc2f760e9ce2cf4674892d40f522a9b5208c1a652073f73';
+export const LOG_EXPORT_TOKEN_SHA256 =
+  '598ecd772dab0cd12bc2f760e9ce2cf4674892d40f522a9b5208c1a652073f73';
 
 /*  TOKEN=$(openssl rand -hex 32); echo "$TOKEN"; printf %s "$TOKEN" | sha256sum */

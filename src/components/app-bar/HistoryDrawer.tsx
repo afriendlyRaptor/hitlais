@@ -13,6 +13,7 @@ export type HistoryPanel = {
   entries: HistoryEntry[];
   activeId: number | null;
   onRestore: (entry: HistoryEntry) => void;
+  showScore?: boolean;
 };
 
 type Props = HistoryPanel & {
@@ -29,6 +30,7 @@ export function HistoryDrawer({
   entries,
   activeId,
   onRestore,
+  showScore,
 }: Props) {
   return (
     <Drawer
@@ -55,9 +57,9 @@ export function HistoryDrawer({
                 onClick={() => onRestore(entry)}
               >
                 <ListItemText
-                  primary={`Version ${index + 1} – ${Math.round(entry.score)} Punkte`}
+                  primary={`Version ${index + 1}${showScore ? ` – ${Math.round(entry.score)} Punkte` : ''}`}
                   secondary={new Date(entry.id).toLocaleTimeString('de-DE')}
-                />
+                />{' '}
               </ListItemButton>
             </ListItem>
           ))}

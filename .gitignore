@@ -2,6 +2,10 @@
 node_modules/
 dataset/
 data/
+logs/
+
+.next/
+next-env.d.ts
 
 # Build
 dist/

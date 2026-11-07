@@ -26,7 +26,10 @@ export function useTaskSession(taskId: string, documentId: number) {
     reload();
   }, [reload]);
 
-  const documentSentences = useMemo(() => document?.sentences ?? [], [document]);
+  const documentSentences = useMemo(
+    () => document?.sentences ?? [],
+    [document]
+  );
   const paragraphs = useMemo(
     () => groupByParagraph(documentSentences),
     [documentSentences]

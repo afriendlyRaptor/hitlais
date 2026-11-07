@@ -19,6 +19,7 @@ type Props = {
   history?: HistoryPanel;
   /** Adds an info icon (top left) that shows the current task. */
   taskInfo?: TaskInfo;
+
 };
 
 /**
@@ -150,6 +151,7 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
           entries={history.entries}
           activeId={history.activeId}
           onRestore={handleRestore}
+          showScore={history.showScore}
         />
       )}
 

@@ -20,11 +20,16 @@ function execScript(scriptPath: string, args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
     execFile(
       /*turbopackIgnore: true*/ PYTHON_BIN,
-      [path.resolve(/*turbopackIgnore: true*/ PROJECT_ROOT, scriptPath), ...args],
+      [
+        path.resolve(/*turbopackIgnore: true*/ PROJECT_ROOT, scriptPath),
+        ...args,
+      ],
       { timeout: TIMEOUT_MS, cwd: PROJECT_ROOT },
       (err, stdout, stderr) => {
         if (err) {
-          reject(new Error(err.killed ? 'script timed out' : stderr || err.message));
+          reject(
+            new Error(err.killed ? 'script timed out' : stderr || err.message)
+          );
           return;
         }
 

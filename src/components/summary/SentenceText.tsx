@@ -39,10 +39,10 @@ export function SentenceText({ paragraphs, selected, onToggle }: Props) {
                   backgroundColor: selectedSet.has(index)
                     ? 'secondary.main'
                     : 'transparent',
-                    borderRadius: '11px',
-                    cursor: 'pointer',
-                    px: 0.5,
-                    py: 0.2,
+                  borderRadius: '11px',
+                  cursor: 'pointer',
+                  px: 0.5,
+                  py: 0.2,
                   cursor: 'pointer',
                 }}
               >

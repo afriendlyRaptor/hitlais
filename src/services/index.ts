@@ -24,4 +24,3 @@ export {
   type CompareResponse,
   type CompareResult,
 } from './compare';
-
