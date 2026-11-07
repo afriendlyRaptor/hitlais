@@ -13,13 +13,13 @@ import { NavDrawer } from './NavDrawer';
 import { NavEntry } from './NavEntry';
 import { getNavItems, type NavItem } from './navItems';
 import { TaskInfoDialog, type TaskInfo } from './TaskInfoDialog';
+import { StudyProgress } from './StudyProgress';
 
 type Props = {
   /** Adds a button that opens the version history. */
   history?: HistoryPanel;
   /** Adds an info icon (top left) that shows the current task. */
   taskInfo?: TaskInfo;
-
 };
 
 /**
@@ -102,6 +102,17 @@ export function DrawerAppBar({ history, taskInfo }: Props) {
             >
               {APP_NAME}
             </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            <StudyProgress />
           </Box>
 
           {taskInfo && (

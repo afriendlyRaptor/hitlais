@@ -12,6 +12,8 @@ import { InstructionsStep } from './steps/InstructionsStep';
 import { QuestionnaireStep } from './steps/QuestionnaireStep';
 import { ComparisonStep } from './steps/comparison/ComparisonStep';
 import { TaskStep } from './steps/task/TaskStep';
+import { StudyProgressContext } from '~/components/app-bar';
+import { COMPARISON } from '~/config';
 
 type Props = {
   userId: string;
@@ -27,6 +29,14 @@ export function StudyFlow({ userId }: Props) {
   } = useStudyProgress(plan.steps.length);
   const { isAdmin, unlock, lock } = useAdminMode();
   const step = plan.steps[stepIndex];
+
+  const progress =
+    !step || step.kind === 'comparison'
+      ? { currentStep: COMPARISON.questionnaireId }
+      : {
+          currentStep: step.taskId,
+          inQuestionnaire: step.kind === 'questionnaire',
+        };
 
   useBlockBackNavigation();
 
@@ -108,7 +118,9 @@ export function StudyFlow({ userId }: Props) {
         },
       }}
     >
-      {renderStep()}
+      <StudyProgressContext.Provider value={progress}>
+        {renderStep()}
+      </StudyProgressContext.Provider>
     </AdminProvider>
   );
 }

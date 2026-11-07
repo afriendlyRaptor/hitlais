@@ -9,9 +9,10 @@ import {
   TaskTimer,
 } from '~/components/summary';
 import { DocumentGate } from '~/components/study';
-import { getStudyTask } from '~/config';
+import { getStudyTask, STUDY_BLOCKS } from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
+import type { StudyTaskConfig } from '~/types';
 
 type Props = {
   taskId: string;
@@ -33,17 +34,19 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
     showScore,
   };
 
+  const tasks: Record<string, StudyTaskConfig> = Object.fromEntries(
+    STUDY_BLOCKS.map(({ taskId }) => [taskId, getStudyTask(taskId)])
+  );
+
   return (
     <>
       <DrawerAppBar
         history={historyPanel}
         taskInfo={{ description, instructions }}
-      />
-
+      />{' '}
       {timeLimitSeconds != null && (
         <TaskTimer seconds={timeLimitSeconds} onExpire={onFinish} />
       )}
-
       <Box
         sx={{
           display: 'grid',
@@ -106,12 +109,10 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
           />
         </Box>
       </Box>
-
       <GenerateSummaryButton
         isAnalyzing={session.isAnalyzing}
         onClick={session.generate}
       />
-
       <NextTaskButton
         disabled={!session.summary.trim() || session.isAnalyzing}
         onConfirm={onFinish}
