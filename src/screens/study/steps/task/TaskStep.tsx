@@ -10,10 +10,14 @@ import {
   TaskTimer,
 } from '~/components/summary';
 import { DocumentGate } from '~/components/study';
-import { getStudyTask, STUDY_BLOCKS, TOKEN_LIMIT } from '~/config';
+import {
+  getStudyTask,
+  STUDY_BLOCKS,
+  TOKEN_LIMIT,
+  type StudyTaskConfig,
+} from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
-import type { StudyTaskConfig } from '~/types';
 import { useEffect, useRef } from 'react';
 
 type Props = {
