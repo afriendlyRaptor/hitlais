@@ -43,7 +43,6 @@ export function SentenceText({ paragraphs, selected, onToggle }: Props) {
                   cursor: 'pointer',
                   px: 0.5,
                   py: 0.2,
-                  cursor: 'pointer',
                 }}
               >
                 {sentence}{' '}

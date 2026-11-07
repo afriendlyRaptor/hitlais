@@ -64,7 +64,7 @@ export function useSentenceSelection(
     if (!wasSelected) {
       const currentTokenCount = sumTokens(selected, sentenceTokenCounts);
 
-      if (currentTokenCount + sentenceTokenCounts[index] > TOKEN_LIMIT) {
+      if (currentTokenCount >= TOKEN_LIMIT) {
         Alertify.error('Die maximale Textmenge wurde erreicht.');
         return;
       }
