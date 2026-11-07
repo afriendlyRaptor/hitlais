@@ -19,6 +19,7 @@ import {
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
 import { useEffect, useRef } from 'react';
+import type { HistoryEntry } from '~/types';
 
 type Props = {
   taskId: string;
@@ -33,13 +34,6 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
   const session = useTaskSession(taskId, documentId);
   const { selection, history } = session;
 
-  const historyPanel = {
-    entries: history.entries,
-    activeId: history.activeId,
-    onRestore: session.restore,
-    showScore,
-  };
-
   const tasks: Record<string, StudyTaskConfig> = Object.fromEntries(
     STUDY_BLOCKS.map(({ taskId }) => [taskId, getStudyTask(taskId)])
   );
@@ -49,6 +43,22 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
   const generate = () => {
     generatedFor.current = selection.selected;
     session.generate();
+  };
+
+  const restore = (entry: HistoryEntry) => {
+    if (session.isAnalyzing) {
+      return;
+    }
+    // a restored version is not a new selection, so it must not auto-generate
+    generatedFor.current = entry.selected;
+    session.restore(entry);
+  };
+
+  const historyPanel = {
+    entries: history.entries,
+    activeId: history.activeId,
+    onRestore: restore,
+    showScore,
   };
 
   // generate shortly after the selection stops changing
@@ -127,7 +137,7 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             <ScoreDisplayPanel
               history={history.entries}
               activeId={history.activeId}
-              onSelect={session.restore}
+              onSelect={restore}
             />
           )}
         </Box>

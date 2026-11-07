@@ -74,6 +74,14 @@ export function useTaskSession(taskId: string, documentId: number) {
       return;
     }
 
+    // Building on an older version: add it as the newest one first, so the
+    // history reads chronologically and the new version follows it.
+    const latest = history.entries[history.entries.length - 1];
+
+    if (history.active && history.active !== latest) {
+      history.push({ ...history.active, id: Date.now() });
+    }
+
     logAction('summary_button', {
       selected_sentences: selection.selectedSentences,
       reference_summary: document.summary,
