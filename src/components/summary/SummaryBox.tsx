@@ -22,11 +22,10 @@ export function SummaryBox({ summary, isLoading }: SummaryProps) {
           border: 1,
           borderColor: summaryUpdated ? FLASH_COLOR : 'divider',
           p: 2,
-          height: 300,
+          minHeight: 100,
           mt: 1,
           borderRadius: 1,
           bgcolor: summaryUpdated ? FLASH_COLOR : 'background.paper',
-          overflowY: 'auto',
           boxSizing: 'border-box',
           transition: 'background-color 0.5s ease, border-color 0.5s ease',
         }}

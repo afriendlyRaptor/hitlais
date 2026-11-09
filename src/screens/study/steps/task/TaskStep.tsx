@@ -126,6 +126,11 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             position: 'sticky',
             top: 100,
             alignSelf: 'flex-start',
+
+            // Scrolls on its own and stays clear of the floating bottom controls
+            maxHeight: 'calc(100vh - 220px)',
+            overflowY: 'auto',
+            p: 0.5,
           }}
         >
           <SummaryBox
