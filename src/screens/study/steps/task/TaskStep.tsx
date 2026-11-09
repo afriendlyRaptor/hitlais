@@ -137,7 +137,6 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             summary={session.summary}
             isLoading={session.isAnalyzing}
           />
-          <HistoryButton {...historyPanel} />
           {showScore && (
             <ScoreDisplayPanel
               history={history.entries}
@@ -145,6 +144,7 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
               onSelect={restore}
             />
           )}
+          <HistoryButton {...historyPanel} />
         </Box>
       </Box>
       <GenerateSummaryButton
