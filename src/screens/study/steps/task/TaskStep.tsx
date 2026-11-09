@@ -128,9 +128,10 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
             alignSelf: 'flex-start',
 
             // Scrolls on its own and stays clear of the floating bottom controls
-            maxHeight: 'calc(100vh - 220px)',
+            maxHeight: 'calc(100vh - 100px)',
             overflowY: 'auto',
             p: 0.5,
+            pb: 15,
           }}
         >
           <SummaryBox
