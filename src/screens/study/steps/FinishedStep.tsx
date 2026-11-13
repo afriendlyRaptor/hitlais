@@ -5,7 +5,9 @@ export function FinishedStep() {
     <StepLayout>
       <StepHeader
         title="Vielen Dank!"
-        description="Sie haben die Studie abgeschlossen. Sie können dieses Fenster jetzt schließen."
+        description="Sie haben die Studie erfolgreich abgeschlossen! 
+        Vielen Dank für Ihre Mühen.
+        Sie können dieses Fenster jetzt schließen."
       />
     </StepLayout>
   );
