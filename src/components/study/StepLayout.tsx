@@ -28,7 +28,7 @@ export function StepLayout({
           mx: 'auto',
           px: 4,
           py: 5,
-          pb: 14, // leave room for the button
+          pb: 4, // leave room for the button
         }}
       >
         {children}
