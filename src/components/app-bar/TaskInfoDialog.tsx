@@ -4,8 +4,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
 } from '@mui/material';
+import { InstructionText } from '~/components/common';
 
 export type TaskInfo = {
   description: string;
@@ -24,9 +24,7 @@ export function TaskInfoDialog({ open, onClose, instructions }: Props) {
       <DialogTitle>Aufgabe</DialogTitle>
 
       <DialogContent>
-        <Typography sx={{ whiteSpace: 'pre-line', lineHeight: 1.7 }}>
-          {instructions}
-        </Typography>
+        <InstructionText text={instructions} />
       </DialogContent>
 
       <DialogActions>

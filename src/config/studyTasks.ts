@@ -5,7 +5,7 @@ export type StudyTaskConfig = {
   title: string;
   /** Shown above the text while working on the task. */
   description: string;
-  /** Shown on the instruction screen before the task starts. */
+  /** Shown on the instruction screen before the task starts. `{{image:file.png}}` inserts an image from public/instructions/. */
   instructions: string;
   /** Show the score chart and the version history. */
   showScore: boolean;
@@ -30,11 +30,14 @@ Sie mit Klicken Sätze auswählen können. Aus den ausgewählten Sätze wird dan
 automatisch eine Zusammenfassung generiert. Diese Zusammenfassung wird Ihnen auf 
 der rechten Seite angezeigt.
 
+
 Unterhalb der Zusammenfassung gibt es die Möglichkeit mit dem Verlauf zu einer
 früheren Version zurückzukehren.
+{{image:history.png}}
 
 Am unteren Rand der Seite gibt es Knöpfe für die automatische Selektion der Sätze.
 Auch kann hier die Auswahl aufgehoben werden.
+{{image:selection_controlls.png}}
 
 Ihre Aufgabe besteht darin, die Qualität der generierten Zusammenfassung
 zu verbessern, indem Sie gezielt wichtige Sätze aus dem Text auswählen.
@@ -58,6 +61,8 @@ In Ihrer nächsten Aufgabe wird Ihnen zusätzlich zur Zusammenfassung auch eine
 Punktzahl angezeigt welche die generierte Zusammenfassung bewertet.
 Die verschiedenen Versionen werden ausserdem in einem Graph dargestellt. Durch
 klicken auf einen Punkt im Graph kann direkt diese Version aufgerufen werden.
+
+{{image:score.png}}
 
 Nutzen Sie diesen Score als zusätzliche Orientierung, um Ihre Satzauswahl und 
 damit die Zusammenfassung schrittweise zu verbessern.

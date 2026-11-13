@@ -15,7 +15,8 @@ type ConfirmDialogProps = {
   description: string;
   cancelLabel?: string;
   confirmLabel?: string;
-  onCancel: () => void;
+  /** Without it the dialog only offers the confirm button and cannot be dismissed. */
+  onCancel?: () => void;
   onConfirm: () => void;
 };
 
@@ -45,7 +46,7 @@ export function ConfirmDialog({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onCancel}>{cancelLabel}</Button>
+        {onCancel && <Button onClick={onCancel}>{cancelLabel}</Button>}
 
         <Button onClick={onConfirm} variant="contained" autoFocus>
           {confirmLabel}

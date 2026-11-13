@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { InstructionText } from '~/components/common';
 import { StepHeader, StepLayout } from '~/components/study';
 import { getStudyTask } from '~/config';
 
@@ -14,9 +15,7 @@ export function InstructionsStep({ taskId, onContinue }: Props) {
     <StepLayout onSubmit={onContinue}>
       <StepHeader title={title} />
 
-      <Typography sx={{ whiteSpace: 'pre-line', lineHeight: 1.7 }}>
-        {instructions}
-      </Typography>
+      <InstructionText text={instructions} />
 
       {timeLimitSeconds != null && (
         <Typography sx={{ mt: 3, fontWeight: 600 }}>

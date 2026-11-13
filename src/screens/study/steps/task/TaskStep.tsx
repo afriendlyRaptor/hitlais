@@ -9,6 +9,7 @@ import {
   SummaryBox,
   TaskTimer,
 } from '~/components/summary';
+import { ConfirmDialog } from '~/components/common';
 import { DocumentGate } from '~/components/study';
 import {
   getStudyTask,
@@ -18,7 +19,8 @@ import {
 } from '~/config';
 import { useTaskSession } from '~/hooks';
 import { GenerateSummaryButton } from './GenerateSummaryButton';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { logAction } from '~/services';
 import type { HistoryEntry } from '~/types';
 
 type Props = {
@@ -33,6 +35,7 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
     getStudyTask(taskId);
   const session = useTaskSession(taskId, documentId);
   const { selection, history } = session;
+  const [timeUp, setTimeUp] = useState(false);
 
   const tasks: Record<string, StudyTaskConfig> = Object.fromEntries(
     STUDY_BLOCKS.map(({ taskId }) => [taskId, getStudyTask(taskId)])
@@ -75,7 +78,7 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
     <>
       <DrawerAppBar taskInfo={{ description, instructions }} />{' '}
       {timeLimitSeconds != null && (
-        <TaskTimer seconds={timeLimitSeconds} onExpire={onFinish} />
+        <TaskTimer seconds={timeLimitSeconds} onExpire={() => setTimeUp(true)} />
       )}
       <Box
         sx={{
@@ -155,6 +158,17 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
       <NextTaskButton
         disabled={!session.summary.trim() || session.isAnalyzing}
         onConfirm={onFinish}
+      />
+      <ConfirmDialog
+        open={timeUp}
+        id="time-up-dialog"
+        title="Zeit abgelaufen"
+        description="Die Zeit für diese Aufgabe ist abgelaufen. Ihre aktuelle Zusammenfassung wird eingereicht."
+        confirmLabel="Weiter"
+        onConfirm={() => {
+          logAction('time_up_dialog_confirm', { open: false });
+          onFinish();
+        }}
       />
     </>
   );
