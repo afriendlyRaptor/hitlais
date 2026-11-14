@@ -1,9 +1,11 @@
+
+
 services:
   server:
-    build:
-      context: .
+    image: ghcr.io/afriendlyRaptor/hitlais:latest
     restart: unless-stopped
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
       - TZ=Europe/Zurich
+
