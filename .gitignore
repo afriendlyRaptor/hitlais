@@ -1,7 +1,6 @@
 # Dependencies
 node_modules/
 dataset/
-data/
 logs/
 
 .next/
