@@ -35,13 +35,17 @@ How the numbers are derived
   is one "generation". The first generation of a task is the automatic one made
   when the task opens ("initial"); the others are triggered by the user.
 * Final score: the score that is "current" when the task is submitted
-  (`submit_dialog_confirm`). It is the last generated score, unless a
-  `history_restored` event happened after that, in which case the restored
-  entry (looked up via its `entry_id`) is the final score.
+  (`submit_dialog_confirm`, or `time_up_dialog_confirm` when the timer ran out).
+  It is the last generated score, unless a `history_restored` event happened
+  after that, in which case the restored entry (looked up via its `entry_id`)
+  is the final score.
   (The score shown in the UI, e.g. 9.41, equals ROUGE-L x 100; the report
   uses the raw 0-1 values of all four metrics.)
-* Task time: `task_timer_start` -> `submit_dialog_confirm`.
+* Task time: `task_timer_start` -> `submit_dialog_confirm`, or -> `task_timer_expired`
+  when the timer ran out.
 * Manual selection: number of `sentence_toggled` events per task.
+* Comparisons: one per compared task (step `comparison:<taskId>`), each with its
+  own time and answers.
 """
 
 import argparse
@@ -151,6 +155,14 @@ class TaskData:
 
 
 @dataclass
+class ComparisonData:
+    """One final comparison step (generated vs. reference summary of one task)."""
+    start: Optional[int] = None
+    end: Optional[int] = None
+    data: Dict[str, Any] = field(default_factory=dict)      # payload of `comparison_submit`
+
+
+@dataclass
 class UserData:
     user: str
     files: List[str] = field(default_factory=list)
@@ -159,10 +171,7 @@ class UserData:
     last_ts: Optional[int] = None
     doc_ids: Dict[str, Any] = field(default_factory=dict)
     tasks: "OrderedDict[str, TaskData]" = field(default_factory=OrderedDict)
-    cmp_start: Optional[int] = None
-    cmp_end: Optional[int] = None
-    cmp_task: Optional[str] = None
-    comparison: Dict[str, Any] = field(default_factory=dict)
+    comparisons: "OrderedDict[str, ComparisonData]" = field(default_factory=OrderedDict)  # task id -> comparison
 
     def task(self, tid: str) -> TaskData:
         if tid not in self.tasks:
@@ -229,14 +238,14 @@ def analyze_user(user: str, events: List[dict], files: List[str]) -> UserData:
                 u.task(tid).document_id = doc
             continue
 
-        # ---- final A/B comparison step -------------------------------------
+        # ---- final A/B comparison steps (one per compared task) ------------
         if kind == "comparison":
-            u.cmp_task = step_task or ev.get("taskId")
+            cmp = u.comparisons.setdefault(step_task or ev.get("taskId"), ComparisonData())
             if typ == "step_entered":
-                u.cmp_start = ts
+                cmp.start = ts
             elif typ == "comparison_submit":
-                u.cmp_end = ts
-                u.comparison = p
+                cmp.end = ts
+                cmp.data = p
             continue
 
         if kind not in ("instructions", "task", "questionnaire") or not step_task:
@@ -311,6 +320,11 @@ def analyze_user(user: str, events: List[dict], files: List[str]) -> UserData:
                     td.submit_opens += 1
             elif typ == "submit_dialog_confirm":
                 td.end = ts
+                td.submitted = True
+                td.final_src = td._current
+            elif typ == "task_timer_expired":           # time ran out: working time ends here
+                td.end = ts
+            elif typ == "time_up_dialog_confirm":       # participant clicked "Weiter" in the time-up dialog
                 td.submitted = True
                 td.final_src = td._current
 
@@ -557,7 +571,7 @@ def build_report(users: List[UserData], plots: Dict[str, Optional[str]], source_
         "case the restored entry counts.")
     add("- All scores are the raw 0–1 values (the score shown in the UI is ROUGE-L × 100). "
         "Cells read `first → final (Δ)`.")
-    add("- **Task time** = timer start → submit confirmation. "
+    add("- **Task time** = timer start → submit confirmation (or timer expiry if the time ran out). "
         "**Manual selection** = number of `sentence_toggled` events.\n")
 
     # ---- 1. overview --------------------------------------------------------
@@ -643,12 +657,12 @@ def build_report(users: List[UserData], plots: Dict[str, Optional[str]], source_
                   "Reading instructions", "Questionnaire"], rows,
                  name="time", caption="Time spent per task (working time = timer start until submission).",
                  tex_drop=("% of limit",), tex_group=True))
-    if any(u.cmp_start and u.cmp_end for u in users):
-        add("**Final comparison step**\n")
+    if any(c.start and c.end for u in users for c in u.comparisons.values()):
+        add("**Final comparison steps**\n")
         add(md_table(["User", "Compared document", "Time"],
-                     [[u.user, u.cmp_task or "–",
-                       fmt_dur((u.cmp_end - u.cmp_start) / 1000 if u.cmp_start and u.cmp_end else None)]
-                      for u in users], name="time_comparison", caption="Time spent on the final comparison step."))
+                     [[u.user, t, fmt_dur((c.end - c.start) / 1000 if c.start and c.end else None)]
+                      for u in users for t, c in u.comparisons.items()],
+                     name="time_comparison", caption="Time spent on the final comparison steps."))
 
     # ---- 4. manual selection ------------------------------------------------
     add("## 4. Manual sentence selection\n")
@@ -708,29 +722,32 @@ def build_report(users: List[UserData], plots: Dict[str, Optional[str]], source_
             add(md_table(["Question", "User", "Answer"], trows, name=f"freetext_{t}",
                          caption=f"{t}: free-text answers.", text_col=True))
 
-    with_cmp = [u for u in users if u.comparison]
-    if with_cmp:
-        add("### Final comparison (generated vs. reference summary)\n")
+    # one section per compared task
+    for t in sorted({t for u in users for t in u.comparisons}):
+        with_cmp = [u for u in users if u.comparisons.get(t) and u.comparisons[t].data]
+        if not with_cmp:
+            continue
+        add(f"### Final comparison {t} (generated vs. reference summary)\n")
+        answers = {u.user: u.comparisons[t].data.get("answers") or {} for u in with_cmp}
         ans_keys: List[str] = []
-        for u in with_cmp:
-            for k in (u.comparison.get("answers") or {}):
+        for a in answers.values():
+            for k in a:
                 if k not in ans_keys:
                     ans_keys.append(k)
-        text_keys = [k for k in ans_keys if any(isinstance((u.comparison.get("answers") or {}).get(k), str)
-                                                for u in with_cmp)]
-        rows = [[f, *[u.comparison.get(f, "–") for u in with_cmp]]
+        text_keys = [k for k in ans_keys if any(isinstance(a.get(k), str) for a in answers.values())]
+        rows = [[f, *[u.comparisons[t].data.get(f, "–") for u in with_cmp]]
                 for f in ("selected_position", "selected_source", "generated_position")]
         for k in ans_keys:
             if k not in text_keys:
-                rows.append([k] + [(u.comparison.get("answers") or {}).get(k, "–") for u in with_cmp])
-        add(md_table(["Item"] + [u.user for u in with_cmp], rows, name="final_comparison",
-                     caption="Final comparison of generated vs. reference summary."))
-        trows = [[k, u.user, (u.comparison.get("answers") or {}).get(k)] for k in text_keys for u in with_cmp
-                 if (u.comparison.get("answers") or {}).get(k) not in (None, "")]
+                rows.append([k] + [answers[u.user].get(k, "–") for u in with_cmp])
+        add(md_table(["Item"] + [u.user for u in with_cmp], rows, name=f"final_comparison_{t}",
+                     caption=f"Final comparison {t}: generated vs. reference summary."))
+        trows = [[k, u.user, answers[u.user].get(k)] for k in text_keys for u in with_cmp
+                 if answers[u.user].get(k) not in (None, "")]
         if trows:
             add("Free-text answers:\n")
-            add(md_table(["Question", "User", "Answer"], trows, name="final_comparison_text",
-                         caption="Final comparison: free-text answers.", text_col=True))
+            add(md_table(["Question", "User", "Answer"], trows, name=f"final_comparison_text_{t}",
+                         caption=f"Final comparison {t}: free-text answers.", text_col=True))
 
     # ---- appendix -----------------------------------------------------------
     add("## Appendix: generation log per user and task\n")

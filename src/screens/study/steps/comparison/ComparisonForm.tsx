@@ -9,7 +9,7 @@ import {
   StepLayout,
   ValidationMessage,
 } from '~/components/study';
-import { COMPARISON, getQuestionnaire } from '~/config';
+import { getQuestionnaire } from '~/config';
 import { useQuestionnaireForm } from '~/hooks';
 import { arrangeSummaries } from '~/lib/comparison';
 import { logAction } from '~/services';
@@ -17,6 +17,7 @@ import { SummaryChoiceCard } from './SummaryChoiceCard';
 
 type Props = {
   userId: string;
+  questionnaireId: string;
   generatedSummary: string;
   referenceSummary: string;
   onFinish: () => void;
@@ -26,12 +27,13 @@ const CHOICE_ID = 'summary-choice';
 
 export function ComparisonForm({
   userId,
+  questionnaireId,
   generatedSummary,
   referenceSummary,
   onFinish,
 }: Props) {
   const { title, description, items } = getQuestionnaire(
-    COMPARISON.questionnaireId
+    questionnaireId
   );
 
   const options = useMemo(

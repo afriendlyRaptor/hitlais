@@ -7,7 +7,7 @@ export { studyTasks, getStudyTask, type StudyTaskConfig } from './studyTasks';
 export {
   STUDY_BLOCKS,
   RANDOMIZE_BLOCK_ORDER,
-  COMPARISON,
+  COMPARISONS,
   type StudyBlock,
 } from './studyFlow';
 export {

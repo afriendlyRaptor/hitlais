@@ -14,11 +14,20 @@ export const STUDY_BLOCKS: StudyBlock[] = [
   { taskId: 'taskC', questionnaireId: 'taskQuestionnaire' },
 ];
 
+export type ComparisonConfig = {
+  /** Task whose final summary is compared with the reference summary. */
+  taskId: string;
+  /** Key in `questionnaires` shown with the comparison. */
+  questionnaireId: string;
+};
+
 /**
- * Final step, always last: compares the participant's final summary of
- * `taskId` with the reference summary of that task's document.
+ * Final steps, always last and in this order: each compares the participant's
+ * final summary of `taskId` with the reference summary of that task's document.
+ * Add one entry per comparison.
  */
-export const COMPARISON = {
-  taskId: 'taskA',
-  questionnaireId: 'comparisonQuestionnaire',
-} as const;
+export const COMPARISONS: ComparisonConfig[] = [
+  { taskId: 'taskA', questionnaireId: 'comparisonQuestionnaire' },
+  { taskId: 'taskB', questionnaireId: 'comparisonQuestionnaire' },
+  { taskId: 'taskC', questionnaireId: 'comparisonQuestionnaire' },
+];

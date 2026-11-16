@@ -1,4 +1,4 @@
-import { COMPARISON, RANDOMIZE_BLOCK_ORDER, STUDY_BLOCKS } from '~/config';
+import { COMPARISONS, RANDOMIZE_BLOCK_ORDER, STUDY_BLOCKS } from '~/config';
 import { assignDocuments } from './documentAssignment';
 import { seededRng, shuffle } from './random';
 
@@ -24,9 +24,7 @@ const STEP_LABELS: Record<StudyStep['kind'], string> = {
 };
 
 export const stepLabel = (step: StudyStep) =>
-  step.kind === 'comparison'
-    ? STEP_LABELS.comparison
-    : `${STEP_LABELS[step.kind]} – ${step.taskId}`;
+  `${STEP_LABELS[step.kind]} – ${step.taskId}`;
 
 /** The complete, ordered list of screens one participant goes through. */
 export function buildStudyPlan(userId: string): StudyPlan {
@@ -40,11 +38,16 @@ export function buildStudyPlan(userId: string): StudyPlan {
       { kind: 'task', taskId },
       { kind: 'questionnaire', taskId, questionnaireId },
     ]),
-    { kind: 'comparison', ...COMPARISON },
+    ...COMPARISONS.map((comparison): StudyStep => ({
+      kind: 'comparison',
+      ...comparison,
+    })),
   ];
 
   const taskIds = [
-    ...new Set([...STUDY_BLOCKS.map((b) => b.taskId), COMPARISON.taskId]),
+    ...new Set([...STUDY_BLOCKS.map((b) => b.taskId),
+    ...COMPARISONS.map((c) => c.taskId),
+  ]),
   ];
 
   return {

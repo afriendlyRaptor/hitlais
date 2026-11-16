@@ -1,9 +1,9 @@
 import { createContext, Fragment, useContext } from 'react';
 import { Box, Tooltip } from '@mui/material';
-import { STUDY_BLOCKS, COMPARISON, studyTasks } from '~/config';
+import { STUDY_BLOCKS, COMPARISONS, studyTasks } from '~/config';
 
 type Progress = {
-  /** Task id (also on its instruction screen), or the comparison questionnaire id. */
+  /** Task id (also on its instruction screen), or `comparison:${taskId}`. */
   currentStep?: string;
   /** True while the questionnaire that follows `currentStep` is shown. */
   inQuestionnaire?: boolean;
@@ -31,11 +31,13 @@ export function StudyProgress() {
     },
   ]);
 
-  steps.push({
-    id: COMPARISON.questionnaireId,
-    label: 'Final comparison',
-    duration: QUESTIONNAIRE_TIME_SECONDS,
-  });
+  COMPARISONS.forEach((comparison) =>
+    steps.push({
+      id: `comparison:${comparison.taskId}`,
+      label: 'Final comparison',
+      duration: QUESTIONNAIRE_TIME_SECONDS,
+    })
+  );
 
   const stepIndex = steps.findIndex((step) => step.id === currentStep);
   const currentIndex =

@@ -13,7 +13,7 @@ import { QuestionnaireStep } from './steps/QuestionnaireStep';
 import { ComparisonStep } from './steps/comparison/ComparisonStep';
 import { TaskStep } from './steps/task/TaskStep';
 import { StudyProgressContext } from '~/components/app-bar';
-import { COMPARISON } from '~/config';
+import { COMPARISONS } from '~/config';
 
 type Props = {
   userId: string;
@@ -30,9 +30,15 @@ export function StudyFlow({ userId }: Props) {
   const { isAdmin, unlock, lock } = useAdminMode();
   const step = plan.steps[stepIndex];
 
+  // After the last step the progress bar shows the last comparison.
+  const comparisonTaskId =
+    step?.kind === 'comparison'
+      ? step.taskId
+      : COMPARISONS[COMPARISONS.length - 1].taskId;
+
   const progress =
     !step || step.kind === 'comparison'
-      ? { currentStep: COMPARISON.questionnaireId }
+      ? { currentStep: `comparison:${comparisonTaskId}` }
       : {
           currentStep: step.taskId,
           inQuestionnaire: step.kind === 'questionnaire',
@@ -97,6 +103,8 @@ export function StudyFlow({ userId }: Props) {
           <ComparisonStep
             key={stepIndex}
             userId={userId}
+            taskId={step.taskId}
+            questionnaireId={step.questionnaireId}
             documentId={documentId}
             onFinish={advance}
           />
