@@ -13,6 +13,9 @@ services:
     network_mode: "service:tailscale"
     depends_on:
       - tailscale
+    # Study logs written by src/server/log.ts (one JSONL file per user per day).
+    volumes:
+      - ./volumes/logs:/app/logs
 
   tailscale:
     container_name: sentence-tailscale
