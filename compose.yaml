@@ -4,8 +4,41 @@ services:
   server:
     image: ghcr.io/afriendlyraptor/hitlais:latest
     restart: unless-stopped
+    environment:
+      - TZ=Europe/Zurich
+      - LOG_EXPORT_TOKEN_SHA256=${LOG_EXPORT_TOKEN_SHA256:-}
+      - API_URL=http://summary-api:8080
+    # Shares the sidecar's network namespace, so it reaches the tailnet
+    # and is exposed through the sidecar's ports (see tailscale below).
+    network_mode: "service:tailscale"
+    depends_on:
+      - tailscale
+
+  tailscale:
+    container_name: sentence-tailscale
+    image: tailscale/tailscale:latest
+    hostname: sentence-api
+    restart: unless-stopped
+    # Published here, not on `server`: the app has no network of its own.
     ports:
       - "3000:3000"
     environment:
-      - TZ=Europe/Zurich
-
+      - TS_AUTHKEY=${TS_AUTHKEY:-}
+      - TS_HOSTNAME=sentence-api
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=true
+    volumes:
+      - ./volumes/tailscale:/var/lib/tailscale
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+      - NET_RAW
+    sysctls:
+      - net.ipv4.conf.all.route_localnet=1
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    healthcheck:
+      test: ["CMD", "tailscale", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
