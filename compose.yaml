@@ -7,7 +7,7 @@ services:
     environment:
       - TZ=Europe/Zurich
       - LOG_EXPORT_TOKEN_SHA256=${LOG_EXPORT_TOKEN_SHA256:-}
-      - API_URL=http://100.105.103.45:8000
+      - API_URL=http://summary-api:8080
     # Shares the sidecar's network namespace, so it reaches the tailnet
     # and is exposed through the sidecar's ports (see tailscale below).
     network_mode: "service:tailscale"
