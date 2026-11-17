@@ -28,6 +28,6 @@ export type ComparisonConfig = {
  */
 export const COMPARISONS: ComparisonConfig[] = [
   { taskId: 'taskA', questionnaireId: 'comparisonQuestionnaire' },
-  { taskId: 'taskB', questionnaireId: 'comparisonQuestionnaire' },
-  { taskId: 'taskC', questionnaireId: 'comparisonQuestionnaire' },
+/*  { taskId: 'taskB', questionnaireId: 'comparisonQuestionnaire' },
+  { taskId: 'taskC', questionnaireId: 'comparisonQuestionnaire' }, */
 ];
