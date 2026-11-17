@@ -12,7 +12,6 @@ __pycache__/
 dataset/
 preprocess/
 
-
 # Ignore Vite, Webpack, and React-specific build artifacts
 .vite/
 .vitepress/
@@ -47,6 +46,11 @@ pnpm-debug.log*
 *.swp
 .DS_Store
 Thumbs.db
+
+scripts
+logs
+volumes
+
 
 # Ignore Docker-related files (to avoid copying unnecessary configs)
 Dockerfile

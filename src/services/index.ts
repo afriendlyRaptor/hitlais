@@ -15,12 +15,6 @@ export {
   USER_ID_CHANGED_EVENT,
 } from './user';
 
-export { analyzeSentences, type AnalyzeResponse } from './analyzer';
+export { analyzeSentences, type AnalyzeResult } from './analyzer';
 
 export { getDocument } from '~/server/documents';
-
-export {
-  compareTexts,
-  type CompareResponse,
-  type CompareResult,
-} from './compare';
