@@ -735,13 +735,23 @@ def build_report(users: List[UserData], plots: Dict[str, Optional[str]], source_
                 if k not in ans_keys:
                     ans_keys.append(k)
         text_keys = [k for k in ans_keys if any(isinstance(a.get(k), str) for a in answers.values())]
+
+        headers = ["Item"] + [u.user for u in with_cmp] + (["Mean"] if len(with_cmp) > 1 else [])
         rows = [[f, *[u.comparisons[t].data.get(f, "–") for u in with_cmp]]
                 for f in ("selected_position", "selected_source", "generated_position")]
+
         for k in ans_keys:
             if k not in text_keys:
-                rows.append([k] + [answers[u.user].get(k, "–") for u in with_cmp])
-        add(md_table(["Item"] + [u.user for u in with_cmp], rows, name=f"final_comparison_{t}",
+                rows.append([k, *[answers[u.user].get(k, "–") for u in with_cmp]])
+
+        if len(with_cmp) > 1:
+            for row in rows:
+                m = mean([v for v in row[1:] if is_num(v)])
+                row.append("–" if m is None else f"{m:.2f}")
+
+        add(md_table(headers, rows, name=f"final_comparison_{t}",
                      caption=f"Final comparison {t}: generated vs. reference summary."))
+
         trows = [[k, u.user, answers[u.user].get(k)] for k in text_keys for u in with_cmp
                  if answers[u.user].get(k) not in (None, "")]
         if trows:
