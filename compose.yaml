@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Zurich
-      - LOG_EXPORT_TOKEN_SHA256=${LOG_EXPORT_TOKEN_SHA256:-}
+      - LOG_EXPORT_TOKEN_SHA256=598ecd772dab0cd12bc2f760e9ce2cf4674892d40f522a9b5208c1a652073f73
       - API_URL=http://100.105.103.45:8000
     # Shares the sidecar's network namespace, so it reaches the tailnet
     # and is exposed through the sidecar's ports (see tailscale below).

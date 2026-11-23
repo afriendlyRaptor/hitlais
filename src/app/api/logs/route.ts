@@ -1,7 +1,6 @@
 import { createHash, timingSafeEqual } from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
-import { LOG_EXPORT_TOKEN_SHA256 } from '~/config/logExport';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,13 +11,15 @@ const LOG_FILE = /^[a-zA-Z0-9_-]+_\d{4}-\d{2}-\d{2}\.jsonl$/;
 
 /** The request must carry `Authorization: Bearer <token>` matching the stored hash. */
 function isAuthorized(request: Request) {
-  if (!LOG_EXPORT_TOKEN_SHA256) {
+  const tokenHash = process.env.LOG_EXPORT_TOKEN_SHA256;
+
+  if (!tokenHash) {
     return false;
   }
 
   const token = request.headers.get('authorization')?.replace(/^Bearer /, '') ?? '';
   const given = createHash('sha256').update(token).digest();
-  const wanted = Buffer.from(LOG_EXPORT_TOKEN_SHA256, 'hex');
+  const wanted = Buffer.from(tokenHash, 'hex');
 
   return given.length === wanted.length && timingSafeEqual(given, wanted);
 }
