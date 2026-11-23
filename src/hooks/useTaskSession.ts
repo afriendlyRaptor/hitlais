@@ -11,8 +11,9 @@ import { useTaskHistory } from './useTaskHistory';
  * Everything a summarizing task needs: the document, the sentence selection,
  * the summary history and the actions on them.
  *
- * On first visit the first sentences are selected and summarized, so there is
- * always a starting summary and score.
+ * On first visit the first sentences are summarized, so there is always a
+ * starting summary and score. The selection is then cleared again, so the
+ * participant starts with nothing selected.
  */
 export function useTaskSession(taskId: string, documentId: number) {
   const { document, isLoading, error, loadDocument } = useDocument();
@@ -67,6 +68,9 @@ export function useTaskSession(taskId: string, documentId: number) {
       indexes.map((index) => ({ index, text: sentences[index] })),
       document.summary
     );
+
+    selection.replaceSelection([]);
+    logAction('baseline_selection_cleared', { selected_indexes: indexes });
   }, [document, sentences, history.entries.length, selection, analyze]);
 
   const generate = () => {

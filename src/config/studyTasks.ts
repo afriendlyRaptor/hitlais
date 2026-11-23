@@ -15,18 +15,19 @@ export const studyTasks: Record<string, StudyTaskConfig> = {
     title: 'Task A',
     description: '',
     instructions: `
-Sie dürfen in den nächsten ca. 50min eine neue Herangehensweise an das erstellen
+Sie dürfen in den nächsten ca. 20min eine neue Herangehensweise an das erstellen
 von Zusammenfassungen testen. Ihre Rückmeldungen und Ihre Erfahrungen sind für
 die Weiterentwicklung dieses Projektes äusserst wertvoll.
 
-Auf den folgenden Seiten werden Sie drei Aufgaben bewältigen und danach
-die Effektivität und den Nutzen der Ihnen zur Verfügung gestellten Mittel bewerten.
+Auf den folgenden Seiten werden Sie eine Aufgaben bewältigen und danach die 
+Effektivität und den Nutzen der Ihnen zur Verfügung gestellten Mittel bewerten.
 
-Während den Aufgaben wird Ihnen in der linken Hälfte ein Text präsentiert aus welchem
-Sie mit Klicken Sätze auswählen können. Aus den ausgewählten Sätze wird danach 
-automatisch eine Zusammenfassung generiert. Diese Zusammenfassung wird Ihnen auf 
-der rechten Seite angezeigt.
+Während den Aufgaben wird Ihnen in der linken Hälfte ein Text präsentiert aus 
+welchem Sie mit Klicken Sätze auswählen können. 
+{{image:select_notSelect.png}}
 
+Aus den ausgewählten Sätze wird danach automatisch eine Zusammenfassung generiert.
+Diese Zusammenfassung wird Ihnen auf der rechten Seite angezeigt.
 
 Unterhalb der Zusammenfassung gibt es die Möglichkeit mit dem Verlauf zu einer
 früheren Version zurückzukehren.
@@ -36,13 +37,13 @@ Am unteren Rand der Seite gibt es Knöpfe für die automatische Selektion der S�
 Auch kann hier die Auswahl aufgehoben werden.
 {{image:selection_controlls.png}}
 
-Ihre Aufgabe besteht darin, die Qualität der generierten Zusammenfassung
-zu verbessern, indem Sie gezielt wichtige Sätze aus dem Text auswählen.
-Sie können Ihre Satzauswahl beliebig oft verändern. 
+Ihre Aufgabe besteht darin, die Qualität der generierten Zusammenfassung zu 
+verbessern, indem Sie gezielt wichtige Sätze aus dem Text auswählen. Sie können 
+Ihre Satzauswahl beliebig oft verändern. 
 
-Versuchen Sie, innerhalb des Zeitlimits eine möglichst gute
-Zusammenfassung zu erstellen. Sobald Sie mit dem Ergebnis zufrieden sind, können
-Sie Ihre Zusammenfassung jederzeit einreichen.
+Versuchen Sie, innerhalb des Zeitlimits eine möglichst gute Zusammenfassung zu 
+erstellen. Sobald Sie mit dem Ergebnis zufrieden sind, können Sie Ihre 
+Zusammenfassung jederzeit einreichen.
 `,
     showScore: false,
     timeLimitSeconds: 1200, // 20 min
