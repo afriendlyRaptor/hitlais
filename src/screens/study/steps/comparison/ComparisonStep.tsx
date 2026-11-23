@@ -10,7 +10,7 @@ type Props = {
   taskId: string;
   questionnaireId: string;
   /** Document of the compared task; its reference summary is the second candidate. */
-  documentId: number;
+  documentId: string;
   onFinish: () => void;
 };
 

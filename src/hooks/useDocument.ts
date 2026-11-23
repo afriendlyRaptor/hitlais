@@ -7,7 +7,7 @@ export function useDocument() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const loadDocument = useCallback(async (id: number) => {
+  const loadDocument = useCallback(async (id: string) => {
     setIsLoading(true);
     setError(null);
 

@@ -15,7 +15,7 @@ import { useTaskHistory } from './useTaskHistory';
  * starting summary and score. The selection is then cleared again, so the
  * participant starts with nothing selected.
  */
-export function useTaskSession(taskId: string, documentId: number) {
+export function useTaskSession(taskId: string, documentId: string) {
   const { document, isLoading, error, loadDocument } = useDocument();
 
   const reload = useCallback(

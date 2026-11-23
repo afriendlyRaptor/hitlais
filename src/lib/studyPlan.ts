@@ -11,7 +11,7 @@ export type StudyStep =
 export interface StudyPlan {
   steps: StudyStep[];
   /** taskId -> document id */
-  documentIds: Record<string, number>;
+  documentIds: Record<string, string>;
 }
 
 export const stepId = (step: StudyStep) => `${step.kind}:${step.taskId}`;

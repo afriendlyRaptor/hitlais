@@ -4,9 +4,9 @@ type DatasetConfig = {
   /** Folder in data/ that holds the document json files. */
   folder: string;
   /** Document ids a participant may be assigned. */
-  validIds: number[];
+  validIds: string[];
   /** Tasks that always get the same document. All other tasks draw a random one. */
-  fixedIds: Record<string, number>;
+  fixedIds: Record<string, string>;
 };
 
 const DATASETS: Record<string, DatasetConfig> = {
@@ -19,14 +19,19 @@ const DATASETS: Record<string, DatasetConfig> = {
       64897, 67984, 61082, 64468, 65195, 69198, 69828, 64813, 64382, 68195,
       60393, 57794, 62136, 69602, 62450, 61327, 69300, 67953, 60931, 62292,
       59534, 62472,
-    ],
-    fixedIds: { taskA: 69198, taskB: 69828, taskC: 61082 },
+    ].map(String),
+    fixedIds: { taskA: '69198', taskB: '69828', taskC: '61082' },
   },
   gov_report: {
     model: 'gov_report',
-    folder: 'documents_gov_report',
-    validIds: [],
-    fixedIds: {},
+    folder: 'gov_documents',
+    validIds: [
+      '93-792', '98-756', 'R42846', 'R43849', 'R44097', 'R44297', 'R44484',
+      'R44486', 'R44583', 'R44758', 'R44873', 'RL34667', 'RS20607', 'RS20792',
+      'RS22246', 'RS22785', 'RS22897',
+      'R41799', 'RS22877', 'RS22923',
+    ],
+    fixedIds: { taskA: 'R44583', taskB: 'R41799', taskC: '98-756' },
   },
 };
 

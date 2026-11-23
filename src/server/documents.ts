@@ -6,9 +6,9 @@ import { DATASET } from '~/config';
 import type { DocumentResult } from '~/types';
 
 /** Reads a document prepared by preprocess/prepare-documents.mjs. */
-export async function getDocument(id: number): Promise<DocumentResult> {
-  if (!Number.isInteger(id)) {
-    throw new Error('Document ID must be numeric');
+export async function getDocument(id: string): Promise<DocumentResult> {
+  if (!/^[\w-]+$/.test(id)) {
+    throw new Error('Invalid document ID');
   }
 
   const file = path.join(

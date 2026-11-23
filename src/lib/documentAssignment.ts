@@ -8,8 +8,8 @@ import { shuffle } from './random';
 export function assignDocuments(
   taskIds: string[],
   rng: () => number
-): Record<string, number> {
-  const assigned: Record<string, number> = {};
+): Record<string, string> {
+  const assigned: Record<string, string> = {};
   const randomTaskIds: string[] = [];
 
   for (const taskId of taskIds) {

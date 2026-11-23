@@ -25,7 +25,7 @@ import type { HistoryEntry } from '~/types';
 
 type Props = {
   taskId: string;
-  documentId: number;
+  documentId: string;
   onFinish: () => void;
 };
 

@@ -25,7 +25,7 @@ export interface DocumentSentence {
 
 /** A prepared document, as stored in data/documents/<id>.json. */
 export interface DocumentResult {
-  id: number;
+  id: string;
   title: string | null;
   language: string | null;
   link: string | null;

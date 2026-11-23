@@ -1,7 +1,7 @@
 export type LogContext = {
   step: string | null;
   taskId: string | null;
-  documentId: number | null;
+  documentId: string | null;
 };
 
 let context: LogContext = { step: null, taskId: null, documentId: null };
