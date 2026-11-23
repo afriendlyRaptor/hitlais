@@ -1,0 +1,280 @@
+{
+  "id": "R42846",
+  "title": "Lifeline Telephone Program: Frequently Asked Questions",
+  "language": "English",
+  "transcript": "# What Is the Lifeline Program?\n\nLifeline is a federal program, established in 1984, that assists eligible individuals in paying the recurring monthly service charges associated with either wireline or wireless telephone usage. The program is part of the Low Income Program supported by the Universal Service Fund.\n\nEligible households can receive up to $9.25 per month in Lifeline discounts. Additional state support may be available. Approximately 2,000 telephone companies are eligible to provide these discounts. A household applies for the discounts through their designated telecommunications service provider. Support is not given directly to the subscriber, but to the service provider. The provider is reimbursed through the Lifeline Program and in turn passes the discount on to the subscriber.\n\n# Who Oversees the Lifeline Program?\n\nThe Universal Service Administrative Company (USAC), an independent not-for-profit organization, is the designated administrator of the Universal Service Fund (USF), of which the Lifeline Program is a part. USAC administers the USF programs for the Federal Communications Commission and does not set or advocate policy.\n\n# What Is Covered Under the Lifeline Program?\n\nThe Lifeline program covers the minutes of use for the eligible subscriber. Depending on the package selected the subscriber is allocated a set number of usage minutes per month. Once the allocation is used the subscriber may choose to pay for additional minutes of use. Although not required, most providers that offer a prepaid wireless option provide a wireless phone to the subscriber for free. The cost of this phone is not covered under the Lifeline program but is borne by the designated provider.\n\nAlthough the prepaid wireless option is growing in popularity the Lifeline program also covers a wireline option or a postpaid wireless option. As with the case of the prepaid wireless option the program solely covers the minutes of use, not the device.\n\n# What Are the Requirements for Eligibility?\n\nThe Lifeline program is available to eligible low-income consumers in every state, territory, and commonwealth, and on Tribal lands. To participate in the program, consumers must either have an income that is at or below 135% of the federal Poverty Guidelines or participate in one of the following assistance programs: Medicaid; Supplemental Nutrition Assistance Program (Food Stamps or SNAP); Supplemental Security Income (SSI); Federal Public Housing Assistance (Section 8); Low-Income Home Energy Assistance Program (LIHEAP); Temporary Assistance to Needy Families (TANF); National School Lunch Program's Free Lunch Program; Bureau of Indian Affairs General Assistance; Tribally-Administered Temporary Assistance for Needy Families (TTANF); Food Distribution Program on Indian Reservations (FDPIR); Head Start (if income eligibility criteria are met); or state assistance programs (if applicable).\n\nThe Lifeline Pre-Screening Tool ( http://www.lifelinesupport.org/ls/eligibility/default.aspx ) provided by USAC can help determine whether a household is eligible for Lifeline assistance.\n\nAt least once each year, beginning in 2012, consumers who are receiving lifeline service must recertify their eligibility and that no one else in their household has a lifeline discounted service. A failure to recertify eligibility will result in removal from the program.\n\n# How Does Someone Enroll?\n\nConsumers apply for Lifeline through their local telephone company or designated state agency. The Companies in My State ( http://www.lifelinesupport.org/ls/companies.aspx ) provided by USAC can help locate a Lifeline provider in your state. The National Association of Regulatory Utility Commissioners (NARUC) provides a listing and links to state utility commissions ( http://www.naruc.org/Commissions/CommissionsList.cfm ).\n\n# Who Pays for the Lifeline Program?\n\nTelecommunications carriers that provide interstate service and certain other providers of telecommunications services are required to contribute to the federal USF based on a percentage of their end-user interstate and international telecommunications revenues. These companies include wireline telephone companies, wireless telephone companies, paging service providers, and certain Voice over Internet Protocol (VoIP) providers. The USF receives no federal monies.\n\nSome consumers may notice a \"Universal Service\" line item on their telephone bills. This line item appears when a company chooses to recover its USF contributions directly from its customers by billing them this charge. The FCC permits, but does not require, this charge to be passed on directly to customers. Each company makes a business decision about whether and how to assess charges to recover its Universal Service obligations. The charge, however, cannot exceed the amount owed to the USF by the company.\n\n# Can a Household Have More Than One Discounted Service?\n\nNo. Federal rules prohibit eligible low-income consumers from receiving more than one Lifeline discount per household. An eligible consumer may receive a discount on either a wireline or wireless service, but not both. If a household is currently receiving more than one monthly Lifeline service, it must select one provider to provide Lifeline service and it must contact the other provider to de-enroll from their program. Subscribers found to be violating this rule will be de-enrolled and may also be subject to criminal and/or civil penalties.",
+  "summary": "The concept that all Americans should have affordable access to the telecommunications network, commonly called the \"universal service concept,\" can trace its origins back to the 1934 Communications Act. The preservation and advancement of universal service has remained a basic tenet of federal communications policy, and in the mid-1980s the Federal Communications Commission (FCC) established the Lifeline program to provide support for low-income subscribers. The Lifeline program, which is administered under the Universal Service Fund (USF) Low Income Program, was established by the FCC in 1984 to assist eligible low-income subscribers to cover the recurring monthly service charges incurred for telephone usage. Although the program solely covers costs associated with the minutes of use, not the telephone, misinformation connecting the program to payment for a \"free phone\" has resulted in a significant number of constituent inquiries.",
+  "link": "",
+  "sentences": [
+    {
+      "index": 0,
+      "paragraph": 0,
+      "text": "# What Is the Lifeline Program?",
+      "tokens": 8
+    },
+    {
+      "index": 1,
+      "paragraph": 1,
+      "text": "Lifeline is a federal program, established in 1984, that assists eligible individuals in paying the recurring monthly service charges associated with either wireline or wireless telephone usage.",
+      "tokens": 35
+    },
+    {
+      "index": 2,
+      "paragraph": 1,
+      "text": "The program is part of the Low Income Program supported by the Universal Service Fund.",
+      "tokens": 18
+    },
+    {
+      "index": 3,
+      "paragraph": 2,
+      "text": "Eligible households can receive up to $9.25 per month in Lifeline discounts.",
+      "tokens": 20
+    },
+    {
+      "index": 4,
+      "paragraph": 2,
+      "text": "Additional state support may be available.",
+      "tokens": 9
+    },
+    {
+      "index": 5,
+      "paragraph": 2,
+      "text": "Approximately 2,000 telephone companies are eligible to provide these discounts.",
+      "tokens": 15
+    },
+    {
+      "index": 6,
+      "paragraph": 2,
+      "text": "A household applies for the discounts through their designated telecommunications service provider.",
+      "tokens": 18
+    },
+    {
+      "index": 7,
+      "paragraph": 2,
+      "text": "Support is not given directly to the subscriber, but to the service provider.",
+      "tokens": 17
+    },
+    {
+      "index": 8,
+      "paragraph": 2,
+      "text": "The provider is reimbursed through the Lifeline Program and in turn passes the discount on to the subscriber.",
+      "tokens": 25
+    },
+    {
+      "index": 9,
+      "paragraph": 3,
+      "text": "# Who Oversees the Lifeline Program?",
+      "tokens": 10
+    },
+    {
+      "index": 10,
+      "paragraph": 4,
+      "text": "The Universal Service Administrative Company (USAC), an independent not-for-profit organization, is the designated administrator of the Universal Service Fund (USF), of which the Lifeline Program is a part.",
+      "tokens": 43
+    },
+    {
+      "index": 11,
+      "paragraph": 4,
+      "text": "USAC administers the USF programs for the Federal Communications Commission and does not set or advocate policy.",
+      "tokens": 23
+    },
+    {
+      "index": 12,
+      "paragraph": 5,
+      "text": "# What Is Covered Under the Lifeline Program?",
+      "tokens": 11
+    },
+    {
+      "index": 13,
+      "paragraph": 6,
+      "text": "The Lifeline program covers the minutes of use for the eligible subscriber.",
+      "tokens": 17
+    },
+    {
+      "index": 14,
+      "paragraph": 6,
+      "text": "Depending on the package selected the subscriber is allocated a set number of usage minutes per month.",
+      "tokens": 23
+    },
+    {
+      "index": 15,
+      "paragraph": 6,
+      "text": "Once the allocation is used the subscriber may choose to pay for additional minutes of use.",
+      "tokens": 20
+    },
+    {
+      "index": 16,
+      "paragraph": 6,
+      "text": "Although not required, most providers that offer a prepaid wireless option provide a wireless phone to the subscriber for free.",
+      "tokens": 26
+    },
+    {
+      "index": 17,
+      "paragraph": 6,
+      "text": "The cost of this phone is not covered under the Lifeline program but is borne by the designated provider.",
+      "tokens": 23
+    },
+    {
+      "index": 18,
+      "paragraph": 7,
+      "text": "Although the prepaid wireless option is growing in popularity the Lifeline program also covers a wireline option or a postpaid wireless option.",
+      "tokens": 29
+    },
+    {
+      "index": 19,
+      "paragraph": 7,
+      "text": "As with the case of the prepaid wireless option the program solely covers the minutes of use, not the device.",
+      "tokens": 25
+    },
+    {
+      "index": 20,
+      "paragraph": 8,
+      "text": "# What Are the Requirements for Eligibility?",
+      "tokens": 13
+    },
+    {
+      "index": 21,
+      "paragraph": 9,
+      "text": "The Lifeline program is available to eligible low-income consumers in every state, territory, and commonwealth, and on Tribal lands.",
+      "tokens": 33
+    },
+    {
+      "index": 22,
+      "paragraph": 9,
+      "text": "To participate in the program, consumers must either have an income that is at or below 135% of the federal Poverty Guidelines or participate in one of the following assistance programs: Medicaid; Supplemental Nutrition Assistance Program (Food Stamps or SNAP); Supplemental Security Income (SSI); Federal Public Housing Assistance (Section 8); Low-Income Home Energy Assistance Program (LIHEAP); Temporary Assistance to Needy Families (TANF); National School Lunch Program's Free Lunch Program; Bureau of Indian Affairs General Assistance; Tribally-Administered Temporary Assistance for Needy Families (TTANF); Food Distribution Program on Indian Reservations (FDPIR); Head Start (if income eligibility criteria are met); or state assistance programs (if applicable).",
+      "tokens": 179
+    },
+    {
+      "index": 23,
+      "paragraph": 10,
+      "text": "The Lifeline Pre-Screening Tool ( http://www.lifelinesupport.org/ls/eligibility/default.aspx ) provided by USAC can help determine whether a household is eligible for Lifeline assistance.",
+      "tokens": 48
+    },
+    {
+      "index": 24,
+      "paragraph": 11,
+      "text": "At least once each year, beginning in 2012, consumers who are receiving lifeline service must recertify their eligibility and that no one else in their household has a lifeline discounted service.",
+      "tokens": 41
+    },
+    {
+      "index": 25,
+      "paragraph": 11,
+      "text": "A failure to recertify eligibility will result in removal from the program.",
+      "tokens": 18
+    },
+    {
+      "index": 26,
+      "paragraph": 12,
+      "text": "# How Does Someone Enroll?",
+      "tokens": 8
+    },
+    {
+      "index": 27,
+      "paragraph": 13,
+      "text": "Consumers apply for Lifeline through their local telephone company or designated state agency.",
+      "tokens": 17
+    },
+    {
+      "index": 28,
+      "paragraph": 13,
+      "text": "The Companies in My State ( http://www.lifelinesupport.org/ls/companies.aspx ) provided by USAC can help locate a Lifeline provider in your state.",
+      "tokens": 42
+    },
+    {
+      "index": 29,
+      "paragraph": 13,
+      "text": "The National Association of Regulatory Utility Commissioners (NARUC) provides a listing and links to state utility commissions ( http://www.naruc.org/Commissions/CommissionsList.cfm ).",
+      "tokens": 47
+    },
+    {
+      "index": 30,
+      "paragraph": 14,
+      "text": "# Who Pays for the Lifeline Program?",
+      "tokens": 10
+    },
+    {
+      "index": 31,
+      "paragraph": 15,
+      "text": "Telecommunications carriers that provide interstate service and certain other providers of telecommunications services are required to contribute to the federal USF based on a percentage of their end-user interstate and international telecommunications revenues.",
+      "tokens": 49
+    },
+    {
+      "index": 32,
+      "paragraph": 15,
+      "text": "These companies include wireline telephone companies, wireless telephone companies, paging service providers, and certain Voice over Internet Protocol (VoIP) providers.",
+      "tokens": 31
+    },
+    {
+      "index": 33,
+      "paragraph": 15,
+      "text": "The USF receives no federal monies.",
+      "tokens": 10
+    },
+    {
+      "index": 34,
+      "paragraph": 16,
+      "text": "Some consumers may notice a \"Universal Service\" line item on their telephone bills.",
+      "tokens": 19
+    },
+    {
+      "index": 35,
+      "paragraph": 16,
+      "text": "This line item appears when a company chooses to recover its USF contributions directly from its customers by billing them this charge.",
+      "tokens": 27
+    },
+    {
+      "index": 36,
+      "paragraph": 16,
+      "text": "The FCC permits, but does not require, this charge to be passed on directly to customers.",
+      "tokens": 21
+    },
+    {
+      "index": 37,
+      "paragraph": 16,
+      "text": "Each company makes a business decision about whether and how to assess charges to recover its Universal Service obligations.",
+      "tokens": 21
+    },
+    {
+      "index": 38,
+      "paragraph": 16,
+      "text": "The charge, however, cannot exceed the amount owed to the USF by the company.",
+      "tokens": 19
+    },
+    {
+      "index": 39,
+      "paragraph": 17,
+      "text": "# Can a Household Have More Than One Discounted Service?",
+      "tokens": 14
+    },
+    {
+      "index": 40,
+      "paragraph": 18,
+      "text": "No.",
+      "tokens": 2
+    },
+    {
+      "index": 41,
+      "paragraph": 18,
+      "text": "Federal rules prohibit eligible low-income consumers from receiving more than one Lifeline discount per household.",
+      "tokens": 22
+    },
+    {
+      "index": 42,
+      "paragraph": 18,
+      "text": "An eligible consumer may receive a discount on either a wireline or wireless service, but not both.",
+      "tokens": 20
+    },
+    {
+      "index": 43,
+      "paragraph": 18,
+      "text": "If a household is currently receiving more than one monthly Lifeline service, it must select one provider to provide Lifeline service and it must contact the other provider to de-enroll from their program.",
+      "tokens": 40
+    },
+    {
+      "index": 44,
+      "paragraph": 18,
+      "text": "Subscribers found to be violating this rule will be de-enrolled and may also be subject to criminal and/or civil penalties.",
+      "tokens": 30
+    }
+  ]
+}

@@ -1,0 +1,364 @@
+{
+  "id": "RS22877",
+  "title": "Health Savings Accounts and High-Deductible Health Plans: A Data Primer",
+  "language": "English",
+  "transcript": "# Introduction\n\nIndividuals were first able to establish health savings accounts (HSAs) in 2004. These accounts allow people to pay for out-of-pocket medical expenses on a tax-advantaged basis. Individuals must have a qualifying high-deductible health plan (HDHP) to establish an HSA. After establishing an HSA, individuals (or employers) can contribute money to the account up to an annual maximum.\n\nAlthough commonly discussed in combination, HSAs should not be confused with Health Reimbursement Accounts (HRAs). Even though HRAs are also used to pay for unreimbursed medical expenses on a tax-advantaged basis, only employers may establish and contribute to an HRA. In addition, employees usually forfeit any remaining HRA funds at the termination of employment.\n\nData covering enrollment and/or cost sharing during the first few years of HDHPs and their associated HSAs are now available from at least five separate sources. Only one source provides data on HSAs. Two sources provide data on HDHPs whose owners are eligible to open an HSA. The remaining two sources provide data that include individuals with HRAs. Before analysts can evaluate the effects of HSAs, they must decide which data source(s) to use. This primer provides basic guidance in that direction. The primer also provides the most recent data available from each source on enrollment, premiums, and deductible.\n\n# Data Sources\n\nTable 1 identifies the five data sources. The various data sources include two separate surveys of firms, a survey of individuals, data on all policies reported to an association, and a sample of IRS tax returns. The data sources are listed in alphabetical order.\n\nWhich data source to use depends primarily on the question being asked. If the policy question truly requires information on HSAs—that is, the actual accounts rather than the associated HDHPs—then only the IRS data are suitable. The IRS data, which are broken down by tax reporting units, provide the total number of tax deductions taken and the aggregate value of the deductions. Two disadvantages of the IRS data are a total lack of information on the associated HDHPs and that the data are released well after the other data sources.\n\nTwo sources combine data on HSA-eligible HDHPs and HRAs. These data can be used if separate analyses of HSAs or HRAs are not necessary. The Employee Benefit Research Institute (EBRI) provides enrollment estimates for privately insured individuals aged 21 to 64 with either an HRA or an HSA-eligible HDHP, while Mercer, a human resources consulting firm, provides enrollment estimates for account holders who are adults working in firms with at least 10 employees with either an HRA or an HSA-eligible HDHP. The EBRI data are based on a survey of individuals and contain information on the workers' ages, incomes, health status, and opinions of their health plan options. The Mercer survey is of firms and contains information on firm size. Choosing between these two data sources comes down to a choice between an individual-level analysis (EBRI) or a firm-level analysis (Mercer).\n\nFinally, two additional data sources provide information on HSA-qualified HDHPs. The data from America's Health Insurance Plans (AHIP) are obtained from insurance plans and measure all covered lives in the plans. Both individual and group plans are analyzed. The data form virtually a census of such policies among AHIP member companies. Thus, the AHIP data are based on a large number of enrollees in high-deductible health plans. Along with the average premiums and deductibles, information on enrollees' age and state of residence is also available. The Kaiser Family Foundation/Health Research and Education Trust (KFF/HRET) survey is of firms with at least three employees.\n\n# Enrollment\n\nTable 2 presents the most recent available data on enrollment. Four of the sources contain data on enrollment. The enrollment estimates differ greatly. These differences occur because each source measures a unique concept. AHIP reports that 10,009,000 individuals (including children) were covered by an HSA-eligible HDHP, and EBRI reports that 11,200,000 individuals between 21 and 64 were enrolled in either an HSA-eligible HDHP or an HRA in 2009. Mercer reports that 9% of all covered employees (in firms with at least 10 employees) have either an HSA-eligible HDHP or HRA, also in 2009. The IRS data do not measure enrollment but state that 810,729 tax returns claimed an HSA deduction in 2008.\n\nAlthough the various enrollment measures are not directly comparable to each other because they represent different concepts, the number of individuals who claim deductions for HSA contributions in 2008 is the smallest number. This is as expected for two reasons: (1) the number of HSAs has been growing over the 2008 to 2010 period, and (2) not all individuals contribute money to the HSA—and of those who do, not all claim an HSA deduction.\n\n# Premiums and Deductibles\n\nAHIP provides the most complete information on premiums and deductibles; the average values are available for the small group and large group markets, and for three age groups in the individual market. No other data source provides breakdowns for more than one of these markets. In all cases, values for individual (and not family) insurance plans are reported in Table 2 .\n\nIn general, individuals in small group markets are more costly to insure because the risk of major illness is spread across fewer individuals and because there are fewer economies of scale. Small group market deductibles should therefore be higher than large group market deductibles, assuming benefits and other policy characteristics are comparable across group size. The AHIP data display the expected pattern for HSA-eligible HDHPs, although the difference is not particularly large. The average deductible for small group policies is $2,329, and the average deducible for a large group policy is $2,203.\n\n# Conclusion\n\nHSAs have been available since 2004, and at least five data sources can be used to uncover some basic facts about the recent experience. Nevertheless, the data sources differ in the insurance markets analyzed; whether the information covers HSAs, HSA-eligible HDHPs, or HSA-eligible HDHPs and HRAs; and whether the information is provided by employers, insurance companies, or individuals. Great caution should be exercised in any attempt to combine data from these different sources. A more fruitful strategy would be to decide on a specific question and use only the source which best answers that question.",
+  "summary": "Individuals began establishing health savings accounts (HSAs) in 2004. These savings accounts are generally used to pay for unreimbursed medical expenses on a tax-advantaged basis. Any unspent money accrues to the individual. To open an HSA, the individual must enroll in a qualifying high-deductible health plan (HDHP). HSAs are tax-advantaged and provide some incentives for people to monitor, and perhaps reduce, their expenditures on health care. Data covering enrollment and/or cost sharing during the first few years of HDHPs and their associated HSAs are now available from at least five separate sources. This primer provides information on the data sources, together with the most recent data available from each source on enrollment, premiums and deductibles. Only one source, the Internal Revenue Service, provides data on HSAs. These data count the number of tax filing units that took a deduction for the HSA on their tax returns. Two sources provide data on HDHPs whose owners are eligible to open an HSA. One of these data sources, from the American Health Insurance Plans, is a census of virtually all lives covered by a HSA-eligible HDHP. The remaining two sources provide data that includes individuals with another type of health-related savings account (the Health Reimbursement Account). In addition to differing by the type of insurance plan covered, the data sources differ in the insurance markets analyzed, and whether the information is provided by employers, insurance companies, or individuals. Great caution should be exercised in any attempt to combine data from these different sources. A more fruitful strategy would be to decide on a specific question and use only the source which best answers that question.",
+  "link": "",
+  "sentences": [
+    {
+      "index": 0,
+      "paragraph": 0,
+      "text": "# Introduction",
+      "tokens": 3
+    },
+    {
+      "index": 1,
+      "paragraph": 1,
+      "text": "Individuals were first able to establish health savings accounts (HSAs) in 2004.",
+      "tokens": 18
+    },
+    {
+      "index": 2,
+      "paragraph": 1,
+      "text": "These accounts allow people to pay for out-of-pocket medical expenses on a tax-advantaged basis.",
+      "tokens": 26
+    },
+    {
+      "index": 3,
+      "paragraph": 1,
+      "text": "Individuals must have a qualifying high-deductible health plan (HDHP) to establish an HSA.",
+      "tokens": 24
+    },
+    {
+      "index": 4,
+      "paragraph": 1,
+      "text": "After establishing an HSA, individuals (or employers) can contribute money to the account up to an annual maximum.",
+      "tokens": 25
+    },
+    {
+      "index": 5,
+      "paragraph": 2,
+      "text": "Although commonly discussed in combination, HSAs should not be confused with Health Reimbursement Accounts (HRAs).",
+      "tokens": 27
+    },
+    {
+      "index": 6,
+      "paragraph": 2,
+      "text": "Even though HRAs are also used to pay for unreimbursed medical expenses on a tax-advantaged basis, only employers may establish and contribute to an HRA.",
+      "tokens": 39
+    },
+    {
+      "index": 7,
+      "paragraph": 2,
+      "text": "In addition, employees usually forfeit any remaining HRA funds at the termination of employment.",
+      "tokens": 22
+    },
+    {
+      "index": 8,
+      "paragraph": 3,
+      "text": "Data covering enrollment and/or cost sharing during the first few years of HDHPs and their associated HSAs are now available from at least five separate sources.",
+      "tokens": 35
+    },
+    {
+      "index": 9,
+      "paragraph": 3,
+      "text": "Only one source provides data on HSAs.",
+      "tokens": 9
+    },
+    {
+      "index": 10,
+      "paragraph": 3,
+      "text": "Two sources provide data on HDHPs whose owners are eligible to open an HSA.",
+      "tokens": 18
+    },
+    {
+      "index": 11,
+      "paragraph": 3,
+      "text": "The remaining two sources provide data that include individuals with HRAs.",
+      "tokens": 15
+    },
+    {
+      "index": 12,
+      "paragraph": 3,
+      "text": "Before analysts can evaluate the effects of HSAs, they must decide which data source(s) to use.",
+      "tokens": 24
+    },
+    {
+      "index": 13,
+      "paragraph": 3,
+      "text": "This primer provides basic guidance in that direction.",
+      "tokens": 9
+    },
+    {
+      "index": 14,
+      "paragraph": 3,
+      "text": "The primer also provides the most recent data available from each source on enrollment, premiums, and deductible.",
+      "tokens": 25
+    },
+    {
+      "index": 15,
+      "paragraph": 4,
+      "text": "# Data Sources",
+      "tokens": 4
+    },
+    {
+      "index": 16,
+      "paragraph": 5,
+      "text": "Table 1 identifies the five data sources.",
+      "tokens": 10
+    },
+    {
+      "index": 17,
+      "paragraph": 5,
+      "text": "The various data sources include two separate surveys of firms, a survey of individuals, data on all policies reported to an association, and a sample of IRS tax returns.",
+      "tokens": 37
+    },
+    {
+      "index": 18,
+      "paragraph": 5,
+      "text": "The data sources are listed in alphabetical order.",
+      "tokens": 11
+    },
+    {
+      "index": 19,
+      "paragraph": 6,
+      "text": "Which data source to use depends primarily on the question being asked.",
+      "tokens": 15
+    },
+    {
+      "index": 20,
+      "paragraph": 6,
+      "text": "If the policy question truly requires information on HSAs—that is, the actual accounts rather than the associated HDHPs—then only the IRS data are suitable.",
+      "tokens": 35
+    },
+    {
+      "index": 21,
+      "paragraph": 6,
+      "text": "The IRS data, which are broken down by tax reporting units, provide the total number of tax deductions taken and the aggregate value of the deductions.",
+      "tokens": 38
+    },
+    {
+      "index": 22,
+      "paragraph": 6,
+      "text": "Two disadvantages of the IRS data are a total lack of information on the associated HDHPs and that the data are released well after the other data sources.",
+      "tokens": 35
+    },
+    {
+      "index": 23,
+      "paragraph": 7,
+      "text": "Two sources combine data on HSA-eligible HDHPs and HRAs.",
+      "tokens": 18
+    },
+    {
+      "index": 24,
+      "paragraph": 7,
+      "text": "These data can be used if separate analyses of HSAs or HRAs are not necessary.",
+      "tokens": 20
+    },
+    {
+      "index": 25,
+      "paragraph": 7,
+      "text": "The Employee Benefit Research Institute (EBRI) provides enrollment estimates for privately insured individuals aged 21 to 64 with either an HRA or an HSA-eligible HDHP, while Mercer, a human resources consulting firm, provides enrollment estimates for account holders who are adults working in firms with at least 10 employees with either an HRA or an HSA-eligible HDHP.",
+      "tokens": 93
+    },
+    {
+      "index": 26,
+      "paragraph": 7,
+      "text": "The EBRI data are based on a survey of individuals and contain information on the workers' ages, incomes, health status, and opinions of their health plan options.",
+      "tokens": 35
+    },
+    {
+      "index": 27,
+      "paragraph": 7,
+      "text": "The Mercer survey is of firms and contains information on firm size.",
+      "tokens": 16
+    },
+    {
+      "index": 28,
+      "paragraph": 7,
+      "text": "Choosing between these two data sources comes down to a choice between an individual-level analysis (EBRI) or a firm-level analysis (Mercer).",
+      "tokens": 33
+    },
+    {
+      "index": 29,
+      "paragraph": 8,
+      "text": "Finally, two additional data sources provide information on HSA-qualified HDHPs.",
+      "tokens": 18
+    },
+    {
+      "index": 30,
+      "paragraph": 8,
+      "text": "The data from America's Health Insurance Plans (AHIP) are obtained from insurance plans and measure all covered lives in the plans.",
+      "tokens": 29
+    },
+    {
+      "index": 31,
+      "paragraph": 8,
+      "text": "Both individual and group plans are analyzed.",
+      "tokens": 10
+    },
+    {
+      "index": 32,
+      "paragraph": 8,
+      "text": "The data form virtually a census of such policies among AHIP member companies.",
+      "tokens": 17
+    },
+    {
+      "index": 33,
+      "paragraph": 8,
+      "text": "Thus, the AHIP data are based on a large number of enrollees in high-deductible health plans.",
+      "tokens": 26
+    },
+    {
+      "index": 34,
+      "paragraph": 8,
+      "text": "Along with the average premiums and deductibles, information on enrollees' age and state of residence is also available.",
+      "tokens": 28
+    },
+    {
+      "index": 35,
+      "paragraph": 8,
+      "text": "The Kaiser Family Foundation/Health Research and Education Trust (KFF/HRET) survey is of firms with at least three employees.",
+      "tokens": 28
+    },
+    {
+      "index": 36,
+      "paragraph": 9,
+      "text": "# Enrollment",
+      "tokens": 4
+    },
+    {
+      "index": 37,
+      "paragraph": 10,
+      "text": "Table 2 presents the most recent available data on enrollment.",
+      "tokens": 14
+    },
+    {
+      "index": 38,
+      "paragraph": 10,
+      "text": "Four of the sources contain data on enrollment.",
+      "tokens": 11
+    },
+    {
+      "index": 39,
+      "paragraph": 10,
+      "text": "The enrollment estimates differ greatly.",
+      "tokens": 10
+    },
+    {
+      "index": 40,
+      "paragraph": 10,
+      "text": "These differences occur because each source measures a unique concept.",
+      "tokens": 13
+    },
+    {
+      "index": 41,
+      "paragraph": 10,
+      "text": "AHIP reports that 10,009,000 individuals (including children) were covered by an HSA-eligible HDHP, and EBRI reports that 11,200,000 individuals between 21 and 64 were enrolled in either an HSA-eligible HDHP or an HRA in 2009.",
+      "tokens": 59
+    },
+    {
+      "index": 42,
+      "paragraph": 10,
+      "text": "Mercer reports that 9% of all covered employees (in firms with at least 10 employees) have either an HSA-eligible HDHP or HRA, also in 2009.",
+      "tokens": 37
+    },
+    {
+      "index": 43,
+      "paragraph": 10,
+      "text": "The IRS data do not measure enrollment but state that 810,729 tax returns claimed an HSA deduction in 2008.",
+      "tokens": 30
+    },
+    {
+      "index": 44,
+      "paragraph": 11,
+      "text": "Although the various enrollment measures are not directly comparable to each other because they represent different concepts, the number of individuals who claim deductions for HSA contributions in 2008 is the smallest number.",
+      "tokens": 44
+    },
+    {
+      "index": 45,
+      "paragraph": 11,
+      "text": "This is as expected for two reasons: (1) the number of HSAs has been growing over the 2008 to 2010 period, and (2) not all individuals contribute money to the HSA—and of those who do, not all claim an HSA deduction.",
+      "tokens": 51
+    },
+    {
+      "index": 46,
+      "paragraph": 12,
+      "text": "# Premiums and Deductibles",
+      "tokens": 7
+    },
+    {
+      "index": 47,
+      "paragraph": 13,
+      "text": "AHIP provides the most complete information on premiums and deductibles; the average values are available for the small group and large group markets, and for three age groups in the individual market.",
+      "tokens": 40
+    },
+    {
+      "index": 48,
+      "paragraph": 13,
+      "text": "No other data source provides breakdowns for more than one of these markets.",
+      "tokens": 17
+    },
+    {
+      "index": 49,
+      "paragraph": 13,
+      "text": "In all cases, values for individual (and not family) insurance plans are reported in Table 2 .",
+      "tokens": 21
+    },
+    {
+      "index": 50,
+      "paragraph": 14,
+      "text": "In general, individuals in small group markets are more costly to insure because the risk of major illness is spread across fewer individuals and because there are fewer economies of scale.",
+      "tokens": 39
+    },
+    {
+      "index": 51,
+      "paragraph": 14,
+      "text": "Small group market deductibles should therefore be higher than large group market deductibles, assuming benefits and other policy characteristics are comparable across group size.",
+      "tokens": 34
+    },
+    {
+      "index": 52,
+      "paragraph": 14,
+      "text": "The AHIP data display the expected pattern for HSA-eligible HDHPs, although the difference is not particularly large.",
+      "tokens": 26
+    },
+    {
+      "index": 53,
+      "paragraph": 14,
+      "text": "The average deductible for small group policies is $2,329, and the average deducible for a large group policy is $2,203.",
+      "tokens": 30
+    },
+    {
+      "index": 54,
+      "paragraph": 15,
+      "text": "# Conclusion",
+      "tokens": 3
+    },
+    {
+      "index": 55,
+      "paragraph": 16,
+      "text": "HSAs have been available since 2004, and at least five data sources can be used to uncover some basic facts about the recent experience.",
+      "tokens": 28
+    },
+    {
+      "index": 56,
+      "paragraph": 16,
+      "text": "Nevertheless, the data sources differ in the insurance markets analyzed; whether the information covers HSAs, HSA-eligible HDHPs, or HSA-eligible HDHPs and HRAs; and whether the information is provided by employers, insurance companies, or individuals.",
+      "tokens": 64
+    },
+    {
+      "index": 57,
+      "paragraph": 16,
+      "text": "Great caution should be exercised in any attempt to combine data from these different sources.",
+      "tokens": 18
+    },
+    {
+      "index": 58,
+      "paragraph": 16,
+      "text": "A more fruitful strategy would be to decide on a specific question and use only the source which best answers that question.",
+      "tokens": 25
+    }
+  ]
+}

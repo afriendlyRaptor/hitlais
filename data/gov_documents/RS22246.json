@@ -1,0 +1,262 @@
+{
+  "id": "RS22246",
+  "title": "Temporary Assistance for Needy Families (TANF): Its Role in Response to the Effects of Hurricane Katrina",
+  "language": "English",
+  "transcript": "The TANF block grant is a fixed amount of funding paid to each state based on a formula. States design and administer benefits and services funded by TANF and have wide latitude in their use of block grant funds. States are required to share a portion of the cost of TANF benefits and services by expending some of their own funds on TANF-related benefits and services through a \"maintenance of effort\" requirement.\n\n# TANF Cash Welfare Benefit Programs\n\nTANF is the major federal-state program providing cash assistance to needy families with children. While federal TANF grants help fund this cash assistance, states determine eligibility rules and benefit amounts which vary greatly among the states. There are no federal rules regarding eligibility and benefits for ongoing cash welfare, other than the requirement that it be paid to families with children that meet a financial test of economic need.\n\nTable 1 provides some basic information on cash welfare benefits in the states affected by Hurricane Katrina and some of their neighboring states. It shows both the maximum monthly benefit amount paid to a family of three as of January 2005 and the average number of families that received cash assistance in June 2006. The maximum monthly benefit is generally the amount paid to a family with no other income sources. TANF cash assistance benefits in this region are relatively low compared with those paid in other regions and states. For example, the comparable maximum cash welfare grant paid in New York City in January 2005 was $691 per month and the maximum cash welfare grant paid to a family of three in the urban areas of California was $723 per month.\n\nTANF imposes some requirements on states with respect to families receiving cash assistance. The purpose of the requirements is to ensure that receipt of cash welfare is temporary and to encourage movement off the rolls and into work. TANF requires that a specified percentage of its caseload be engaged in work or job preparation activities, limits federally-funded assistance to five years, and requires that cash assistance recipients cooperate with child support enforcement rules (establish paternity and assign child support to the state).\n\n# Emergency Assistance\n\nTANF also gives authority to states to pay \"emergency assistance\" benefits. Emergency benefits are those that:\n\nare considered \"nonrecurrent, short-term benefits;\" are designed to deal with a specific crisis situation or episode of need; are not intended to meet recurrent or ongoing needs; and will not extend beyond four months.\n\nFamilies receiving such emergency benefits are not subject to the same requirements (i.e, work requirements and time limits) as are families that receive cash assistance. As with cash welfare, states determine eligibility for and the scope of emergency benefits provided to low-income families with children.\n\n# Other Benefits and Services\n\nIn addition to ongoing cash welfare and emergency aid, TANF can fund a wide range of other social services for low-income families with children, such as child care, transportation aid, family preservation and support services, and similar types of services. As with ongoing cash welfare and emergency assistance, states determine eligibility and the scope of benefits provided to needy families with children.\n\n# Legislation to Respond to the Impact of Hurricane Katrina\n\nWelfare programs are not usually associated with responses to natural disasters. However, the scope of Hurricane Katrina's displacement of families, the strain placed on human service agencies responding to this displacement, plus the flexibility allowed states to design programs under TANF, made the block grant a potential source of help to the victims of this disaster. While TANF funding is flexible and provides states with options to help needy families, the legislation passed by Congress and signed by the President addressed some policy considerations.\n\n## Funding the benefits of evacuees of hurricane-damaged areas receiving benefits in other states\n\nTANF block grants are fixed amounts determined by formula in federal law, and absent federal legislation benefits paid by a host state to evacuees would come from that host state's TANF allocation.\n\nP.L. 109-68 allowed states to draw from the TANF contingency fund to provide 100% federal funding for certain benefits paid to families that evacuated hurricane-damaged areas. Funding was capped at 20% per year of the host state's annual block grant. In FY2006, a total of $48.4 million was drawn from the TANF contingency fund to provide short-term benefits for evacuees. Table 2 shows TANF contingency fund grants for evacuees of hurricane-damaged areas.\n\n## Providing additional funding to hurricane-damaged states\n\nThe fixed TANF block grants do not adjust for changes in the circumstances of a state. Though TANF did contemplate extra funding in the case of a recession, it has no mechanism to increase funding in the event of a natural disaster. P.L. 109-68 provided extra funding for FY2005 and FY2006 for the three hurricane-damaged states of Alabama, Louisiana, and Mississippi, an extra 20% of the damaged state's block grant.\n\n## Waiving certain TANF requirements\n\nTANF recipients who receive ongoing cash assistance are subject to certain requirements, such as time limits and work requirements. For FY2005 and FY2006, P.L. 109-68 waived penalties on the states for failure to meet state work requirements as well as the penalty for having more than 20% of its caseload on the rolls for more than five years (the TANF time limit). It also gives the authority to states to provide short-term, nonrecurring benefits for evacuee families receiving benefits in other states and families in hurricane damaged states, to meet subsistence needs and not have that time count for purposes of work requirements or time limits.",
+  "summary": "The Temporary Assistance for Needy Families (TANF) block grant provides grants to states to help them fund a wide variety of benefits and services to low-income families with children. TANF is best known for funding cash welfare benefits for families with children, but the block grant may also fund other benefits and services such as emergency payments, child care, transportation assistance, and other social services. Welfare programs are not usually associated with responses to natural disasters. However, the scope of Hurricane Katrina's displacement of families, the strain placed on responding human service agencies, plus the flexibility allowed states to design programs under TANF, made the block grant a potential source of help to the victims of this disaster. P.L. 109-68 provided some additional TANF funds and waived certain program requirements for states affected by Katrina. Under that act, all states were provided capped funding to aid evacuees from hurricane-damaged states. This report will be not be updated.",
+  "link": "",
+  "sentences": [
+    {
+      "index": 0,
+      "paragraph": 0,
+      "text": "The TANF block grant is a fixed amount of funding paid to each state based on a formula.",
+      "tokens": 20
+    },
+    {
+      "index": 1,
+      "paragraph": 0,
+      "text": "States design and administer benefits and services funded by TANF and have wide latitude in their use of block grant funds.",
+      "tokens": 27
+    },
+    {
+      "index": 2,
+      "paragraph": 0,
+      "text": "States are required to share a portion of the cost of TANF benefits and services by expending some of their own funds on TANF-related benefits and services through a \"maintenance of effort\" requirement.",
+      "tokens": 45
+    },
+    {
+      "index": 3,
+      "paragraph": 1,
+      "text": "# TANF Cash Welfare Benefit Programs",
+      "tokens": 10
+    },
+    {
+      "index": 4,
+      "paragraph": 2,
+      "text": "TANF is the major federal-state program providing cash assistance to needy families with children.",
+      "tokens": 19
+    },
+    {
+      "index": 5,
+      "paragraph": 2,
+      "text": "While federal TANF grants help fund this cash assistance, states determine eligibility rules and benefit amounts which vary greatly among the states.",
+      "tokens": 31
+    },
+    {
+      "index": 6,
+      "paragraph": 2,
+      "text": "There are no federal rules regarding eligibility and benefits for ongoing cash welfare, other than the requirement that it be paid to families with children that meet a financial test of economic need.",
+      "tokens": 39
+    },
+    {
+      "index": 7,
+      "paragraph": 3,
+      "text": "Table 1 provides some basic information on cash welfare benefits in the states affected by Hurricane Katrina and some of their neighboring states.",
+      "tokens": 29
+    },
+    {
+      "index": 8,
+      "paragraph": 3,
+      "text": "It shows both the maximum monthly benefit amount paid to a family of three as of January 2005 and the average number of families that received cash assistance in June 2006.",
+      "tokens": 31
+    },
+    {
+      "index": 9,
+      "paragraph": 3,
+      "text": "The maximum monthly benefit is generally the amount paid to a family with no other income sources.",
+      "tokens": 18
+    },
+    {
+      "index": 10,
+      "paragraph": 3,
+      "text": "TANF cash assistance benefits in this region are relatively low compared with those paid in other regions and states.",
+      "tokens": 23
+    },
+    {
+      "index": 11,
+      "paragraph": 3,
+      "text": "For example, the comparable maximum cash welfare grant paid in New York City in January 2005 was $691 per month and the maximum cash welfare grant paid to a family of three in the urban areas of California was $723 per month.",
+      "tokens": 50
+    },
+    {
+      "index": 12,
+      "paragraph": 4,
+      "text": "TANF imposes some requirements on states with respect to families receiving cash assistance.",
+      "tokens": 17
+    },
+    {
+      "index": 13,
+      "paragraph": 4,
+      "text": "The purpose of the requirements is to ensure that receipt of cash welfare is temporary and to encourage movement off the rolls and into work.",
+      "tokens": 31
+    },
+    {
+      "index": 14,
+      "paragraph": 4,
+      "text": "TANF requires that a specified percentage of its caseload be engaged in work or job preparation activities, limits federally-funded assistance to five years, and requires that cash assistance recipients cooperate with child support enforcement rules (establish paternity and assign child support to the state).",
+      "tokens": 63
+    },
+    {
+      "index": 15,
+      "paragraph": 5,
+      "text": "# Emergency Assistance",
+      "tokens": 6
+    },
+    {
+      "index": 16,
+      "paragraph": 6,
+      "text": "TANF also gives authority to states to pay \"emergency assistance\" benefits.",
+      "tokens": 18
+    },
+    {
+      "index": 17,
+      "paragraph": 6,
+      "text": "Emergency benefits are those that:",
+      "tokens": 8
+    },
+    {
+      "index": 18,
+      "paragraph": 7,
+      "text": "are considered \"nonrecurrent, short-term benefits;\" are designed to deal with a specific crisis situation or episode of need; are not intended to meet recurrent or ongoing needs; and will not extend beyond four months.",
+      "tokens": 46
+    },
+    {
+      "index": 19,
+      "paragraph": 8,
+      "text": "Families receiving such emergency benefits are not subject to the same requirements (i.e, work requirements and time limits) as are families that receive cash assistance.",
+      "tokens": 33
+    },
+    {
+      "index": 20,
+      "paragraph": 8,
+      "text": "As with cash welfare, states determine eligibility for and the scope of emergency benefits provided to low-income families with children.",
+      "tokens": 29
+    },
+    {
+      "index": 21,
+      "paragraph": 9,
+      "text": "# Other Benefits and Services",
+      "tokens": 7
+    },
+    {
+      "index": 22,
+      "paragraph": 10,
+      "text": "In addition to ongoing cash welfare and emergency aid, TANF can fund a wide range of other social services for low-income families with children, such as child care, transportation aid, family preservation and support services, and similar types of services.",
+      "tokens": 53
+    },
+    {
+      "index": 23,
+      "paragraph": 10,
+      "text": "As with ongoing cash welfare and emergency assistance, states determine eligibility and the scope of benefits provided to needy families with children.",
+      "tokens": 29
+    },
+    {
+      "index": 24,
+      "paragraph": 11,
+      "text": "# Legislation to Respond to the Impact of Hurricane Katrina",
+      "tokens": 14
+    },
+    {
+      "index": 25,
+      "paragraph": 12,
+      "text": "Welfare programs are not usually associated with responses to natural disasters.",
+      "tokens": 15
+    },
+    {
+      "index": 26,
+      "paragraph": 12,
+      "text": "However, the scope of Hurricane Katrina's displacement of families, the strain placed on human service agencies responding to this displacement, plus the flexibility allowed states to design programs under TANF, made the block grant a potential source of help to the victims of this disaster.",
+      "tokens": 65
+    },
+    {
+      "index": 27,
+      "paragraph": 12,
+      "text": "While TANF funding is flexible and provides states with options to help needy families, the legislation passed by Congress and signed by the President addressed some policy considerations.",
+      "tokens": 35
+    },
+    {
+      "index": 28,
+      "paragraph": 13,
+      "text": "## Funding the benefits of evacuees of hurricane-damaged areas receiving benefits in other states",
+      "tokens": 23
+    },
+    {
+      "index": 29,
+      "paragraph": 14,
+      "text": "TANF block grants are fixed amounts determined by formula in federal law, and absent federal legislation benefits paid by a host state to evacuees would come from that host state's TANF allocation.",
+      "tokens": 46
+    },
+    {
+      "index": 30,
+      "paragraph": 15,
+      "text": "P.L. 109-68 allowed states to draw from the TANF contingency fund to provide 100% federal funding for certain benefits paid to families that evacuated hurricane-damaged areas.",
+      "tokens": 41
+    },
+    {
+      "index": 31,
+      "paragraph": 15,
+      "text": "Funding was capped at 20% per year of the host state's annual block grant.",
+      "tokens": 19
+    },
+    {
+      "index": 32,
+      "paragraph": 15,
+      "text": "In FY2006, a total of $48.4 million was drawn from the TANF contingency fund to provide short-term benefits for evacuees.",
+      "tokens": 35
+    },
+    {
+      "index": 33,
+      "paragraph": 15,
+      "text": "Table 2 shows TANF contingency fund grants for evacuees of hurricane-damaged areas.",
+      "tokens": 25
+    },
+    {
+      "index": 34,
+      "paragraph": 16,
+      "text": "## Providing additional funding to hurricane-damaged states",
+      "tokens": 13
+    },
+    {
+      "index": 35,
+      "paragraph": 17,
+      "text": "The fixed TANF block grants do not adjust for changes in the circumstances of a state.",
+      "tokens": 19
+    },
+    {
+      "index": 36,
+      "paragraph": 17,
+      "text": "Though TANF did contemplate extra funding in the case of a recession, it has no mechanism to increase funding in the event of a natural disaster.",
+      "tokens": 32
+    },
+    {
+      "index": 37,
+      "paragraph": 17,
+      "text": "P.L. 109-68 provided extra funding for FY2005 and FY2006 for the three hurricane-damaged states of Alabama, Louisiana, and Mississippi, an extra 20% of the damaged state's block grant.",
+      "tokens": 49
+    },
+    {
+      "index": 38,
+      "paragraph": 18,
+      "text": "## Waiving certain TANF requirements",
+      "tokens": 8
+    },
+    {
+      "index": 39,
+      "paragraph": 19,
+      "text": "TANF recipients who receive ongoing cash assistance are subject to certain requirements, such as time limits and work requirements.",
+      "tokens": 24
+    },
+    {
+      "index": 40,
+      "paragraph": 19,
+      "text": "For FY2005 and FY2006, P.L. 109-68 waived penalties on the states for failure to meet state work requirements as well as the penalty for having more than 20% of its caseload on the rolls for more than five years (the TANF time limit).",
+      "tokens": 61
+    },
+    {
+      "index": 41,
+      "paragraph": 19,
+      "text": "It also gives the authority to states to provide short-term, nonrecurring benefits for evacuee families receiving benefits in other states and families in hurricane damaged states, to meet subsistence needs and not have that time count for purposes of work requirements or time limits.",
+      "tokens": 61
+    }
+  ]
+}

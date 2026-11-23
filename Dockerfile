@@ -7,6 +7,10 @@ COPY . .
 # Inlined into the client bundle at build time
 ARG NEXT_PUBLIC_ADMIN_PASSWORD
 ENV NEXT_PUBLIC_ADMIN_PASSWORD=$NEXT_PUBLIC_ADMIN_PASSWORD
+
+ARG NEXT_PUBLIC_DATASET=gov_report
+ENV NEXT_PUBLIC_DATASET=$NEXT_PUBLIC_DATASET
+
 RUN npm run build
 
 # ---- run: Node only ----
