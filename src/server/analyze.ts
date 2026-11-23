@@ -1,5 +1,7 @@
 'use server';
 
+import { DATASET } from '~/config';
+
 const TIMEOUT_MS = 15_000;
 const MAX_TEXT_LENGTH = 20_000;
 
@@ -64,6 +66,7 @@ export async function analyzeText(
   // Create job
   const { job_id } = await callApi<{ job_id: string }>('/submit', signal, {
     text,
+    model: DATASET.model,
   });
 
   if (typeof job_id !== 'string' || job_id === '') {

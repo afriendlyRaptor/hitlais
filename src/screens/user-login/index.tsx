@@ -18,9 +18,11 @@ export default function Login() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const id = formData.get('userId')?.toString().trim();
+    const name = formData.get('name')?.toString().trim();
 
-    if (!id) return;
+    if (!name) return;
+
+    const id = `${name}_${crypto.randomUUID().slice(0, 8)}`;
 
     setUserId(id);
 
@@ -56,7 +58,7 @@ export default function Login() {
 
           <Typography variant="body1" color="text.secondary">
             {ALLOW_MANUAL_USER_ID
-              ? 'Please enter your user ID to continue.'
+              ? 'Please enter your name to continue.'
               : 'Sie sind nicht angemeldet.'}
           </Typography>
         </Box>
@@ -64,13 +66,13 @@ export default function Login() {
         {ALLOW_MANUAL_USER_ID && (
           <>
             <TextField
-              label="User ID"
+              label="Name"
               variant="outlined"
               fullWidth
               required
               autoFocus
-              name="userId"
-              placeholder="Enter your ID"
+              name="name"
+              placeholder="Enter your name"
             />
 
             <Button type="submit" variant="contained" size="large" fullWidth>

@@ -2,6 +2,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import { DATASET } from '~/config';
 import type { DocumentResult } from '~/types';
 
 /** Reads a document prepared by preprocess/prepare-documents.mjs. */
@@ -13,7 +14,7 @@ export async function getDocument(id: number): Promise<DocumentResult> {
   const file = path.join(
     /*turbopackIgnore: true*/ process.cwd(),
     'data',
-    'documents',
+    DATASET.folder,
     `${id}.json`
   );
 

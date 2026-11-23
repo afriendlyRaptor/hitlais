@@ -1,9 +1,9 @@
-import { VALID_DOCUMENT_IDS, studyTasks } from '~/config';
+import { DATASET } from '~/config';
 import { shuffle } from './random';
 
 /**
  * Maps each task to a document id.
- * Fixed ids are validated; 'random' tasks draw distinct, still unused ids.
+ * Fixed ids of the active dataset are validated; all other tasks draw distinct, still unused ids.
  */
 export function assignDocuments(
   taskIds: string[],
@@ -13,16 +13,16 @@ export function assignDocuments(
   const randomTaskIds: string[] = [];
 
   for (const taskId of taskIds) {
-    const { documentId } = studyTasks[taskId];
+    const documentId = DATASET.fixedIds[taskId];
 
-    if (documentId === 'random') {
+    if (documentId === undefined) {
       randomTaskIds.push(taskId);
       continue;
     }
 
-    if (!VALID_DOCUMENT_IDS.includes(documentId)) {
+    if (!DATASET.validIds.includes(documentId)) {
       throw new Error(
-        `Task "${taskId}": document ${documentId} is not in VALID_DOCUMENT_IDS`
+        `Task "${taskId}": document ${documentId} is not in the valid ids of the dataset`
       );
     }
 
@@ -31,7 +31,7 @@ export function assignDocuments(
 
   const taken = new Set(Object.values(assigned));
   const pool = shuffle(
-    VALID_DOCUMENT_IDS.filter((id) => !taken.has(id)),
+    DATASET.validIds.filter((id) => !taken.has(id)),
     rng
   );
 
@@ -39,7 +39,7 @@ export function assignDocuments(
     const id = pool.pop();
 
     if (id === undefined) {
-      throw new Error('Not enough unused ids in VALID_DOCUMENT_IDS');
+      throw new Error('Not enough unused document ids in the dataset');
     }
 
     assigned[taskId] = id;
