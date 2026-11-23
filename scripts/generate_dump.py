@@ -26,6 +26,7 @@ def main():
         "combined_text",
         "date_begin",
         "date_end",
+        "documenttype",
     ]
 
     available_columns = [
@@ -67,6 +68,7 @@ def main():
             "length": len(text),
             "preview": text[:100].replace("\n", " "),
             "summary": summary.replace("\n", " "),
+            "type": row.get("documenttype"),
         })
         documentIds.append(docId)
 
@@ -83,6 +85,7 @@ def main():
                 f"Date end: {document['date_end']}\n"
                 f"Length: {document['length']}\n"
                 f"Summary: {document['summary']}\n"
+                f"Type: {document['type']}\n"
                 f"{'-' * 80}\n"
             )
         file.write(str(documentIds))

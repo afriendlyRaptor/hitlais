@@ -15,7 +15,7 @@ export type StudyTaskConfig = {
 export const studyTasks: Record<string, StudyTaskConfig> = {
   taskA: {
     title: 'Task A',
-    documentId: 69198,
+    documentId: 69198, /* Aktennotiy / Notiy */
     description: '',
     instructions: `
 Sie dürfen in den nächsten ca. 50min eine neue Herangehensweise an das erstellen
@@ -53,7 +53,7 @@ Sie Ihre Zusammenfassung jederzeit einreichen.
 
   taskB: {
     title: 'Task B',
-    documentId: 69828,
+    documentId: 69828, /* Aktennotiy / Notiz */
     description: ``,
 
     instructions: `
@@ -78,7 +78,7 @@ Zusammenfassung jederzeit einreichen.
 
   taskC: {
     title: 'Task C',
-    documentId: 61082,
+    documentId: 61082, /* Aktennotiy / Notiz */
     description: ``,
     instructions: `
 Sie haben es fast geschafft! In Ihrer letzten Aufgabe wird ihnen eine 
