@@ -31,7 +31,7 @@ const DATASETS: Record<string, DatasetConfig> = {
       'RS22246', 'RS22785', 'RS22897',
       'R41799', 'RS22877', 'RS22923',
     ],
-    fixedIds: { taskA: 'R44583', taskB: 'R41799', taskC: '98-756' },
+  fixedIds: { taskB: 'R41799', taskC: '98-756' },
   },
 };
 
