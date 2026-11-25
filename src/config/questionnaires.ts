@@ -28,11 +28,11 @@ const taskQuestionnaire: Questionnaire = {
       question:
         'Es ﬁel mir leicht, relevante Sätze im Originaldokument zu identiﬁzieren.',
     },
-    //    {
-    //      id: 'easeOfUse',
-    //      type: 'likert',
-    //      question: 'Die Auswahl und Abwahl von Sätzen war einfach und intuitiv.',
-    //    },
+    {
+      id: 'userReadsQuestion',
+      type: 'likert',
+          question: 'Wählen Sie bei dieser Frage die Nummer 5',
+    },
     {
       id: 'coherantGeneration',
       type: 'likert',

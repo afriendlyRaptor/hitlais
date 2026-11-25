@@ -16,7 +16,9 @@ How it works
    count from the number of characters (chars / 4). No real tokenizer is used
    here, so this step is fast.
 3. Keep all reports whose estimate is within  target-tokens +- tolerance.
-4. Randomly pick  --num-docs  of them.
+4. Randomly pick  --num-docs  of them, split evenly between the sub folders
+   (e.g. 10 from crs and 10 from gao). If a folder has too few candidates,
+   all of its candidates are taken and a warning is printed.
 5. Only for these picked documents: split the transcript into sentences with
    pysbd (a rule-based sentence splitter that handles abbreviations like
    "U.S." or "P.L. 111-148") and count the real tokens of every sentence.
@@ -117,17 +119,23 @@ def build_transcript(data):
 # ----------------------------------------------------------------------------
 
 def find_candidates(input_dir, subfolders, min_tokens, max_tokens, chars_per_token):
-    candidates = []
+    """Return {subfolder: [(path, data, transcript), ...]} of documents in range."""
+    candidates = {}
     for subfolder in subfolders:
         files = sorted((input_dir / subfolder).rglob("*.json"))
         print(f"Scanning {len(files)} files in {input_dir / subfolder} ...")
+        candidates[subfolder] = []
+        empty = 0  # files where no text was found (maybe an unknown structure)
         for path in files:
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             transcript = build_transcript(data)
+            if not transcript:
+                empty += 1
             estimated_tokens = len(transcript) / chars_per_token
             if min_tokens <= estimated_tokens <= max_tokens:
-                candidates.append((path, data, transcript))
+                candidates[subfolder].append((path, data, transcript))
+        print(f"  {len(candidates[subfolder])} in range, {empty} without any text")
     return candidates
 
 
@@ -202,13 +210,20 @@ def main():
         args.target_tokens + args.tolerance,
         args.chars_per_token,
     )
-    print(f"{len(candidates)} documents are in the range "
-          f"{args.target_tokens} +- {args.tolerance} tokens (estimated).")
 
-    # step 3: random selection
+    # step 3: random selection, the same number from every sub folder
     if args.seed is not None:
         random.seed(args.seed)
-    selected = random.sample(candidates, min(args.num_docs, len(candidates)))
+    selected = []
+    for i, subfolder in enumerate(args.subfolders):
+        # split num_docs evenly, the first folders get the remainder
+        quota = args.num_docs // len(args.subfolders)
+        if i < args.num_docs % len(args.subfolders):
+            quota += 1
+        available = candidates[subfolder]
+        if len(available) < quota:
+            print(f"WARNING: only {len(available)} candidates in {subfolder}, wanted {quota}.")
+        selected += random.sample(available, min(quota, len(available)))
 
     # step 4: sentenize + count tokens, write one file per document
     count_tokens = make_token_counter(args.tokenizer, args.api_url)

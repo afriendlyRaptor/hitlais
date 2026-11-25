@@ -32,9 +32,7 @@ export function ComparisonForm({
   referenceSummary,
   onFinish,
 }: Props) {
-  const { title, description, items } = getQuestionnaire(
-    questionnaireId
-  );
+  const { title, description, items } = getQuestionnaire(questionnaireId);
 
   const options = useMemo(
     () => arrangeSummaries(userId, generatedSummary, referenceSummary),

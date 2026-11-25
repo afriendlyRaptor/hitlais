@@ -78,7 +78,10 @@ export function TaskStep({ taskId, documentId, onFinish }: Props) {
     <>
       <DrawerAppBar taskInfo={{ description, instructions }} />{' '}
       {timeLimitSeconds != null && (
-        <TaskTimer seconds={timeLimitSeconds} onExpire={() => setTimeUp(true)} />
+        <TaskTimer
+          seconds={timeLimitSeconds}
+          onExpire={() => setTimeUp(true)}
+        />
       )}
       <Box
         sx={{

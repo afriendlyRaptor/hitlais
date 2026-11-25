@@ -25,13 +25,8 @@ const DATASETS: Record<string, DatasetConfig> = {
   gov_report: {
     model: 'gov_report',
     folder: 'gov_documents',
-    validIds: [
-      '93-792', '98-756', 'R42846', 'R43849', 'R44097', 'R44297', 'R44484',
-      'R44486', 'R44583', 'R44758', 'R44873', 'RL34667', 'RS20607', 'RS20792',
-      'RS22246', 'RS22785', 'RS22897',
-      'R41799', 'RS22877', 'RS22923',
-    ],
-  fixedIds: { taskB: 'R41799', taskC: '98-756' },
+    validIds: ['R40798', 'R41659', 'R43884', 'R44107', 'RS21435', 'R41105'],
+    fixedIds: { taskB: 'R41799', taskC: '98-756' },
   },
 };
 

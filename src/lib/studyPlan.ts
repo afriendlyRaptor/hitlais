@@ -45,9 +45,10 @@ export function buildStudyPlan(userId: string): StudyPlan {
   ];
 
   const taskIds = [
-    ...new Set([...STUDY_BLOCKS.map((b) => b.taskId),
-    ...COMPARISONS.map((c) => c.taskId),
-  ]),
+    ...new Set([
+      ...STUDY_BLOCKS.map((b) => b.taskId),
+      ...COMPARISONS.map((c) => c.taskId),
+    ]),
   ];
 
   return {
